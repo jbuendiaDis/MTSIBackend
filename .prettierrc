@@ -1,0 +1,19 @@
+{
+  "printWidth": 100,           
+  "tabWidth": 2,               
+  "useTabs": false,            
+  "singleQuote": true,         
+  "trailingComma": "all",      
+  "bracketSpacing": true,      
+  "jsxBracketSameLine": false, 
+  "overrides": [
+    {
+      "files": "*.js", 
+      "options": {
+        "trailingComma": "none",   
+        "arrowParens": "always",  
+        "printWidth": 120          
+      }
+    }
+  ]
+}

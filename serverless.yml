@@ -1,0 +1,32 @@
+org: jcbuendiamtsi
+app: mtsi-backend
+service: mtsi-backend
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+
+functions:
+  apiServer:
+    handler: server.handler
+    events:
+      - http:
+          path: /
+          method: GET
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+
+plugins:
+  - serverless-offline
+  - serverless-offline-ssm
+
+custom:
+  serverless-offline-ssm:
+    stages:
+      - dev
+      - prod
