@@ -75,8 +75,8 @@ async function obtenerRutas(data, params) {
 const data = require('./data.json'); // Reemplaza con la ubicación real de tu archivo data.json
 
 const params = {
-  ciudad_origen: '15460',
-  ciudad_destino: '11320',
+  ciudad_origen: '1010',
+  ciudad_destino: '19040',
   vehiculos: '10',
   calcula_rendimiento: 'false',
   tamanio_vehiculo: '6',

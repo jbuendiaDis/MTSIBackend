@@ -5,12 +5,14 @@ const router = express.Router({
 });
 
 const UserController = require('../controllers/userController');
+const { verifyToken } = require('../utils/verifyToken');
+const formatResponse = require('../utils/formatResponse');
 
-router.post('/users', UserController.createUser);
-router.get('/users', UserController.getUsers);
-router.get('/users/:userId', UserController.getUserById);
-router.put('/users/:userId', UserController.updateUser);
-router.delete('/users/:userId', UserController.deleteUser);
+router.post('/users', verifyToken, UserController.createUser);
+router.get('/users', verifyToken, formatResponse, UserController.getUsers);
+router.get('/users/:userId', verifyToken, UserController.getUserById);
+router.put('/users/:userId', verifyToken, UserController.updateUser);
+router.delete('/users/:userId', verifyToken, UserController.deleteUser);
 
 module.exports = {
   usersRoutes: router,

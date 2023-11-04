@@ -10,7 +10,7 @@
     {
       "files": "*.js", 
       "options": {
-        "trailingComma": "none",   
+        "trailingComma": "all",   
         "arrowParens": "always",  
         "printWidth": 120          
       }

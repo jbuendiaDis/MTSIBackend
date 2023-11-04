@@ -1,21 +1,48 @@
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 // Crear un nuevo usuario
 async function createUser(req, res) {
+  const { name, email, password } = req.body;
+
   try {
-    const newUser = new User(req.body);
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    // Validar que los campos obligatorios estén presentes
+    if (!name || !email || !password) {
+      res.status(400).json({ message: 'Faltan campos obligatorios.' });
+    }
+
+    // Verificar si ya existe un usuario con el mismo correo
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      res.status(400).json({ message: 'El correo ya está en uso.' });
+    }
+
+    // Cifrar la contraseña antes de guardarla en la base de datos
+    const saltRounds = 15;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Crear un nuevo usuario
+    const newUser = new User({
+      ...req.body,
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    // Guardar el usuario en la base de datos
+    await newUser.save();
+
+    res.status(201).json({ message: 'Usuario registrado con éxito.' });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Error en el servidor.' });
   }
 }
 
 // Obtener todos los usuarios
 async function getUsers(req, res) {
   try {
-    const users = await User.find();
-    res.status(200).json(users);
+    res.formatResponse(200, '200', 'Respuesta de ejemplo', {});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
