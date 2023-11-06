@@ -3,20 +3,14 @@ const express = require('express');
 const router = express.Router();
 const trasladoController = require('../controllers/trasladoController');
 
-// Ruta POST para crear un nuevo traslado
-router.post('/traslados', trasladoController.createTraslado);
+const { verifyToken } = require('../utils/verifyToken');
+const formatResponse = require('../utils/formatResponse');
 
-// Ruta GET para obtener todos los traslados
-router.get('/traslados', trasladoController.getTraslados);
-
-// Ruta GET para obtener un traslado por su ID
-router.get('/traslados/:id', trasladoController.getTrasladoById);
-
-// Ruta PUT para actualizar un traslado por su ID
-router.put('/traslados/:id', trasladoController.updateTraslado);
-
-// Ruta DELETE para eliminar un traslado por su ID
-router.delete('/traslados/:id', trasladoController.deleteTraslado);
+router.post('/traslados', verifyToken, formatResponse, trasladoController.createTraslado);
+router.get('/traslados', verifyToken, formatResponse, trasladoController.getTraslados);
+router.get('/traslados/:id', verifyToken, formatResponse, trasladoController.getTrasladoById);
+router.put('/traslados/:id', verifyToken, formatResponse, trasladoController.updateTraslado);
+router.delete('/traslados/:id', verifyToken, formatResponse, trasladoController.deleteTraslado);
 
 module.exports = {
   trasladosRoutes: router,

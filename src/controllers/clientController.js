@@ -1,7 +1,9 @@
 /* eslint-disable no-await-in-loop */
 const Cliente = require('../models/clients');
 
-// Función para generar un código de cliente único de longitud "length"
+const generateUUID = require('../utils/generateUUID');
+const logAuditEvent = require('../utils/auditLogger');
+
 function generateUniqueCode(length) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let code = '';
@@ -16,17 +18,24 @@ function generateUniqueCode(length) {
 const createCliente = async (req, res) => {
   try {
     let { codigoCliente } = req.body;
+    // eslint-disable-next-line object-curly-newline
+    const { razonSocial, rfc, regimenFiscal, usoCFDI } = req.body;
+
     if (!codigoCliente) {
       do {
         codigoCliente = generateUniqueCode(10);
       } while (await Cliente.findOne({ codigoCliente }));
     }
 
-    const razonSocial = req.body.razonSocial ? req.body.razonSocial.toUpperCase() : '';
+    if (!razonSocial || !rfc || !regimenFiscal || !usoCFDI) {
+      res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
+      return;
+    }
+    const razonSocialUpper = req.body.razonSocial ? req.body.razonSocial.toUpperCase() : '';
 
     const cliente = new Cliente({
       codigoCliente,
-      razonSocial,
+      razonSocial: razonSocialUpper,
       rfc: req.body.rfc,
       metodoPago: req.body.metodoPago,
       formaPago: req.body.formaPago,
@@ -39,58 +48,92 @@ const createCliente = async (req, res) => {
       colonia: req.body.colonia,
     });
 
+    const existingClient = await Cliente.findOne({ rfc });
+    if (existingClient) {
+      res.formatResponse('ok', 204, 'El RFC ya esta registrado.', []);
+      return;
+    }
+
     const nuevoCliente = await cliente.save();
-    res.status(201).json(nuevoCliente);
+    res.formatResponse('ok', 200, 'Usuario registrado con éxito.', nuevoCliente);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    const errorDescription = error;
+    logAuditEvent(uuid, errorDescription);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      errorDescription,
+    );
   }
 };
 
 // Controlador para obtener todos los clientes
 const getClientes = async (req, res) => {
   try {
-    console.log('rq', req.params);
-
-    const clientes = await Cliente.find();
-    res.status(200).json(clientes);
+    const client = await Cliente.find().select('-__v');
+    if (client.length > 0) {
+      res.formatResponse('ok', 200, 'request success', client);
+    } else {
+      res.formatResponse('ok', 204, 'data not found', []);
+    }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    await logAuditEvent(uuid, error);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      [],
+    );
   }
 };
 
 // Controlador para obtener un cliente por su ID
 const getClienteById = async (req, res) => {
   try {
-    console.log('rw', req.params.id);
-
     const cliente = await Cliente.findById(req.params.id);
     if (!cliente) {
-      res.status(404).json({ message: 'Cliente no encontrado.' });
+      res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
+      return;
     }
-    res.status(200).json(cliente);
+    res.formatResponse('ok', 200, 'request success', cliente);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    await logAuditEvent(uuid, error);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      [],
+    );
   }
 };
 
 const getClienteLike = async (req, res) => {
   try {
-    console.log('rr', req.params);
+    const { razonSocialQuery } = req.params;
 
-    const { razonSocialQuery } = req.params; // Obtener la subcadena de los parámetros.
-    console.log(razonSocialQuery);
-
-    const clientes = await Cliente.find({
-      razonSocial: { $regex: new RegExp(razonSocialQuery, 'i') }, // 'i' indica insensible a mayúsculas/minúsculas.
+    const cliente = await Cliente.find({
+      razonSocial: { $regex: new RegExp(razonSocialQuery, 'i') },
     });
 
-    res.status(200).json(clientes);
+    if (cliente.length <= 0) {
+      res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
+      return;
+    }
+
+    res.formatResponse('ok', 200, 'request success', cliente);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    await logAuditEvent(uuid, error);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      [],
+    );
   }
 };
 
@@ -99,12 +142,19 @@ const updateCliente = async (req, res) => {
   try {
     const cliente = await Cliente.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!cliente) {
-      res.status(404).json({ message: 'Cliente no encontrado.' });
+      res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
+      return;
     }
-    res.status(200).json(cliente);
+    res.formatResponse('ok', 200, 'request success', cliente);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    await logAuditEvent(uuid, error);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      [],
+    );
   }
 };
 
@@ -113,12 +163,18 @@ const deleteCliente = async (req, res) => {
   try {
     const cliente = await Cliente.findByIdAndRemove(req.params.id);
     if (!cliente) {
-      res.status(404).json({ message: 'Cliente no encontrado.' });
+      res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
     }
-    res.status(204).send();
+    res.formatResponse('ok', 200, 'User Delete success', [{ deleteID: req.params.id }]);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    await logAuditEvent(uuid, error);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      [],
+    );
   }
 };
 

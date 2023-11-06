@@ -12,16 +12,19 @@ const clienteSchema = new mongoose.Schema({
   razonSocial: {
     type: String,
     required: true,
+    unique: true,
   },
   rfc: {
     type: String,
     required: true,
+    unique: true,
   },
   metodoPago: String,
   formaPago: String,
   regimenFiscal: {
     type: String,
     required: true,
+    unique: true,
   },
   usoCFDI: {
     type: String,
@@ -32,6 +35,7 @@ const clienteSchema = new mongoose.Schema({
   numeroExterior: String,
   numeroInterior: String,
   colonia: String,
+  documents: String,
 });
 
 // Crear un modelo basado en el esquema

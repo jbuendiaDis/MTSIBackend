@@ -1,20 +1,30 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
+const generateUUID = require('../utils/generateUUID');
+const logAuditEvent = require('../utils/auditLogger');
+
 // Crear un nuevo usuario
 async function createUser(req, res) {
   const { name, email, password } = req.body;
-
+  const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
   try {
     // Validar que los campos obligatorios estén presentes
     if (!name || !email || !password) {
-      res.status(400).json({ message: 'Faltan campos obligatorios.' });
+      res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
+      return;
+    }
+
+    if (!regex.test(password)) {
+      res.formatResponse('ok', 204, 'Minimo 8 caracteres una mayusacula y un caracter especial', []);
+      return;
     }
 
     // Verificar si ya existe un usuario con el mismo correo
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      res.status(400).json({ message: 'El correo ya está en uso.' });
+      res.formatResponse('ok', 204, 'El correo ya está en uso.', []);
+      return;
     }
 
     // Cifrar la contraseña antes de guardarla en la base de datos
@@ -30,36 +40,48 @@ async function createUser(req, res) {
     });
 
     // Guardar el usuario en la base de datos
-    await newUser.save();
-
-    res.status(201).json({ message: 'Usuario registrado con éxito.' });
+    const user = await newUser.save();
+    res.formatResponse('ok', 200, 'Usuario registrado con éxito.', user);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    const errorDescription = error;
+    logAuditEvent(uuid, errorDescription);
   }
 }
 
 // Obtener todos los usuarios
 async function getUsers(req, res) {
   try {
-    res.formatResponse(200, '200', 'Respuesta de ejemplo', {});
+    const users = await User.find().select('-password -__v');
+    if (users.length > 0) {
+      res.formatResponse('ok', 200, 'request success', users);
+    } else {
+      res.formatResponse('ok', 204, 'data not found', []);
+    }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    const uuid = generateUUID();
+    await logAuditEvent(uuid, error);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      [],
+    );
   }
 }
 
 // Obtener un usuario por su ID
 async function getUserById(req, res) {
-  const userId = req.params.id;
+  const { userId } = req.params;
   try {
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select('-password -__v');
     if (!user) {
-      res.status(404).json({ error: 'Usuario no encontrado' });
+      res.formatResponse('ok', 204, 'user not found', []);
       return;
     }
-    res.status(200).json(user);
+    res.formatResponse('ok', 200, 'request success', user);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.formatResponse('ok', 409, 'request decline', error);
   }
 }
 
@@ -69,7 +91,8 @@ async function updateUser(req, res) {
   try {
     const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
     if (!updatedUser) {
-      res.status(404).json({ error: 'Usuario no encontrado' });
+      res.formatResponse('ok', 204, 'user not found', []);
+
       return;
     }
     res.status(200).json(updatedUser);
@@ -80,14 +103,14 @@ async function updateUser(req, res) {
 
 // Eliminar un usuario por su ID
 async function deleteUser(req, res) {
-  const userId = req.params.id;
+  const { userId } = req.params;
   try {
     const deletedUser = await User.findByIdAndDelete(userId);
     if (!deletedUser) {
-      res.status(404).json({ error: 'Usuario no encontrado' });
+      res.formatResponse('ok', 204, 'user not found', []);
       return;
     }
-    res.status(204).send();
+    res.formatResponse('ok', 200, 'User Delete success', [{ deleteID: userId }]);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

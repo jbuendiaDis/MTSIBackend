@@ -4,9 +4,6 @@ const cheerio = require('cheerio');
 const ENDPOINT = 'http://aplicaciones4.sct.gob.mx/sibuac_internet/ControllerUI';
 
 async function obtenerRutas(data, params) {
-  const COMBUSTIBLE = 11.25;
-  const RENDIMIENTO = 14.0;
-
   const ciudadOrigen = params.ciudad_origen.padEnd(4, '0');
   const ciudadDestino = params.ciudad_destino.padEnd(4, '0');
 
@@ -24,8 +21,6 @@ async function obtenerRutas(data, params) {
     vehiculos: params.vehiculos || 2,
     calculaRendimiento: params.calcula_rendimiento === 'true' ? 'si' : null,
     tamanioVehiculo: params.tamanio_vehiculo || 2,
-    rendimiento: params.rendimiento || RENDIMIENTO,
-    combustible: params.combustible || COMBUSTIBLE,
   };
 
   try {
@@ -78,7 +73,6 @@ const params = {
   ciudad_origen: '1010',
   ciudad_destino: '19040',
   vehiculos: '10',
-  calcula_rendimiento: 'false',
   tamanio_vehiculo: '6',
   rendimiento: '12',
 };

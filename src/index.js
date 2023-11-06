@@ -12,6 +12,7 @@ const { trasladosRoutes } = require('./routes/trasladosRoutes');
 const { gastosRoutes } = require('./routes/gastosRoutes');
 const { peajesRoutes } = require('./routes/peajesRoutes');
 const { authRoutes } = require('./routes/authRoutes');
+const { quotesRoutes } = require('./routes/quotesRoutes');
 
 const connectToDatabase = require('./db');
 
@@ -34,6 +35,7 @@ app.use('/api', trasladosRoutes);
 app.use('/api', gastosRoutes);
 app.use('/api', peajesRoutes);
 app.use('/api', authRoutes);
+app.use('/api', quotesRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -25,7 +25,13 @@ async function login(req, res, next) {
   const token = jwt.sign(
     {
       exp: Math.floor(Date.now() / 1000) + 60 * 60,
-      data: user,
+      data: {
+        id: user._id,
+        name: user.name,
+        lastname: user.lastname,
+        position: user.position,
+        email: user.email,
+      },
     },
     process.env.TOKEN_SECRET,
   );
@@ -38,7 +44,15 @@ async function login(req, res, next) {
     },
     payload: {
       token,
-      user,
+      user: {
+        id: user._id,
+        name: user.name,
+        lastname: user.lastname,
+        position: user.position,
+        email: user.email,
+        age: user.age,
+        signature: user.signature,
+      },
     },
   });
 }

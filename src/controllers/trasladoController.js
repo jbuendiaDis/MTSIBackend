@@ -1,9 +1,16 @@
 const Traslado = require('../models/trasladoModel');
 
+const generateUUID = require('../utils/generateUUID');
+const logAuditEvent = require('../utils/auditLogger');
 // Controlador para crear un nuevo traslado
 const createTraslado = async (req, res) => {
   try {
     const { tipoTraslado, concepto, sueldo } = req.body;
+
+    if (!tipoTraslado || !concepto || !sueldo) {
+      res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
+      return;
+    }
 
     const traslado = new Traslado({
       tipoTraslado,
@@ -12,21 +19,39 @@ const createTraslado = async (req, res) => {
     });
 
     const nuevoTraslado = await traslado.save();
-    res.status(201).json(nuevoTraslado);
+    res.formatResponse('ok', 200, 'Usuario registrado con éxito.', nuevoTraslado);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    const errorDescription = error;
+    logAuditEvent(uuid, errorDescription);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      errorDescription,
+    );
   }
 };
 
 // Controlador para obtener todos los traslados
 const getTraslados = async (req, res) => {
   try {
-    const traslados = await Traslado.find();
-    res.status(200).json(traslados);
+    const traslado = await Traslado.find().select('-__v');
+    if (traslado.length > 0) {
+      res.formatResponse('ok', 200, 'request success', traslado);
+    } else {
+      res.formatResponse('ok', 204, 'data not found', []);
+    }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    await logAuditEvent(uuid, error);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      [],
+    );
   }
 };
 
@@ -35,12 +60,19 @@ const getTrasladoById = async (req, res) => {
   try {
     const traslado = await Traslado.findById(req.params.id);
     if (!traslado) {
-      res.status(404).json({ message: 'Traslado no encontrado.' });
+      res.formatResponse('ok', 204, 'data not found', []);
+      return;
     }
-    res.status(200).json(traslado);
+    res.formatResponse('ok', 200, 'request success', traslado);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    const uuid = generateUUID();
+    await logAuditEvent(uuid, error);
+    res.formatResponse(
+      'ok',
+      409,
+      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
+      [],
+    );
   }
 };
 
