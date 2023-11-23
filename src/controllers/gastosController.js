@@ -1,4 +1,5 @@
 const Gastos = require('../models/gastos');
+const Peajes = require('../models/peajes');
 
 // Controlador para crear un nuevo registro de gastos
 const createGastos = async (req, res) => {
@@ -40,19 +41,22 @@ const getGastosById = async (req, res) => {
 
 const getGastosConPeajes = async (req, res) => {
   try {
-    const gastosConPeajes = await Gastos.find()
-      .populate({
-        path: 'peajes', // Nombre del campo en minúsculas en el modelo Gastos
-        model: 'Peajes',
-        select: 'kms casetas puntos totalpeajes', // Nombres en minúsculas
-      })
-      .exec();
+    const gastos = await Gastos.find();
 
-    res.status(200).json(gastosConPeajes);
+    for (const gasto of gastos) {
+      const peajesRelacionados = await Peajes.find({ idgasto: gasto._id });
+      gasto.peajes = peajesRelacionados;
+    }
+
+    res.status(200).json(gastos);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error en el servidor.' });
   }
+};
+
+module.exports = {
+  getGastosConPeajes,
 };
 
 // Controlador para actualizar un registro de gastos por su ID

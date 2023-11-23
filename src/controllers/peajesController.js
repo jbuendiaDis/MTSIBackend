@@ -5,31 +5,47 @@ const Gastos = require('../models/gastos');
 // Controlador para crear un nuevo registro de peajes
 const createPeaje = async (req, res) => {
   try {
-    const peajeData = req.body;
+    const {
+      localidadOrigen,
+      localidadDestino,
+      kms,
+      tipoUnidad,
+      puntos,
+    } = req.body;
 
-    // Buscar el ID de "Gastos" en función de localidadOrigen y localidadDestino
     const gastosQuery = {
-      localidadOrigen: peajeData.localidadOrigen,
-      localidadDestino: peajeData.localidadDestino,
+      localidadOrigen,
+      localidadDestino,
     };
 
     const gastos = await Gastos.findOne(gastosQuery);
 
     if (!gastos) {
-      res.status(404).json({ message: 'Registro de gastos no encontrado para las localidades proporcionadas.' });
+      res.formatResponse('ok', 404, 'Registro de gastos no encontrado para las localidades proporcionadas.', []);
+      return;
     }
 
-    peajeData.idgasto = gastos._id; // Asignar el ID de "Gastos" a "idgasto" en "Peajes"
-    peajeData.totalPeajes = peajeData.puntos.reduce((total, punto) => total + punto.costo, 0);
+    const totalPeajes = puntos.reduce((total, punto) => total + punto.costo, 0);
 
-    const peaje = new Peajes(peajeData);
-    await peaje.save();
-    res.status(201).json(peaje);
+    const peajes = new Peajes({
+      idgasto: gastos._id,
+      localidadOrigen,
+      localidadDestino,
+      kms,
+      tipoUnidad,
+      puntos,
+      totalPeajes,
+    });
+
+ 
+    await peajes.save();
+    res.status(201).json(peajes);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error en el servidor.' });
   }
 };
+
 
 // Controlador para obtener todos los registros de peajes
 const getPeajes = async (req, res) => {

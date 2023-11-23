@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const gananciaSchema = new mongoose.Schema({
   desde: {
-    type: Date,
+    type: Number,
     required: true,
   },
   hasta: {
-    type: Date,
+    type: Number,
     required: true,
   },
   ganancia: {
@@ -15,11 +15,10 @@ const gananciaSchema = new mongoose.Schema({
   },
   fechaCreacion: {
     type: Date,
-    required: true,
+    default: Date.now, 
   },
-  fechaActualizacion: {
+  fechaActualizacion:{
     type: Date,
-    required: true,
   },
 });
 
