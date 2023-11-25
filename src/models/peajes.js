@@ -1,15 +1,23 @@
 const mongoose = require('mongoose');
 
-// Definir el esquema para una entidad de peajes
 const peajesSchema = new mongoose.Schema({
-  idgasto: { type: mongoose.Schema.Types.ObjectId, ref: 'Gastos' },
+  idgasto: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Gastos',
+  },
+  localidadOrigen: String,
+  localidadDestino: String,
   kms: Number,
-  casetas: {
+  tipoUnidad: {
     type: String,
-    enum: ['VIAPASS', 'EFEC'],
+    enum: ['Automovil', 'Otro'],
   },
   puntos: [
     {
+      casetas: {
+        type: String,
+        enum: ['VIAPASS', 'EFEC'],
+      },
       nombreCaseta: String,
       costo: Number,
     },
@@ -17,7 +25,6 @@ const peajesSchema = new mongoose.Schema({
   totalPeajes: Number,
 });
 
-// Crear un modelo basado en el esquema
 const Peajes = mongoose.model('Peajes', peajesSchema);
 
 module.exports = Peajes;
