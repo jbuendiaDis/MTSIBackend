@@ -1,6 +1,5 @@
 const ConfigureData = require('../models/configureData');
-const generateUUID = require('../utils/generateUUID');
-const logAuditEvent = require('../utils/auditLogger');
+const responseError = require('../functions/responseError');
 
 
 const createConfigureData = async (req, res) => {
@@ -31,15 +30,7 @@ const createConfigureData = async (req, res) => {
 
     res.formatResponse('ok', 200, 'ConfigureData registrada con éxito.', resultado);
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrió, por favor, reporta al área de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -65,14 +56,7 @@ const getActiveConfigureData = async (req, res) => {
       res.formatResponse('ok', 200, 'Consulta exitosa', activeConfigureData);
     }
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrió, por favor, reporta al área de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -87,14 +71,7 @@ const getConfigureDataById = async (req, res) => {
   
       res.formatResponse('ok', 200, 'Consulta exitosa', configureData);
     } catch (error) {
-      const uuid = generateUUID();
-      await logAuditEvent(uuid, error);
-      res.formatResponse(
-        'ok',
-        409,
-        `Algo ocurrió, por favor, reporta al área de sistemas con el siguiente folio ${uuid}`,
-        [],
-      );
+      await responseError(409,error,res);
     }
   };
   
@@ -130,15 +107,7 @@ const getConfigureDataById = async (req, res) => {
   
       res.formatResponse('ok', 200, 'ConfigureData actualizada con éxito.', configureDataActualizada);
     } catch (error) {
-      const uuid = generateUUID();
-      const errorDescription = error;
-      logAuditEvent(uuid, errorDescription);
-      res.formatResponse(
-        'ok',
-        409,
-        `Algo ocurrió, por favor, reporta al área de sistemas con el siguiente folio ${uuid}`,
-        errorDescription,
-      );
+      await responseError(409,error,res);
     }
   };
 
