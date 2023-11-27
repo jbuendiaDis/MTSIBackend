@@ -2,6 +2,7 @@ const ConfigureData = require('../models/configureData');
 const generateUUID = require('../utils/generateUUID');
 const logAuditEvent = require('../utils/auditLogger');
 
+
 const createConfigureData = async (req, res) => {
   try {
     const {
@@ -13,6 +14,10 @@ const createConfigureData = async (req, res) => {
       sucontrato,
     } = req.body;
 
+    // Desactivar todas las configuraciones existentes que estén activas
+    await ConfigureData.updateMany({ status: 'Activo' }, { $set: { status: 'Inactivo' } });
+
+    // Crear la nueva configuración
     const configureData = new ConfigureData({
       rendimiento,
       combustible,
