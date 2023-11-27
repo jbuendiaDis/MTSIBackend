@@ -10,9 +10,6 @@ router.get('/configureData/active', verifyToken, formatResponse, configureDataCo
 router.get('/configureData/:id', verifyToken, formatResponse, configureDataController.getConfigureDataById);
 router.put('/configureData/:id', verifyToken, formatResponse, configureDataController.updateConfigureData);
 
-
-// ... (otras rutas)
-
 module.exports = {
   configureDataRoutes: router,
 };

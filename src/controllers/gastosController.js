@@ -1,5 +1,6 @@
 const Gastos = require('../models/gastos');
 const Peajes = require('../models/peajes');
+const responseError = require('../functions/responseError');
 
 // Controlador para crear un nuevo registro de gastos
 const createGastos = async (req, res) => {
@@ -7,10 +8,9 @@ const createGastos = async (req, res) => {
     const gastosData = req.body;
     const gastos = new Gastos(gastosData);
     await gastos.save();
-    res.status(201).json(gastos);
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -18,10 +18,9 @@ const createGastos = async (req, res) => {
 const getGastos = async (req, res) => {
   try {
     const gastos = await Gastos.find();
-    res.status(200).json(gastos);
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -30,15 +29,15 @@ const getGastosById = async (req, res) => {
   try {
     const gastos = await Gastos.findById(req.params.id);
     if (!gastos) {
-      res.status(404).json({ message: 'Registro de gastos no encontrado.' });
+      await responseError(204,'Registro de gastos no encontrado.',res);
     }
-    res.status(200).json(gastos);
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
+// Controlador gastos con peages
 const getGastosConPeajes = async (req, res) => {
   try {
     const gastos = await Gastos.find();
@@ -48,15 +47,10 @@ const getGastosConPeajes = async (req, res) => {
       gasto.peajes = peajesRelacionados;
     }
 
-    res.status(200).json(gastos);
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
-};
-
-module.exports = {
-  getGastosConPeajes,
 };
 
 // Controlador para actualizar un registro de gastos por su ID
@@ -65,12 +59,11 @@ const updateGastos = async (req, res) => {
     const gastosData = req.body;
     const gastos = await Gastos.findByIdAndUpdate(req.params.id, gastosData, { new: true });
     if (!gastos) {
-      res.status(404).json({ message: 'Registro de gastos no encontrado.' });
+      await responseError(204,'Registro de gastos no encontrado.',res);
     }
-    res.status(200).json(gastos);
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -79,14 +72,14 @@ const deleteGastos = async (req, res) => {
   try {
     const gastos = await Gastos.findByIdAndRemove(req.params.id);
     if (!gastos) {
-      res.status(404).json({ message: 'Registro de gastos no encontrado.' });
+      await responseError(204,'Registro de gastos no encontrado.',res);
     }
-    res.status(204).send();
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
+
 
 module.exports = {
   createGastos,

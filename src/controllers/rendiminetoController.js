@@ -1,4 +1,7 @@
 const Rendimientos = require('../models/rednimiento');
+const generateUUID = require('../utils/generateUUID');
+const logAuditEvent = require('../utils/auditLogger');
+const responseError = require('../functions/responseError');
 
 const crearRendimiento = async (req, res) => {
   try {
@@ -6,8 +9,7 @@ const crearRendimiento = async (req, res) => {
     const rendimientoGuardado = await nuevoRendimiento.save();
     res.status(201).json(rendimientoGuardado);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al crear el rendimiento.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -15,10 +17,9 @@ const crearRendimiento = async (req, res) => {
 const obtenerRendimientos = async (req, res) => {
   try {
     const rendimientos = await Rendimientos.find();
-    res.status(200).json(rendimientos);
+    res.formatResponse('ok', 200, 'Consulta exitosa', rendimientos);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al obtener los rendimientos.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -30,10 +31,9 @@ const obtenerRendimientoPorId = async (req, res) => {
     if (!rendimiento) {
       res.status(404).json({ message: 'Rendimiento no encontrado.' });
     }
-    res.status(200).json(rendimiento);
+    res.formatResponse('ok', 200, 'Consulta exitosa', rendimiento);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al obtener el rendimiento.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -48,8 +48,7 @@ const actualizarRendimiento = async (req, res) => {
     }
     res.status(200).json(rendimientoActualizado);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al actualizar el rendimiento.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -63,8 +62,7 @@ const eliminarRendimiento = async (req, res) => {
     }
     res.status(204).send();
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al eliminar el rendimiento.' });
+    await responseError(409,error,res);
   }
 };
 

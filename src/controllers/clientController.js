@@ -111,6 +111,7 @@ const getClienteById = async (req, res) => {
   }
 };
 
+// Controlador para buscar cliente
 const getClienteLike = async (req, res) => {
   try {
     const { razonSocialQuery } = req.params;
