@@ -5,9 +5,11 @@ const router = express.Router({
 });
 
 const stateController = require('../controllers/stateController');
+const { verifyToken } = require('../utils/verifyToken');
+const formatResponse = require('../utils/formatResponse');
 
-router.get('/states', stateController.getStates);
-router.get('/countries', stateController.getCountry);
+router.get('/states', verifyToken, formatResponse, stateController.getStates);
+router.get('/countries', verifyToken, formatResponse, stateController.getCountry);
 
 module.exports = {
   tollsRoutes: router,

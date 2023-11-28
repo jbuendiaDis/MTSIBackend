@@ -29,7 +29,7 @@ const getGastosById = async (req, res) => {
   try {
     const gastos = await Gastos.findById(req.params.id);
     if (!gastos) {
-      await responseError(204,'Registro de gastos no encontrado.',res);
+      return await responseError(204,'Registro de gastos no encontrado.',res);
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
@@ -59,7 +59,7 @@ const updateGastos = async (req, res) => {
     const gastosData = req.body;
     const gastos = await Gastos.findByIdAndUpdate(req.params.id, gastosData, { new: true });
     if (!gastos) {
-      await responseError(204,'Registro de gastos no encontrado.',res);
+      return await responseError(204,'Registro de gastos no encontrado.',res);
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
@@ -72,7 +72,7 @@ const deleteGastos = async (req, res) => {
   try {
     const gastos = await Gastos.findByIdAndRemove(req.params.id);
     if (!gastos) {
-      await responseError(204,'Registro de gastos no encontrado.',res);
+      return await responseError(204,'Registro de gastos no encontrado.',res);
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {

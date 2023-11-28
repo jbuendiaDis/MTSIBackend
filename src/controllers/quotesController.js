@@ -4,6 +4,8 @@ const Quote = require('../models/quotes'); // Asegúrate de importar el modelo a
 const generateUUID = require('../utils/generateUUID');
 const logAuditEvent = require('../utils/auditLogger');
 const enviarCorreo = require('../functions/sendMail');
+const responseError = require('../functions/responseError');
+
 // Controlador para crear un nuevo traslado
 const createData = async (req, res) => {
   try {
@@ -19,18 +21,11 @@ const createData = async (req, res) => {
     const newQuote = await quote.save();
     res.formatResponse('ok', 200, 'Cotizacion registrada con éxito.', newQuote);
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 };
 
+//
 async function sendCotizacion(req, res) {
   try {
     const quotesData = await Quote.find();
@@ -38,15 +33,7 @@ async function sendCotizacion(req, res) {
     await enviarCorreo(quotesData);
     res.formatResponse('ok', 200, 'se evnio la contizacion', []);
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 }
 
@@ -56,15 +43,7 @@ async function getAllData(req, res) {
     const quotesData = await Quote.find();
     res.formatResponse('ok', 200, 'request Success', quotesData);
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 }
 
@@ -79,15 +58,7 @@ async function getDataById(req, res) {
       res.formatResponse('ok', 200, 'Registro recuperado exitosamente', data);
     }
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 }
 
@@ -102,15 +73,7 @@ async function updateData(req, res) {
       res.formatResponse('ok', 200, 'Registro actualizado exitosamente', updatedData);
     }
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 }
 
@@ -125,15 +88,7 @@ async function deleteData(req, res) {
       res.formatResponse('ok', 200, 'Registro eliminado exitosamente', []);
     }
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 }
 

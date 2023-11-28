@@ -1,17 +1,15 @@
 const express = require('express');
-
 const router = express.Router();
+
 const peajesController = require('../controllers/peajesController');
+const { verifyToken } = require('../utils/verifyToken');
+const formatResponse = require('../utils/formatResponse');
 
-router.post('/peajes', peajesController.createPeaje);
-
-router.get('/peajes', peajesController.getPeajes);
-
-router.get('/peajes/:id', peajesController.getPeajeById);
-
-router.put('/peajes/:id', peajesController.updatePeaje);
-
-router.delete('/peajes/:id', peajesController.deletePeaje);
+router.post('/peajes', verifyToken, formatResponse, peajesController.createPeaje);
+router.get('/peajes', verifyToken, formatResponse, peajesController.getPeajes);
+router.get('/peajes/:id', verifyToken, formatResponse, peajesController.getPeajeById);
+router.put('/peajes/:id', verifyToken, formatResponse, peajesController.updatePeaje);
+router.delete('/peajes/:id', verifyToken, formatResponse, peajesController.deletePeaje);
 
 module.exports = {
   peajesRoutes: router,

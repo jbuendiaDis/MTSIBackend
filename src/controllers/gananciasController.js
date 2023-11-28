@@ -12,25 +12,12 @@ const createGanancia = async (req, res) => {
       return;
     }
 
-    const nuevaGanancia = new Ganancia({
-      desde,
-      hasta,
-      ganancia,
-    });
-
+    const nuevaGanancia = new Ganancia({desde,hasta,ganancia,});
     const resultado = await nuevaGanancia.save();
 
     res.formatResponse('ok', 200, 'Ganancia registrada con éxito.', resultado);
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrió, por favor, reporta al área de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -43,14 +30,7 @@ const getGanancias = async (req, res) => {
       res.formatResponse('ok', 204, 'No se encontraron ganancias', []);
     }
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrió, por favor, reporta al área de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -81,15 +61,7 @@ const updateGanancia = async (req, res) => {
   
       res.formatResponse('ok', 200, 'Ganancia actualizada con éxito.', gananciaActualizada);
     } catch (error) {
-      const uuid = generateUUID();
-      const errorDescription = error;
-      logAuditEvent(uuid, errorDescription);
-      res.formatResponse(
-        'ok',
-        409,
-        `Algo ocurrió, por favor, reporta al área de sistemas con el siguiente folio ${uuid}`,
-        errorDescription,
-      );
+      await responseError(409,error,res);
     }
 };
 
@@ -104,14 +76,7 @@ const getGananciaById = async (req, res) => {
   
       res.formatResponse('ok', 200, 'Consulta exitosa', ganancia);
     } catch (error) {
-      const uuid = generateUUID();
-      await logAuditEvent(uuid, error);
-      res.formatResponse(
-        'ok',
-        409,
-        `Algo ocurrió, por favor, reporta al área de sistemas con el siguiente folio ${uuid}`,
-        [],
-      );
+      await responseError(409,error,res);
     }
   };
 
