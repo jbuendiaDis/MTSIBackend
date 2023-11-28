@@ -3,6 +3,7 @@ const Cliente = require('../models/clients');
 
 const generateUUID = require('../utils/generateUUID');
 const logAuditEvent = require('../utils/auditLogger');
+const responseError = require('../functions/responseError');
 
 function generateUniqueCode(length) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -79,14 +80,7 @@ const getClientes = async (req, res) => {
       res.formatResponse('ok', 204, 'data not found', []);
     }
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -100,14 +94,7 @@ const getClienteById = async (req, res) => {
     }
     res.formatResponse('ok', 200, 'request success', cliente);
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -127,16 +114,9 @@ const getClienteLike = async (req, res) => {
 
     res.formatResponse('ok', 200, 'request success', cliente);
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
-};
+}; 
 
 // Controlador para actualizar un cliente por su ID
 const updateCliente = async (req, res) => {
@@ -148,14 +128,7 @@ const updateCliente = async (req, res) => {
     }
     res.formatResponse('ok', 200, 'request success', cliente);
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -168,14 +141,7 @@ const deleteCliente = async (req, res) => {
     }
     res.formatResponse('ok', 200, 'User Delete success', [{ deleteID: req.params.id }]);
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
 };
 

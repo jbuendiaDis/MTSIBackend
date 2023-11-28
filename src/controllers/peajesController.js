@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const Peajes = require('../models/peajes');
 const Gastos = require('../models/gastos');
+const responseError = require('../functions/responseError');
 
 // Controlador para crear un nuevo registro de peajes
 const createPeaje = async (req, res) => {
@@ -21,7 +22,7 @@ const createPeaje = async (req, res) => {
     const gastos = await Gastos.findOne(gastosQuery);
 
     if (!gastos) {
-      res.formatResponse('ok', 404, 'Registro de gastos no encontrado para las localidades proporcionadas.', []);
+      await responseError(204,'Registro de gastos no encontrado para las localidades proporcionadas.',res);
       return;
     }
 
@@ -39,10 +40,9 @@ const createPeaje = async (req, res) => {
 
  
     await peajes.save();
-    res.status(201).json(peajes);
+    res.formatResponse('ok', 200, 'Gastos registrado con éxito.', peajes);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -51,10 +51,9 @@ const createPeaje = async (req, res) => {
 const getPeajes = async (req, res) => {
   try {
     const peajes = await Peajes.find();
-    res.status(200).json(peajes);
+    res.formatResponse('ok', 200, 'Consulta exitosa', peajes);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -63,12 +62,11 @@ const getPeajeById = async (req, res) => {
   try {
     const peaje = await Peajes.findById(req.params.id);
     if (!peaje) {
-      res.status(404).json({ message: 'Registro de peaje no encontrado.' });
+      await responseError(204,'Registro de peaje no encontrado.',res);
     }
-    res.status(200).json(peaje);
+    res.formatResponse('ok', 200, 'request success', peajes);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -78,12 +76,11 @@ const updatePeaje = async (req, res) => {
     const peajeData = req.body;
     const peaje = await Peajes.findByIdAndUpdate(req.params.id, peajeData, { new: true });
     if (!peaje) {
-      res.status(404).json({ message: 'Registro de peaje no encontrado.' });
+      await responseError(204,'Registro de peaje no encontrado.',res);
     }
-    res.status(200).json(peaje);
+    res.formatResponse('ok', 200, 'request success', peaje);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -92,12 +89,11 @@ const deletePeaje = async (req, res) => {
   try {
     const peaje = await Peajes.findByIdAndRemove(req.params.id);
     if (!peaje) {
-      res.status(404).json({ message: 'Registro de peaje no encontrado.' });
+      await responseError(204,'Registro de peaje no encontrado.',res);
     }
     res.status(204).send();
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 

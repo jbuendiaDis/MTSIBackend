@@ -1,14 +1,14 @@
 const Traslado = require('../models/trasladoModel');
+const responseError = require('../functions/responseError');
 
-const generateUUID = require('../utils/generateUUID');
-const logAuditEvent = require('../utils/auditLogger');
 // Controlador para crear un nuevo traslado
 const createTraslado = async (req, res) => {
   try {
     const { tipoTraslado, concepto, sueldo } = req.body;
 
     if (!tipoTraslado || !concepto || !sueldo) {
-      res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
+      //res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
+      await responseError(204,'Faltan campos obligatorios',res);
       return;
     }
 
@@ -19,18 +19,9 @@ const createTraslado = async (req, res) => {
     });
 
     const nuevoTraslado = await traslado.save();
-    res.formatResponse('ok', 200, 'Usuario registrado con éxito.', nuevoTraslado);
+    res.formatResponse('ok', 200, 'Traslado registrado con éxito.', nuevoTraslado);
   } catch (error) {
-    console.error(error);
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -41,17 +32,10 @@ const getTraslados = async (req, res) => {
     if (traslado.length > 0) {
       res.formatResponse('ok', 200, 'request success', traslado);
     } else {
-      res.formatResponse('ok', 204, 'data not found', []);
+      await responseError(204,'data not found',res);
     }
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -60,19 +44,12 @@ const getTrasladoById = async (req, res) => {
   try {
     const traslado = await Traslado.findById(req.params.id);
     if (!traslado) {
-      res.formatResponse('ok', 204, 'data not found', []);
+      await responseError(204,'data not found',res);
       return;
     }
     res.formatResponse('ok', 200, 'request success', traslado);
   } catch (error) {
-    const uuid = generateUUID();
-    await logAuditEvent(uuid, error);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      [],
-    );
+    await responseError(409,error,res);
   }
 };
 
@@ -88,12 +65,11 @@ const updateTraslado = async (req, res) => {
     );
 
     if (!traslado) {
-      res.status(404).json({ message: 'Traslado no encontrado.' });
+      return res.status(204).json({ message: 'Traslado no encontrado.' });
     }
-    res.status(200).json(traslado);
+    res.formatResponse('ok', 200, 'request success', traslado);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 
@@ -102,12 +78,12 @@ const deleteTraslado = async (req, res) => {
   try {
     const traslado = await Traslado.findByIdAndRemove(req.params.id);
     if (!traslado) {
-      res.status(404).json({ message: 'Traslado no encontrado.' });
+      res.status(204).json({ message: 'Traslado no encontrado.' });
     }
-    res.status(204).send();
+    //res.status(204).send();
+    res.formatResponse('ok', 200, 'Traslado eliminado', traslado);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 };
 

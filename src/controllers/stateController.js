@@ -1,18 +1,19 @@
 const State = require('../models/states');
 const Country = require('../models/country');
+const responseError = require('../functions/responseError');
 
 async function getStates(req, res) {
   try {
     const states = await State.find();
 
     if (!states || states.length === 0) {
-      res.status(404).json({ message: 'No se encontraron estados.' });
+      await responseError(204,'No se encontraron estados.',res);
     }
 
-    res.status(200).json(states);
+    //res.status(200).json(states);
+    res.formatResponse('ok', 200, 'Consulta exitosa', states);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 }
 
@@ -21,13 +22,13 @@ async function getCountry(req, res) {
     const states = await Country.find();
 
     if (!states || states.length === 0) {
-      res.status(404).json({ message: 'No se encontraron localidades.' });
+      await responseError(204,'No se encontraron localidades.',res);
     }
 
-    res.status(200).json(states);
+    //res.status(200).json(states);
+    res.formatResponse('ok', 200, 'Consulta exitosa', states);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error en el servidor.' });
+    await responseError(409,error,res);
   }
 }
 

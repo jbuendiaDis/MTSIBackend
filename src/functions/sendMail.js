@@ -17,7 +17,7 @@ async function enviarCorreo(quotesData) {
     const correoOptions = {
       from: 'juan.buendia@mtsisystem.com',
       /*       to: 'juan.carlos.buendia@outlook.com', */
-      to: 'erickbotello007@hotmail.com',
+      to: 'feber32@gmail.com',
       subject: `Cotización ${quotesData[0].cliente}`,
       html: tablaHTML,
     };
