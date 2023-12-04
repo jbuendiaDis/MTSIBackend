@@ -1,0 +1,32 @@
+{
+  "extends": "airbnb-base",
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "indent": ["error", 2],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "no-console": "off",
+
+    // Reglas específicas para Node.js
+    "global-require": "off", // Permite require en cualquier lugar del código
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+
+    // Reglas específicas para MongoDB
+    "no-unused-vars": ["error", { "vars": "local", "args": "none" }],
+
+    // Reglas específicas para Serverless
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": ["**/*.test.js"] }],
+    "func-names": "off" // Permite funciones anónimas
+
+  },
+"plugins": [
+    "node",
+    "import",
+    "security"
+    ] 
+}
