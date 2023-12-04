@@ -86,6 +86,7 @@ const updatePeaje = async (req, res) => {
 
 // Controlador para eliminar un registro de peaje por su ID
 const deletePeaje = async (req, res) => {
+  console.info("ID a borrar",req.params.id);
   try {
     //const peaje = await Peajes.findByIdAndRemove(req.params.id);
     const peaje = await Peajes.findByIdAndDelete(req.params.id);

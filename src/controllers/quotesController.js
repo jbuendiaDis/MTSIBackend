@@ -25,6 +25,25 @@ const createData = async (req, res) => {
   }
 };
 
+// Controlador para crear un nuevo traslado
+const cotizacion01 = async (req, res) => {
+  try {
+    const { origen, destino, tUnidad,tTraslado,tViaje } = req.body;
+
+    if (!origen || !destino || !tUnidad || !tTraslado || !tViaje) {
+      res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
+      return;
+    }
+
+    const quote = new Quote({ ...req.body });
+
+    const newQuote = await quote.save();
+    res.formatResponse('ok', 200, 'Cotizacion registrada con éxito.', newQuote);
+  } catch (error) {
+    await responseError(409,error,res);
+  }
+};
+
 //
 async function sendCotizacion(req, res) {
   try {

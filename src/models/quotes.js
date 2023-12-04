@@ -3,6 +3,12 @@ const mongoose = require('mongoose');
 const dataSchema = new mongoose.Schema({
   origen: { type: String },
   destino: { type: String },
+
+  origenId: { type: Number },
+  destinoId: { type: Number },
+  tipoUnidad: { type: Number },
+  tipoTraslado: { type: Number },
+  tipoViaje: { type: Number },
   kms: { type: Number },
   rend: { type: Number },
   lts: { type: Number },
@@ -34,6 +40,16 @@ const dataSchema = new mongoose.Schema({
   ganancia: { type: Number },
   costo: { type: Number },
   cliente: { type: String },
+
+  fechaCreacion: {
+    type: Date,
+    default: Date.now,
+  },
+  fechaActualizacion: {
+    type: Date,
+  },
+
+  
 });
 
 const Quote = mongoose.model('Quote', dataSchema);
