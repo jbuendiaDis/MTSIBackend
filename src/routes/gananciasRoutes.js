@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 
 const gananciasController = require('../controllers/gananciasController');
@@ -10,8 +9,6 @@ router.post('/ganancias', verifyToken, formatResponse, gananciasController.creat
 router.get('/ganancias', verifyToken, formatResponse, gananciasController.getGanancias);
 router.put('/ganancias/:id', verifyToken, formatResponse, gananciasController.updateGanancia);
 router.get('/ganancias/:id', verifyToken, formatResponse, gananciasController.getGananciaById);
-
-
 
 module.exports = {
   gananciasRoutes: router,

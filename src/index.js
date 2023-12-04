@@ -16,6 +16,10 @@ const { quotesRoutes } = require('./routes/quotesRoutes');
 const { userClientRoutes } = require('./routes/userClient');
 const { gananciasRoutes } = require('./routes/gananciasRoutes');
 const { configureDataRoutes } = require('./routes/configureDataRoutes');
+const { costoPeajeRoutes } = require('./routes/costoPeajeRoutes');
+const { quote01Routes } = require('./routes/quote01Routes');
+const { countryRoutes } = require('./routes/countryRoutes');
+
 
 const connectToDatabase = require('./db');
 
@@ -42,6 +46,9 @@ app.use('/api', quotesRoutes);
 app.use('/api', userClientRoutes);
 app.use('/api', gananciasRoutes);
 app.use('/api', configureDataRoutes);
+app.use('/api', costoPeajeRoutes);
+app.use('/api', quote01Routes);
+app.use('/api', countryRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

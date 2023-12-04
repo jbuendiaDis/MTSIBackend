@@ -58,15 +58,7 @@ const createCliente = async (req, res) => {
     const nuevoCliente = await cliente.save();
     res.formatResponse('ok', 200, 'Usuario registrado con éxito.', nuevoCliente);
   } catch (error) {
-    const uuid = generateUUID();
-    const errorDescription = error;
-    logAuditEvent(uuid, errorDescription);
-    res.formatResponse(
-      'ok',
-      409,
-      `Algo ocurrio favor de reportar al area de sistemas con el siguiente folio ${uuid}`,
-      errorDescription,
-    );
+    await responseError(409,error,res);
   }
 };
 

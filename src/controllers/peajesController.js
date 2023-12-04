@@ -64,7 +64,7 @@ const getPeajeById = async (req, res) => {
     if (!peaje) {
       await responseError(204,'Registro de peaje no encontrado.',res);
     }
-    res.formatResponse('ok', 200, 'request success', peajes);
+    res.formatResponse('ok', 200, 'request success', peaje);
   } catch (error) {
     await responseError(409,error,res);
   }
@@ -87,11 +87,13 @@ const updatePeaje = async (req, res) => {
 // Controlador para eliminar un registro de peaje por su ID
 const deletePeaje = async (req, res) => {
   try {
-    const peaje = await Peajes.findByIdAndRemove(req.params.id);
+    //const peaje = await Peajes.findByIdAndRemove(req.params.id);
+    const peaje = await Peajes.findByIdAndDelete(req.params.id);
     if (!peaje) {
-      await responseError(204,'Registro de peaje no encontrado.',res);
+      return res.formatResponse('ok', 204, 'Peaje no encontrado.', []);
     }
-    res.status(204).send();
+     
+    await res.formatResponse('ok', 200, 'Peaje eliminado con éxito.', peaje);
   } catch (error) {
     await responseError(409,error,res);
   }
