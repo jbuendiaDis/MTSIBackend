@@ -111,7 +111,7 @@ async function loginclient(req, res, next) {
     process.env.TOKEN_SECRET,
   );
 
-  res.status(200).json({
+  return res.status(200).json({
     response: {
       status: 'ok',
       code: 200,
