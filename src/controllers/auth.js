@@ -15,14 +15,14 @@ async function login(req, res, next) {
 
 
   if (!user) {
-    res.status(401).json({ message: 'Credenciales inválidas' });
+    return res.status(401).json({ message: 'Credenciales inválidas' });
   }
 
   // Verifica la contraseña
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    res.status(401).json({ message: 'Credenciales inválidas' });
+    return res.status(401).json({ message: 'Credenciales inválidas' });
   }
 
   // Genera un token JWT
@@ -40,7 +40,7 @@ async function login(req, res, next) {
     process.env.TOKEN_SECRET,
   );
 
-  res.status(200).send({
+  return res.status(200).send({
     response: {
       status: 'ok',
       code: 200,

@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
-const port = process.env.PORT || 3000;
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const { usersRoutes } = require('./routes/userRoutes');
 const { tollsRoutes } = require('./routes/tollsRoutes');
@@ -19,11 +19,12 @@ const { configureDataRoutes } = require('./routes/configureDataRoutes');
 const { costoPeajeRoutes } = require('./routes/costoPeajeRoutes');
 const { quote01Routes } = require('./routes/quote01Routes');
 const { countryRoutes } = require('./routes/countryRoutes');
-
+const { catalogRoutes } = require('./routes/catalogRoutes');
 
 const connectToDatabase = require('./db');
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -34,6 +35,22 @@ connectToDatabase();
 // Configura middlewares, enrutadores y rutas
 app.use(express.json());
 
+// Configuración Swagger
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'API Documentation',
+      version: '1.0.0',
+      description: 'Documentation for your API',
+    },
+  },
+  apis: ['controllers/configureDataController.js'],  // Ajusta esta ruta según la ubicación de tus archivos de documentación
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Rutas
 app.use('/api', usersRoutes);
 app.use('/api', clientRoutes);
 app.use('/api', tollsRoutes);
@@ -49,6 +66,7 @@ app.use('/api', configureDataRoutes);
 app.use('/api', costoPeajeRoutes);
 app.use('/api', quote01Routes);
 app.use('/api', countryRoutes);
+app.use('/api', catalogRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
