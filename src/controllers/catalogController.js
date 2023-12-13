@@ -43,10 +43,18 @@ const getAllCatalogs = async (req, res) => {
 
 const getCatalogById = async (req, res) => {
   try {
+
+    const parentId = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(parentId)) {
+    return res.formatResponse('error', 400, 'ID de Padre no válido.', []);
+    }
+
+     
     const catalog = await Catalog.findById(req.params.id);
 
     if (!catalog) {
-      res.formatResponse('ok', 204, 'Elemento de catálogo no encontrado.', []);
+      return res.formatResponse('ok', 204, 'Elemento de catálogo no encontrado.', []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', catalog);

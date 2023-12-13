@@ -36,6 +36,7 @@ const clienteSchema = new mongoose.Schema({
   numeroInterior: String,
   colonia: String,
   documents: String,
+  estadoId:Number
 });
 
 // Crear un modelo basado en el esquema

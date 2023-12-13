@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const Cliente = require('../models/clients');
+const Catalog = require('../models/catalog');
 
 const generateUUID = require('../utils/generateUUID');
 const logAuditEvent = require('../utils/auditLogger');
@@ -47,6 +48,7 @@ const createCliente = async (req, res) => {
       numeroExterior: req.body.numeroExterior,
       numeroInterior: req.body.numeroInterior,
       colonia: req.body.colonia,
+      estadoId: req.body.estadoId
     });
 
     const existingClient = await Cliente.findOne({ rfc });
@@ -65,14 +67,42 @@ const createCliente = async (req, res) => {
 // Controlador para obtener todos los clientes
 const getClientes = async (req, res) => {
   try {
-    const client = await Cliente.find().select('-__v');
-    if (client.length > 0) {
-      res.formatResponse('ok', 200, 'request success', client);
+    const clients = await Cliente.find().select('-__v');
+
+    if (clients.length > 0) {
+ 
+      // Mapear los clientes para agregar el campo 'estadonombre'
+    const clientsWithEstadoNombre = await Promise.all(clients.map(async (client) => {
+      const estadoNombre = await determinarEstadoNombre(client.estadoId);
+      return {
+        ...client._doc,
+        estado: estadoNombre,
+      };
+    }));
+
+      res.formatResponse('ok', 200, 'request success', clientsWithEstadoNombre);
     } else {
       res.formatResponse('ok', 204, 'data not found', []);
     }
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
+  }
+};
+
+const determinarEstadoNombre = async (estadoId) => {
+  try {
+    const catalogEntry = await Catalog.findOne({ codigo: estadoId, idPadre: '6579211bba59a5eee8b34567' });
+
+    console.log("catalogEntry:",catalogEntry);
+
+    if (catalogEntry) {
+      return catalogEntry.descripcion;
+    } else {
+        return '';
+    }
+  } catch (error) {
+    console.error('Error al consultar el catálogo:', error);
+    return '';
   }
 };
 
