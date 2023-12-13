@@ -14,17 +14,22 @@ const createPeaje = async (req, res) => {
       puntos,
     } = req.body;
 
+    // Buscar el registro de gastos para las localidades proporcionadas
     const gastosQuery = {
       localidadOrigen,
       localidadDestino,
     };
 
-    const gastos = await Gastos.findOne(gastosQuery);
+    let gastos = await Gastos.findOne(gastosQuery);
 
     if (!gastos) {
-      await responseError(204,'Registro de gastos no encontrado para las localidades proporcionadas.',res);
-      return;
+      gastos = new Gastos({
+        ...gastosQuery,
+        idCliente: req.user.data.id,
+      });
+      await gastos.save();
     }
+
 
     const totalPeajes = puntos.reduce((total, punto) => total + punto.costo, 0);
 
@@ -38,13 +43,13 @@ const createPeaje = async (req, res) => {
       totalPeajes,
     });
 
- 
     await peajes.save();
     res.formatResponse('ok', 200, 'Gastos registrado con éxito.', peajes);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
+
 
 
 // Controlador para obtener todos los registros de peajes

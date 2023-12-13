@@ -70,7 +70,7 @@ async function loginclient(req, res, next) {
   console.log("user:", user);
 
   if (!user) {
-    return res.status(401).json({ message: 'Credenciales inválidas' });
+    return res.status(401).json({ message: 'Credenciales inválidas.' });
   }
 
   const idCliente = user.idCliente.toString();
@@ -82,7 +82,7 @@ async function loginclient(req, res, next) {
   // Verifica si el cliente existe antes de acceder a sus propiedades
   if (!cliente) {
     console.log("El cliente no fue encontrado en la base de datos");
-    return res.status(401).json({ message: 'Credenciales inválidas' });
+    return res.status(401).json({ message: 'Credenciales inválidas..' });
   }
 
   console.log("codigoClienteDB:", cliente.codigoCliente);
@@ -90,11 +90,15 @@ async function loginclient(req, res, next) {
   // Verifica la contraseña
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
+  console.log("isPasswordValid->",isPasswordValid);
+  console.log("codigoCliente->",codigoCliente);
+  console.log("cliente.codigoCliente->",cliente.codigoCliente);
+
   if (!isPasswordValid || codigoCliente !== cliente.codigoCliente) {
-    return res.status(401).json({ message: 'Credenciales inválidas' });
+    return res.status(401).json({ message: 'Credenciales inválidas...' });
   }
 
-  console.log("Credenciales válidas");
+ 
 
   // Genera un token JWT
   const token = jwt.sign(
