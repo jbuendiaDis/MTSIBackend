@@ -106,10 +106,26 @@ const getAllChildrenByParentId = async (req, res) => {
     }
   };
 
+  const getAllParents = async (req, res) => {
+    try {
+      // Busca todos los catálogos que tienen idPadre como null
+      const parents = await Catalog.find({ idPadre: null });
+  
+      if (!parents || parents.length === 0) {
+        return res.formatResponse('ok', 204, 'No hay elementos padre en el catálogo.', []);
+      }
+  
+      res.formatResponse('ok', 200, 'Consulta exitosa', parents);
+    } catch (error) {
+      await responseError(409, error, res);
+    }
+  };
+
 module.exports = {
   createCatalog,
   getAllCatalogs,
   getCatalogById,
   updateCatalog,
   getAllChildrenByParentId,
+  getAllParents,
 };
