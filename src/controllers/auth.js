@@ -64,41 +64,25 @@ async function login(req, res, next) {
 async function loginclient(req, res, next) {
   const { email, password, codigoCliente } = req.body;
 
-  // Busca al usuario por su correo electrónico
   const user = await UserClient.findOne({ email });
-
-  console.log("user:", user);
 
   if (!user) {
     return res.status(401).json({ message: 'Credenciales inválidas.' });
   }
 
   const idCliente = user.idCliente.toString();
-  console.log("idCliente:", idCliente);
-
+ 
   const cliente = await Clientes.findOne({ _id: idCliente });
-  console.log("cliente:", cliente);
-
-  // Verifica si el cliente existe antes de acceder a sus propiedades
-  if (!cliente) {
-    console.log("El cliente no fue encontrado en la base de datos");
-    return res.status(401).json({ message: 'Credenciales inválidas..' });
+ 
+   if (!cliente) {
+     return res.status(401).json({ message: 'Credenciales inválidas..' });
   }
 
-  console.log("codigoClienteDB:", cliente.codigoCliente);
-
-  // Verifica la contraseña
   const isPasswordValid = await bcrypt.compare(password, user.password);
-
-  console.log("isPasswordValid->",isPasswordValid);
-  console.log("codigoCliente->",codigoCliente);
-  console.log("cliente.codigoCliente->",cliente.codigoCliente);
-
+ 
   if (!isPasswordValid || codigoCliente !== cliente.codigoCliente) {
     return res.status(401).json({ message: 'Credenciales inválidas...' });
   }
-
- 
 
   // Genera un token JWT
   const token = jwt.sign(
