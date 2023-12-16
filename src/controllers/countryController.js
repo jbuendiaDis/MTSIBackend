@@ -6,24 +6,37 @@ const responseError = require('../functions/responseError');
 
 const createCountry = async (req, res) => {
   try {
-    const { codigo } = req.body;
+    const { costo, estado, nombre, tipoUnidad } = req.body;
 
-    // Verificar si ya existe un documento con el mismo código
-    const existingCountry = await Country.findOne({ codigo });
+    const existingCountry = await Country.findOne({
+      costo,
+      estado,
+      nombre,
+      tipoUnidad,
+    });
 
     if (existingCountry) {
-      return res.formatResponse('error', 204, 'Ya existe una localidad con el mismo código.', []);
+      return res.formatResponse('error', 204, 'Ya existe un peaje con estos datos.', []);
     }
 
-    // Si no existe, crear y guardar el nuevo país
-    const newCountry = new Country(req.body);
+    const lastCountry = await Country.findOne().sort({ codigo: -1 });
+
+    const newCodigo = lastCountry ? lastCountry.codigo + 1 : 1;
+
+    const newCountry = new Country({
+      ...req.body,
+      codigo: newCodigo,
+    });
+
     const savedCountry = await newCountry.save();
 
-    res.formatResponse('ok', 200, 'Country registrado con éxito.', savedCountry);
+    res.formatResponse('ok', 200, 'Peaje registrado con éxito.', savedCountry);
   } catch (error) {
     await responseError(409, error, res);
   }
 };
+
+
 
 const getAllCountries = async (req, res) => {
   try {
@@ -120,9 +133,20 @@ const deleteCountryById = async (req, res) => {
 
 const savePointsAsCountries = async (req, res) => {
   try {
- 
+    const createCountryInternal = async (data, newCodigo) => {
+      // Crear el nuevo país con el nuevo código
+      const newCountry = new Country({
+        ...data,
+        codigo: newCodigo,
+      });
+
+      // Guardar el nuevo país en la base de datos
+      const savedCountry = await newCountry.save();
+
+      return savedCountry;
+    };
+
     const dataFilePath = path.join(__dirname, '../functions/data.json');
- 
     const rawData = await fs.readFile(dataFilePath, 'utf-8');
     const data = JSON.parse(rawData);
 
@@ -130,29 +154,39 @@ const savePointsAsCountries = async (req, res) => {
       return res.formatResponse('error', 400, 'La estructura de puntos no es válida.', []);
     }
 
-    const countriesToSave = [];
- 
+    const savedCountries = [];
+
     for (const codigo in data.puntos) {
       if (data.puntos.hasOwnProperty(codigo)) {
         const punto = data.puntos[codigo];
-  
-        countriesToSave.push({
+
+        // Obtener el último país ordenado por código de forma descendente
+        const lastCountry = await Country.findOne().sort({ codigo: -1 });
+
+        // Determinar el nuevo código sumando 1 al último código o asignar 1 si no hay países registrados
+        const newCodigo = lastCountry ? lastCountry.codigo + 1 : 1;
+
+        // Crear y guardar el país actual
+        const savedCountry = await createCountryInternal({
           codigo,
           estado: punto.estado,
           coordenadas: punto.coordenadas,
           nombre: punto.nombre,
           fechaCreacion: new Date(),
-        });
+        }, newCodigo);
+
+        savedCountries.push(savedCountry);
       }
     }
- 
-    const savedCountries = await Country.create(countriesToSave);
 
     res.formatResponse('ok', 200, 'Puntos guardados como localidades con éxito.', savedCountries);
   } catch (error) {
     await responseError(409, error, res);
   }
 };
+
+
+
 
 module.exports = {
   createCountry,

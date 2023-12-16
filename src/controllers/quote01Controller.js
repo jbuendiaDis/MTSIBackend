@@ -1,7 +1,7 @@
 const Quote = require('../models/quotes');
 const responseError = require('../functions/responseError');
 
-const createQuote01 = async (req, res) => {
+const createQuote01Old = async (req, res) => {
   try {
     const { origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje } = req.body;
 
@@ -26,6 +26,43 @@ const createQuote01 = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
+const createQuote01 = async (req, res) => {
+  try {
+    console.log("req.body->",req.body);
+    const { destinos } = req.body;
+
+    // Validar la existencia de destinos
+    if (!destinos || !Array.isArray(destinos) || destinos.length === 0) {
+      res.formatResponse('ok', 204, 'El campo "destinos" es obligatorio y debe ser un array no vacío.', []);
+      return;
+    }
+
+    const quotes = await Promise.all(destinos.map(async (destino) => {
+      const { origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje } = destino;
+
+      // Validar campos
+      if (!tipoUnidad || !tipoTraslado || !tipoViaje || !origenId || !destinoId) {
+        return res.formatResponse('ok', 204, 'Los campos "origenId", "destinoId", "tipoUnidad", "tipoTraslado" y "tipoViaje" son obligatorios.', []);
+      }
+
+      const quote = new Quote({
+        origenId,
+        destinoId,
+        tipoUnidad,
+        tipoTraslado,
+        tipoViaje
+      });
+
+      return quote.save();
+    }));
+
+    res.formatResponse('ok', 200, 'Quotes registrados con éxito.', quotes);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
 
 const getQuotes01 = async (req, res) => {
   try {

@@ -20,6 +20,7 @@ const { costoPeajeRoutes } = require('./routes/costoPeajeRoutes');
 const { quote01Routes } = require('./routes/quote01Routes');
 const { countryRoutes } = require('./routes/countryRoutes');
 const { catalogRoutes } = require('./routes/catalogRoutes');
+const { banderaRoutes } = require('./routes/banderaRoutes');
 
 const connectToDatabase = require('./db');
 
@@ -67,6 +68,7 @@ app.use('/api', costoPeajeRoutes);
 app.use('/api', quote01Routes);
 app.use('/api', countryRoutes);
 app.use('/api', catalogRoutes);
+app.use('/api', banderaRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

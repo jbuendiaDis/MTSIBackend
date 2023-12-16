@@ -67,10 +67,42 @@ const eliminarRendimiento = async (req, res) => {
   }
 };
 
+
+// Obtener marcas distintas
+const obtenerMarcasDistintas = async (req, res) => {
+  try {
+    const marcasDistintas = await Rendimientos.distinct('marca');
+    res.formatResponse('ok', 200, 'Marcas distintas obtenidas con éxito', marcasDistintas);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+// Controlador para obtener modelos por marca
+const obtenerModelosPorMarca = async (req, res) => {
+  try {
+    const { marca } = req.params;
+
+    // Validar si la marca es proporcionada
+    if (!marca) {
+      return res.formatResponse('error', 400, 'La marca es obligatoria.', []);
+    }
+
+    // Obtener modelos relacionados a la marca
+    const modelosPorMarca = await Rendimientos.find({ marca }).distinct('modelo');
+
+    res.formatResponse('ok', 200, 'Modelos obtenidos por marca con éxito.', modelosPorMarca);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
 module.exports = {
   crearRendimiento,
   obtenerRendimientos,
   obtenerRendimientoPorId,
   actualizarRendimiento,
   eliminarRendimiento,
+  obtenerMarcasDistintas,
+  obtenerModelosPorMarca
 };
