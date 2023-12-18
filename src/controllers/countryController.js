@@ -186,6 +186,27 @@ const savePointsAsCountries = async (req, res) => {
 };
 
 
+const getCountryByEstadoYTipoUnidad = async (req, res) => {
+  try {
+    const { estado, tipoUnidad } = req.params;
+
+    // Verificar si el estado y tipo de unidad son proporcionados
+    if (!estado || !tipoUnidad) {
+      return res.formatResponse('error', 204, 'Los parámetros estado y tipoUnidad son requeridos.', []);
+    }
+
+    const countries = await Country.find({ estado, tipoUnidad });
+
+    if (!countries || countries.length === 0) {
+      return res.formatResponse('ok', 204, `No hay localidades para el estado ${estado} y tipo de unidad ${tipoUnidad}.`, []);
+    }
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', countries);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
 
 
 module.exports = {
@@ -196,5 +217,6 @@ module.exports = {
   deleteCountryById,
   savePointsAsCountries,
   getCountryByEstado,
-  getCountryByNombre
+  getCountryByNombre,
+  getCountryByEstadoYTipoUnidad 
 };

@@ -19,6 +19,12 @@ router.delete('/countries/:id', verifyToken, formatResponse, countryController.d
 router.post('/countries/save-points', verifyToken, formatResponse, countryController.savePointsAsCountries);
 
 
+router.post('/countries/save-points', verifyToken, formatResponse, countryController.savePointsAsCountries);
+
+router.get('/countries/estado/:estado/tipoUnidad/:tipoUnidad',  verifyToken, formatResponse, countryController.getCountryByEstadoYTipoUnidad);
+
+
+
 
 module.exports = {
   countryRoutes: router,
