@@ -6,7 +6,7 @@ const { verifyToken } = require('../utils/verifyToken');
 const formatResponse = require('../utils/formatResponse');
 
 router.post('/countries', verifyToken, formatResponse, countryController.createCountry);
-router.get('/countries', verifyToken, formatResponse, countryController.getAllCountries);
+router.get('/countriesx', verifyToken, formatResponse, countryController.getAllCountries);
 router.get('/countries/:codigo', verifyToken, formatResponse, countryController.getCountryByCode);
 router.get('/countries/by-estado/:estado', verifyToken, formatResponse, countryController.getCountryByEstado);
 router.get('/countries/by-nombre/:nombre', verifyToken, formatResponse, countryController.getCountryByNombre);

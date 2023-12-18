@@ -3,6 +3,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const Country = require('../models/country');
 const responseError = require('../functions/responseError');
+const Catalog = require('../models/catalog');
 
 const createCountry = async (req, res) => {
   try {
@@ -37,11 +38,44 @@ const createCountry = async (req, res) => {
 };
 
 
-
-const getAllCountries = async (req, res) => {
+/*
+const getAllCountriesOld = async (req, res) => {
   try {
     const countries = await Country.find();
     res.formatResponse('ok', 200, 'Consulta exitosa', countries);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+*/
+
+const getAllCountries = async (req, res) => {
+  console.log("getAllCountries->",req);
+
+  try {
+    const countries = await Country.find();
+
+    // Obtener el nombre del estado para cada país
+    const countriesWithEstado = await Promise.all(
+      countries.map(async (country) => {
+        const estadoCatalogo = await Catalog.findOne({ codigo: country.estado, idPadre: '6579211bba59a5eee8b34567' });
+
+        console.log("estadoCatalogo->",estadoCatalogo);
+
+        // Si se encuentra el estado en el catálogo, agrega el nombre al país
+        if (estadoCatalogo) {
+          return {
+            ...country.toObject(),
+            estadoNombre: estadoCatalogo.descripcion,
+          };
+        } else {
+          // Si no se encuentra el estado, devuelve el país sin el nombre del estado
+          return country.toObject();
+        }
+      })
+    );
+
+    res.formatResponse('ok', 202, 'Consulta exitosa', countriesWithEstado);
   } catch (error) {
     await responseError(409, error, res);
   }
