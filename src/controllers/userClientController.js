@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const UserClient = require('../models/userClient');
- 
+
 const generateUUID = require('../utils/generateUUID');
 const logAuditEvent = require('../utils/auditLogger');
 const responseError = require('../functions/responseError');
@@ -12,10 +12,10 @@ const getAllUserClients = async (req, res) => {
     if (userClients.length > 0) {
       res.formatResponse('ok', 200, 'request success', userClients);
     } else {
-      return await responseError(204,'data not found',res);
+      return await responseError(204, 'data not found', res);
     }
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -25,11 +25,11 @@ const getUserClientById = async (req, res) => {
     console.log(req.params.id);
     const userClient = await UserClient.findById(req.params.id);
     if (!userClient) {
-      return await responseError(204,'data not found',res);
+      return await responseError(204, 'data not found', res);
     }
     res.formatResponse('ok', 200, 'request success', userClient);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -65,7 +65,7 @@ const createUserClient = async (req, res) => {
     const newUserClient = await userClient.save();
     res.formatResponse('ok', 200, 'request success', newUserClient);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -86,7 +86,7 @@ const updateUserClient = async (req, res) => {
 
     res.formatResponse('ok', 200, 'request success', updatedUserClient);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -101,7 +101,7 @@ const deleteUserClient = async (req, res) => {
     await UserClient.findByIdAndRemove(req.params.id);
     res.formatResponse('ok', 200, 'request success', []);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 

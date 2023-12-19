@@ -7,13 +7,12 @@ async function getStates(req, res) {
     const states = await State.find();
 
     if (!states || states.length === 0) {
-      await responseError(204,'No se encontraron estados.',res);
+      await responseError(204, 'No se encontraron estados.', res);
     }
 
-    //res.status(200).json(states);
     res.formatResponse('ok', 200, 'Consulta exitosa', states);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 }
 
@@ -22,13 +21,13 @@ async function getCountry(req, res) {
     const states = await Country.find();
 
     if (!states || states.length === 0) {
-      await responseError(204,'No se encontraron localidades.',res);
+      await responseError(204, 'No se encontraron localidades.', res);
     }
 
-    //res.status(200).json(states);
+    // res.status(200).json(states);
     res.formatResponse('ok', 200, 'Consulta exitosa', states);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 }
 

@@ -1,22 +1,25 @@
 const Quote = require('../models/quotes');
 const responseError = require('../functions/responseError');
 
-const createQuote01Old = async (req, res) => {
+/* const createQuote01Old = async (req, res) => {
   try {
-    const { origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje } = req.body;
+    const {
+      origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje,
+    } = req.body;
 
-    // Validar campos  
-    if (!tipoUnidad || !tipoTraslado || !tipoViaje || !origenId  || !destinoId) {
-      res.formatResponse('ok', 204, 'Campos origen,destino, tipoUnidad, tipoTraslado y tipoViaje son obligatorios.', []);
+    // Validar campos
+    if (!tipoUnidad || !tipoTraslado || !tipoViaje || !origenId || !destinoId) {
+      res.formatResponse('ok', 204, 'Campos origen,destino,
+       tipoUnidad, tipoTraslado y tipoViaje son obligatorios.', []);
       return;
     }
 
     const quote = new Quote({
-        origenId,
+      origenId,
       destinoId,
       tipoUnidad,
       tipoTraslado,
-      tipoViaje
+      tipoViaje,
     });
 
     const resultado = await quote.save();
@@ -25,11 +28,11 @@ const createQuote01Old = async (req, res) => {
   } catch (error) {
     await responseError(409, error, res);
   }
-};
+}; */
 
 const createQuote01 = async (req, res) => {
   try {
-    console.log("req.body->",req.body);
+    console.log('req.body->', req.body);
     const { destinos } = req.body;
 
     // Validar la existencia de destinos
@@ -39,7 +42,9 @@ const createQuote01 = async (req, res) => {
     }
 
     const quotes = await Promise.all(destinos.map(async (destino) => {
-      const { origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje } = destino;
+      const {
+        origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje,
+      } = destino;
 
       // Validar campos
       if (!tipoUnidad || !tipoTraslado || !tipoViaje || !origenId || !destinoId) {
@@ -51,7 +56,7 @@ const createQuote01 = async (req, res) => {
         destinoId,
         tipoUnidad,
         tipoTraslado,
-        tipoViaje
+        tipoViaje,
       });
 
       return quote.save();
@@ -62,7 +67,6 @@ const createQuote01 = async (req, res) => {
     await responseError(409, error, res);
   }
 };
-
 
 const getQuotes01 = async (req, res) => {
   try {
@@ -78,27 +82,27 @@ const getQuotes01 = async (req, res) => {
 };
 
 const getQuote01ById = async (req, res) => {
-    try {
-      const quote = await Quote.findById(req.params.id);
-  
-      // Verificar si el registro ha sido modificado (tiene fecha de actualización)
-      if (!quote.fechaActualizacion) {
-        //TODO: Asignar valores consultados en cada elemento si el registro es nuevo
-        quote.origen = 'Ejemplo Origen';
-        quote.destino = 'Ejemplo Destino';
-        quote.kms = 1000;
-        quote.rend = 100;
-        quote.lts = 10000;
-        quote.tipoUnidad = 222;
-        quote.tipoTraslado = 333;
-        quote.tipoViaje = 444;
-      }
-  
-      res.formatResponse('ok', 200, 'Consulta exitosa', quote);
-    } catch (error) {
-      await responseError(409, error, res);
+  try {
+    const quote = await Quote.findById(req.params.id);
+
+    // Verificar si el registro ha sido modificado (tiene fecha de actualización)
+    if (!quote.fechaActualizacion) {
+      // TODO: Asignar valores consultados en cada elemento si el registro es nuevo
+      quote.origen = 'Ejemplo Origen';
+      quote.destino = 'Ejemplo Destino';
+      quote.kms = 1000;
+      quote.rend = 100;
+      quote.lts = 10000;
+      quote.tipoUnidad = 222;
+      quote.tipoTraslado = 333;
+      quote.tipoViaje = 444;
     }
-  };
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', quote);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
 
 const updateQuote01 = async (req, res) => {
   try {
@@ -107,10 +111,10 @@ const updateQuote01 = async (req, res) => {
       req.params.id,
       req.body,
       {
-         
+
         fechaActualizacion: new Date(),
       },
-      { new: true }
+      { new: true },
     );
 
     if (!quoteActualizado) {

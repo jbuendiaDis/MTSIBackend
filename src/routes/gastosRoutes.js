@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const gastosController = require('../controllers/gastosController');

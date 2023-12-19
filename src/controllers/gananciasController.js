@@ -12,12 +12,12 @@ const createGanancia = async (req, res) => {
       return;
     }
 
-    const nuevaGanancia = new Ganancia({desde,hasta,ganancia,});
+    const nuevaGanancia = new Ganancia({ desde, hasta, ganancia });
     const resultado = await nuevaGanancia.save();
 
     res.formatResponse('ok', 200, 'Ganancia registrada con éxito.', resultado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -30,55 +30,55 @@ const getGanancias = async (req, res) => {
       res.formatResponse('ok', 204, 'No se encontraron ganancias', []);
     }
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
 const updateGanancia = async (req, res) => {
-    try {
-      const { desde, hasta, ganancia } = req.body;
-  
-      if (!desde || !hasta || !ganancia) {
-        res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
-        return;
-      }
-  
-      const gananciaActualizada = await Ganancia.findByIdAndUpdate(
-        req.params.id,
-        {
-          desde,
-          hasta,
-          ganancia,
-          fechaActualizacion: new Date(),
-        },
-        { new: true }
-      );
-  
-      if (!gananciaActualizada) {
-        res.formatResponse('ok', 204, 'Ganancia no encontrada.', []);
-        return;
-      }
-  
-      res.formatResponse('ok', 200, 'Ganancia actualizada con éxito.', gananciaActualizada);
-    } catch (error) {
-      await responseError(409,error,res);
+  try {
+    const { desde, hasta, ganancia } = req.body;
+
+    if (!desde || !hasta || !ganancia) {
+      res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
+      return;
     }
+
+    const gananciaActualizada = await Ganancia.findByIdAndUpdate(
+      req.params.id,
+      {
+        desde,
+        hasta,
+        ganancia,
+        fechaActualizacion: new Date(),
+      },
+      { new: true },
+    );
+
+    if (!gananciaActualizada) {
+      res.formatResponse('ok', 204, 'Ganancia no encontrada.', []);
+      return;
+    }
+
+    res.formatResponse('ok', 200, 'Ganancia actualizada con éxito.', gananciaActualizada);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
 };
 
 const getGananciaById = async (req, res) => {
-    try {
-      const ganancia = await Ganancia.findById(req.params.id);
-  
-      if (!ganancia) {
-        res.formatResponse('ok', 204, 'Ganancia no encontrada.', []);
-        return;
-      }
-  
-      res.formatResponse('ok', 200, 'Consulta exitosa', ganancia);
-    } catch (error) {
-      await responseError(409,error,res);
+  try {
+    const ganancia = await Ganancia.findById(req.params.id);
+
+    if (!ganancia) {
+      res.formatResponse('ok', 204, 'Ganancia no encontrada.', []);
+      return;
     }
-  };
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', ganancia);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
 
 module.exports = {
   createGanancia,

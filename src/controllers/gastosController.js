@@ -10,7 +10,7 @@ const createGastos = async (req, res) => {
     await gastos.save();
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -20,7 +20,7 @@ const getGastos = async (req, res) => {
     const gastos = await Gastos.find();
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -29,11 +29,11 @@ const getGastosById = async (req, res) => {
   try {
     const gastos = await Gastos.findById(req.params.id);
     if (!gastos) {
-      return await responseError(204,'Registro de gastos no encontrado.',res);
+      await responseError(204, 'Registro de gastos no encontrado.', res);
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -49,7 +49,7 @@ const getGastosConPeajes = async (req, res) => {
 
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -59,11 +59,11 @@ const updateGastos = async (req, res) => {
     const gastosData = req.body;
     const gastos = await Gastos.findByIdAndUpdate(req.params.id, gastosData, { new: true });
     if (!gastos) {
-      return await responseError(204,'Registro de gastos no encontrado.',res);
+      return await responseError(204, 'Registro de gastos no encontrado.', res);
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -72,14 +72,13 @@ const deleteGastos = async (req, res) => {
   try {
     const gastos = await Gastos.findByIdAndRemove(req.params.id);
     if (!gastos) {
-      return await responseError(204,'Registro de gastos no encontrado.',res);
+      return await responseError(204, 'Registro de gastos no encontrado.', res);
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
-
 
 module.exports = {
   createGastos,

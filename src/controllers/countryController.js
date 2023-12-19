@@ -8,7 +8,9 @@ const Country = require('../models/country');
 
 const createCountry = async (req, res) => {
   try {
-    const { costo, estado, nombre, tipoUnidad } = req.body;
+    const {
+      costo, estado, nombre, tipoUnidad,
+    } = req.body;
 
     const existingCountry = await Country.findOne({
       costo,
@@ -18,7 +20,7 @@ const createCountry = async (req, res) => {
     });
 
     if (existingCountry) {
-      return res.formatResponse('error', 204, 'Ya existe un peaje con estos datos.', []);
+      res.formatResponse('error', 204, 'Ya existe un peaje con estos datos.', []);
     }
 
     const lastCountry = await Country.findOne().sort({ codigo: -1 });
@@ -38,9 +40,7 @@ const createCountry = async (req, res) => {
   }
 };
 
-
 const getAllCountries = async (req, res) => {
-
   try {
     const countries = await Country.find();
 
@@ -48,17 +48,16 @@ const getAllCountries = async (req, res) => {
       countries.map(async (country) => {
         const estadoNombre = await getStateName(country.estado);
 
-        console.log("estadoNombre->",estadoNombre);
+        console.log('estadoNombre->', estadoNombre);
 
         if (estadoNombre) {
           return {
             ...country.toObject(),
             estadoNombre,
           };
-        } else {
-          return country.toObject();
         }
-      })
+        return country.toObject();
+      }),
     );
 
     res.formatResponse('ok', 202, 'Consulta exitosa', countriesWithEstado);
@@ -68,13 +67,13 @@ const getAllCountries = async (req, res) => {
 };
 
 const getCountryByCode = async (req, res) => {
-  const codigo = req.params.codigo;
+  const { codigo } = req.params;
 
   try {
     const country = await Country.findOne({ codigo });
 
     if (!country) {
-      return res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      res.formatResponse('ok', 204, 'Country no encontrado.', []);
     }
 
     const estadoNombre = await getStateName(country.estado);
@@ -91,13 +90,13 @@ const getCountryByCode = async (req, res) => {
 };
 
 const getCountryByEstado = async (req, res) => {
-  const estado = parseInt(req.params.estado);
+  const estado = parseInt(req.params.estado, 10);
 
   try {
     const countries = await Country.find({ estado });
 
     if (!countries || countries.length === 0) {
-      return res.formatResponse('ok', 204, `No hay localidades para el estado ${estado}.`, []);
+      res.formatResponse('ok', 204, `No hay localidades para el estado ${estado}.`, []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', countries);
@@ -107,13 +106,13 @@ const getCountryByEstado = async (req, res) => {
 };
 
 const getCountryByNombre = async (req, res) => {
-  const nombre = req.params.nombre;
+  const { nombre } = req.params;
 
   try {
     const countries = await Country.find({ nombre: { $regex: nombre, $options: 'i' } });
 
     if (!countries || countries.length === 0) {
-      return res.formatResponse('ok', 204, `No hay países con nombre similar a "${nombre}".`, []);
+      res.formatResponse('ok', 204, `No hay países con nombre similar a "${nombre}".`, []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', countries);
@@ -129,11 +128,11 @@ const updateCountryByCode = async (req, res) => {
     const updatedCountry = await Country.findOneAndUpdate(
       { codigo },
       { ...req.body, fechaActualizacion: new Date() },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedCountry) {
-      return res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      res.formatResponse('ok', 204, 'Country no encontrado.', []);
     }
 
     res.formatResponse('ok', 200, 'Country actualizado con éxito.', updatedCountry);
@@ -149,7 +148,7 @@ const deleteCountryById = async (req, res) => {
     const deletedCountry = await Country.findByIdAndDelete(id);
 
     if (!deletedCountry) {
-      return res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      res.formatResponse('ok', 204, 'Country no encontrado.', []);
     }
 
     res.formatResponse('ok', 200, 'Country eliminado con éxito.', deletedCountry);
@@ -178,40 +177,33 @@ const savePointsAsCountries = async (req, res) => {
     const data = JSON.parse(rawData);
 
     if (!data || !data.puntos || typeof data.puntos !== 'object') {
-      return res.formatResponse('error', 400, 'La estructura de puntos no es válida.', []);
+      res.formatResponse('error', 400, 'La estructura de puntos no es válida.', []);
     }
 
     const savedCountries = [];
 
-    for (const codigo in data.puntos) {
-      if (data.puntos.hasOwnProperty(codigo)) {
-        const punto = data.puntos[codigo];
+    Object.keys(data.puntos).forEach(async (codigo) => {
+      const punto = data.puntos[codigo];
 
-        // Obtener el último país ordenado por código de forma descendente
-        const lastCountry = await Country.findOne().sort({ codigo: -1 });
+      const lastCountry = await Country.findOne().sort({ codigo: -1 });
 
-        // Determinar el nuevo código sumando 1 al último código o asignar 1 si no hay países registrados
-        const newCodigo = lastCountry ? lastCountry.codigo + 1 : 1;
+      const newCodigo = lastCountry ? lastCountry.codigo + 1 : 1;
 
-        // Crear y guardar el país actual
-        const savedCountry = await createCountryInternal({
-          codigo,
-          estado: punto.estado,
-          coordenadas: punto.coordenadas,
-          nombre: punto.nombre,
-          fechaCreacion: new Date(),
-        }, newCodigo);
+      const savedCountry = await createCountryInternal({
+        codigo,
+        estado: punto.estado,
+        coordenadas: punto.coordenadas,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, newCodigo);
 
-        savedCountries.push(savedCountry);
-      }
-    }
-
+      savedCountries.push(savedCountry);
+    });
     res.formatResponse('ok', 200, 'Puntos guardados como localidades con éxito.', savedCountries);
   } catch (error) {
     await responseError(409, error, res);
   }
 };
-
 
 const getCountryByEstadoYTipoUnidad = async (req, res) => {
   try {
@@ -219,13 +211,13 @@ const getCountryByEstadoYTipoUnidad = async (req, res) => {
 
     // Verificar si el estado y tipo de unidad son proporcionados
     if (!estado || !tipoUnidad) {
-      return res.formatResponse('error', 204, 'Los parámetros estado y tipoUnidad son requeridos.', []);
+      res.formatResponse('error', 204, 'Los parámetros estado y tipoUnidad son requeridos.', []);
     }
 
     const countries = await Country.find({ estado, tipoUnidad });
 
     if (!countries || countries.length === 0) {
-      return res.formatResponse('ok', 204, `No hay localidades para el estado ${estado} y tipo de unidad ${tipoUnidad}.`, []);
+      res.formatResponse('ok', 204, `No hay localidades para el estado ${estado} y tipo de unidad ${tipoUnidad}.`, []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', countries);
@@ -233,8 +225,6 @@ const getCountryByEstadoYTipoUnidad = async (req, res) => {
     await responseError(409, error, res);
   }
 };
-
-
 
 module.exports = {
   createCountry,
@@ -245,5 +235,5 @@ module.exports = {
   savePointsAsCountries,
   getCountryByEstado,
   getCountryByNombre,
-  getCountryByEstadoYTipoUnidad 
+  getCountryByEstadoYTipoUnidad,
 };

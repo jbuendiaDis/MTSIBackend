@@ -4,8 +4,6 @@ const Gastos = require('../models/gastos');
 const responseError = require('../functions/responseError');
 const getDestinationName = require('../functions/getDestinationName');
 
-
-// Controlador para crear un nuevo registro de peajes
 const createPeaje = async (req, res) => {
   try {
     const {
@@ -32,7 +30,6 @@ const createPeaje = async (req, res) => {
       await gastos.save();
     }
 
-
     const totalPeajes = puntos.reduce((total, punto) => total + punto.costo, 0);
 
     const peajes = new Peajes({
@@ -52,7 +49,6 @@ const createPeaje = async (req, res) => {
   }
 };
 
-
 const getPeajes = async (req, res) => {
   try {
     const peajes = await Peajes.find();
@@ -68,7 +64,7 @@ const getPeajes = async (req, res) => {
           nombreOrigen,
           nombreDestino,
         };
-      })
+      }),
     );
 
     res.formatResponse('ok', 200, 'Consulta exitosa', peajesWithDestinationNames);
@@ -82,11 +78,11 @@ const getPeajeById = async (req, res) => {
   try {
     const peaje = await Peajes.findById(req.params.id);
     if (!peaje) {
-      await responseError(204,'Registro de peaje no encontrado.',res);
+      await responseError(204, 'Registro de peaje no encontrado.', res);
     }
     res.formatResponse('ok', 200, 'request success', peaje);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -96,27 +92,27 @@ const updatePeaje = async (req, res) => {
     const peajeData = req.body;
     const peaje = await Peajes.findByIdAndUpdate(req.params.id, peajeData, { new: true });
     if (!peaje) {
-      await responseError(204,'Registro de peaje no encontrado.',res);
+      await responseError(204, 'Registro de peaje no encontrado.', res);
     }
     res.formatResponse('ok', 200, 'request success', peaje);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
 // Controlador para eliminar un registro de peaje por su ID
 const deletePeaje = async (req, res) => {
-  console.info("ID a borrar",req.params.id);
+  console.info('ID a borrar', req.params.id);
   try {
-    //const peaje = await Peajes.findByIdAndRemove(req.params.id);
+    // const peaje = await Peajes.findByIdAndRemove(req.params.id);
     const peaje = await Peajes.findByIdAndDelete(req.params.id);
     if (!peaje) {
-      return res.formatResponse('ok', 204, 'Peaje no encontrado.', []);
+      res.formatResponse('ok', 204, 'Peaje no encontrado.', []);
     }
-     
+
     await res.formatResponse('ok', 200, 'Peaje eliminado con éxito.', peaje);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 

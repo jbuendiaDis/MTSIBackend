@@ -3,14 +3,14 @@ const generateUUID = require('../utils/generateUUID');
 const logAuditEvent = require('../utils/auditLogger');
 const responseError = require('../functions/responseError');
 
-//crear rendimiento 
+// crear rendimiento
 const crearRendimiento = async (req, res) => {
   try {
     const nuevoRendimiento = new Rendimientos(req.body);
     const rendimientoGuardado = await nuevoRendimiento.save();
     res.formatResponse('ok', 200, 'Rendimiento registrado con éxito.', rendimientoGuardado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -20,7 +20,7 @@ const obtenerRendimientos = async (req, res) => {
     const rendimientos = await Rendimientos.find();
     res.formatResponse('ok', 200, 'Consulta exitosa', rendimientos);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -30,11 +30,11 @@ const obtenerRendimientoPorId = async (req, res) => {
   try {
     const rendimiento = await Rendimientos.findById(rendimientoId);
     if (!rendimiento) {
-      return await responseError(204,'Rendimiento no encontrado.',res);
+      await responseError(204, 'Rendimiento no encontrado.', res);
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', rendimiento);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -45,11 +45,11 @@ const actualizarRendimiento = async (req, res) => {
     const rendimientoActualizado = await
     Rendimientos.findByIdAndUpdate(rendimientoId, req.body, { new: true });
     if (!rendimientoActualizado) {
-      return await responseError(204,'Rendimiento no encontrado.',res);
+      return await responseError(204, 'Rendimiento no encontrado.', res);
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', rendimientoActualizado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -59,14 +59,13 @@ const eliminarRendimiento = async (req, res) => {
   try {
     const rendimientoEliminado = await Rendimientos.findByIdAndRemove(rendimientoId);
     if (!rendimientoEliminado) {
-      return await responseError(204,'Rendimiento no encontrado.',res);
+      return await responseError(204, 'Rendimiento no encontrado.', res);
     }
     res.formatResponse('ok', 200, 'Rendimiento Delete success', [{ deleteID: req.params.id }]);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
-
 
 // Obtener marcas distintas
 const obtenerMarcasDistintas = async (req, res) => {
@@ -104,5 +103,5 @@ module.exports = {
   actualizarRendimiento,
   eliminarRendimiento,
   obtenerMarcasDistintas,
-  obtenerModelosPorMarca
+  obtenerModelosPorMarca,
 };

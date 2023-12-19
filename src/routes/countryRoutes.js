@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const countryController = require('../controllers/countryController');
@@ -12,17 +13,11 @@ router.get('/countries/all', verifyToken, formatResponse, countryController.getA
 router.get('/countries/by-codigo/:codigo', verifyToken, formatResponse, countryController.getCountryByCode);
 router.get('/countries/by-estado/:estado', verifyToken, formatResponse, countryController.getCountryByEstado);
 router.get('/countries/by-nombre/:nombre', verifyToken, formatResponse, countryController.getCountryByNombre);
-router.get('/countries/estado/:estado/tipoUnidad/:tipoUnidad',  verifyToken, formatResponse, countryController.getCountryByEstadoYTipoUnidad);
-
+router.get('/countries/estado/:estado/tipoUnidad/:tipoUnidad', verifyToken, formatResponse, countryController.getCountryByEstadoYTipoUnidad);
 
 router.put('/countries/:codigo', verifyToken, formatResponse, countryController.updateCountryByCode);
 
-router.delete('/countries/:id', verifyToken, formatResponse, countryController.deleteCountryById);   
-
-
-
-
-
+router.delete('/countries/:id', verifyToken, formatResponse, countryController.deleteCountryById);
 
 module.exports = {
   countryRoutes: router,

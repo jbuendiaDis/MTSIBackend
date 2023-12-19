@@ -16,7 +16,7 @@ const createCostoPeaje = async (req, res) => {
 
     res.formatResponse('ok', 200, 'CostoPeaje registrado con éxito.', resultado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -29,7 +29,7 @@ const getCostoPeajes = async (req, res) => {
       res.formatResponse('ok', 204, 'No se encontraron datos', []);
     }
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -42,7 +42,7 @@ const getCostoPeajeById = async (req, res) => {
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', costoPeaje);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -58,7 +58,7 @@ const updateCostoPeaje = async (req, res) => {
         monto,
         fechaActualizacion: new Date(),
       },
-      { new: true }
+      { new: true },
     );
 
     if (!costoPeajeActualizado) {
@@ -68,7 +68,7 @@ const updateCostoPeaje = async (req, res) => {
 
     res.formatResponse('ok', 200, 'CostoPeaje actualizado con éxito.', costoPeajeActualizado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -80,7 +80,7 @@ const deleteCostoPeaje = async (req, res) => {
     }
     res.formatResponse('ok', 200, 'CostoPeaje eliminado con éxito', [{ deleteID: req.params.id }]);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 

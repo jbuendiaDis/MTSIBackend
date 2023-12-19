@@ -6,13 +6,11 @@ const User = require('../models/User');
 const UserClient = require('../models/userClient');
 const Clientes = require('../models/clients');
 
-
 async function login(req, res, next) {
   const { email, password } = req.body;
 
   // Busca al usuario por su correo electrónico
   const user = await User.findOne({ email });
-
 
   if (!user) {
     return res.status(401).json({ message: 'Credenciales inválidas' });
@@ -71,15 +69,15 @@ async function loginclient(req, res, next) {
   }
 
   const idCliente = user.idCliente.toString();
- 
+
   const cliente = await Clientes.findOne({ _id: idCliente });
- 
-   if (!cliente) {
-     return res.status(401).json({ message: 'Credenciales inválidas..' });
+
+  if (!cliente) {
+    return res.status(401).json({ message: 'Credenciales inválidas..' });
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
- 
+
   if (!isPasswordValid || codigoCliente !== cliente.codigoCliente) {
     return res.status(401).json({ message: 'Credenciales inválidas...' });
   }
@@ -120,8 +118,7 @@ async function loginclient(req, res, next) {
   });
 }
 
-
 module.exports = {
   login,
-  loginclient
+  loginclient,
 };

@@ -7,8 +7,8 @@ const createTraslado = async (req, res) => {
     const { tipoTraslado, concepto, sueldo } = req.body;
 
     if (!tipoTraslado || !concepto || !sueldo) {
-      //res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
-      await responseError(204,'Faltan campos obligatorios',res);
+      // res.formatResponse('ok', 204, 'Faltan campos obligatorios', []);
+      await responseError(204, 'Faltan campos obligatorios', res);
       return;
     }
 
@@ -21,7 +21,7 @@ const createTraslado = async (req, res) => {
     const nuevoTraslado = await traslado.save();
     res.formatResponse('ok', 200, 'Traslado registrado con éxito.', nuevoTraslado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -32,10 +32,10 @@ const getTraslados = async (req, res) => {
     if (traslado.length > 0) {
       res.formatResponse('ok', 200, 'request success', traslado);
     } else {
-      await responseError(204,'data not found',res);
+      await responseError(204, 'data not found', res);
     }
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -44,12 +44,12 @@ const getTrasladoById = async (req, res) => {
   try {
     const traslado = await Traslado.findById(req.params.id);
     if (!traslado) {
-      await responseError(204,'data not found',res);
+      await responseError(204, 'data not found', res);
       return;
     }
     res.formatResponse('ok', 200, 'request success', traslado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -65,11 +65,11 @@ const updateTraslado = async (req, res) => {
     );
 
     if (!traslado) {
-      return res.status(204).json({ message: 'Traslado no encontrado.' });
+      res.status(204).json({ message: 'Traslado no encontrado.' });
     }
     res.formatResponse('ok', 200, 'request success', traslado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 
@@ -80,10 +80,10 @@ const deleteTraslado = async (req, res) => {
     if (!traslado) {
       res.status(204).json({ message: 'Traslado no encontrado.' });
     }
-    //res.status(204).send();
+    // res.status(204).send();
     res.formatResponse('ok', 200, 'Traslado eliminado', traslado);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 

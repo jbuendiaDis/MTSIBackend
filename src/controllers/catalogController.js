@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Catalog = require('../models/catalog');
 const responseError = require('../functions/responseError');
 
@@ -43,18 +44,16 @@ const getAllCatalogs = async (req, res) => {
 
 const getCatalogById = async (req, res) => {
   try {
-
     const parentId = req.params.id;
 
     if (!mongoose.Types.ObjectId.isValid(parentId)) {
-    return res.formatResponse('error', 400, 'ID de Padre no válido.', []);
+      res.formatResponse('error', 400, 'ID de Padre no válido.', []);
     }
 
-     
     const catalog = await Catalog.findById(req.params.id);
 
     if (!catalog) {
-      return res.formatResponse('ok', 204, 'Elemento de catálogo no encontrado.', []);
+      res.formatResponse('ok', 204, 'Elemento de catálogo no encontrado.', []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', catalog);
@@ -113,20 +112,20 @@ const getAllChildrenByParentId = async (req, res) => {
   }
 };
 
-  const getAllParents = async (req, res) => {
-    try {
-      // Busca todos los catálogos que tienen idPadre como null
-      const parents = await Catalog.find({ idPadre: null });
-  
-      if (!parents || parents.length === 0) {
-        return res.formatResponse('ok', 204, 'No hay elementos padre en el catálogo.', []);
-      }
-  
-      res.formatResponse('ok', 200, 'Consulta exitosa', parents);
-    } catch (error) {
-      await responseError(409, error, res);
+const getAllParents = async (req, res) => {
+  try {
+    // Busca todos los catálogos que tienen idPadre como null
+    const parents = await Catalog.find({ idPadre: null });
+
+    if (!parents || parents.length === 0) {
+      res.formatResponse('ok', 204, 'No hay elementos padre en el catálogo.', []);
     }
-  };
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', parents);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
 
 module.exports = {
   createCatalog,

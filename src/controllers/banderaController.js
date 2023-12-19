@@ -3,14 +3,14 @@ const responseError = require('../functions/responseError');
 
 const createBandera = async (req, res) => {
   try {
-    console.log("req.body:",req.body)
+    console.log('req.body:', req.body);
     const { nombre, descripcion, valor } = req.body;
 
     // Verificar si ya existe una bandera con el mismo nombre
     const existingBandera = await Bandera.findOne({ nombre });
 
     if (existingBandera) {
-      return res.formatResponse('error', 409, 'Ya existe una bandera con el mismo nombre.', []);
+      res.formatResponse('error', 409, 'Ya existe una bandera con el mismo nombre.', []);
     }
 
     // Crear y guardar la nueva bandera
@@ -33,7 +33,7 @@ const getAllBanderas = async (req, res) => {
     const banderas = await Bandera.find();
 
     if (!banderas || banderas.length === 0) {
-      return res.formatResponse('ok', 204, 'No hay banderas registradas.', []);
+      res.formatResponse('ok', 204, 'No hay banderas registradas.', []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', banderas);
@@ -47,7 +47,7 @@ const getBanderaById = async (req, res) => {
     const bandera = await Bandera.findById(req.params.id);
 
     if (!bandera) {
-      return res.formatResponse('ok', 204, 'Bandera no encontrada.', []);
+      res.formatResponse('ok', 204, 'Bandera no encontrada.', []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', bandera);
@@ -67,11 +67,11 @@ const updateBandera = async (req, res) => {
         descripcion,
         valor,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedBandera) {
-      return res.formatResponse('ok', 204, 'Bandera no encontrada.', []);
+      res.formatResponse('ok', 204, 'Bandera no encontrada.', []);
     }
 
     res.formatResponse('ok', 200, 'Bandera actualizada con éxito.', updatedBandera);
@@ -85,7 +85,7 @@ const deleteBandera = async (req, res) => {
     const deletedBandera = await Bandera.findByIdAndDelete(req.params.id);
 
     if (!deletedBandera) {
-      return res.formatResponse('ok', 204, 'Bandera no encontrada.', []);
+      res.formatResponse('ok', 204, 'Bandera no encontrada.', []);
     }
 
     res.formatResponse('ok', 200, 'Bandera eliminada con éxito.', deletedBandera);
