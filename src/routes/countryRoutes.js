@@ -5,23 +5,21 @@ const countryController = require('../controllers/countryController');
 const { verifyToken } = require('../utils/verifyToken');
 const formatResponse = require('../utils/formatResponse');
 
-router.post('/countries', verifyToken, formatResponse, countryController.createCountry);
-router.get('/countriesx', verifyToken, formatResponse, countryController.getAllCountries);
-router.get('/countries/:codigo', verifyToken, formatResponse, countryController.getCountryByCode);
+router.post('/countrie', verifyToken, formatResponse, countryController.createCountry);
+router.post('/countries/save-points', verifyToken, formatResponse, countryController.savePointsAsCountries);
+
+router.get('/countries/all', verifyToken, formatResponse, countryController.getAllCountries);
+router.get('/countries/by-codigo/:codigo', verifyToken, formatResponse, countryController.getCountryByCode);
 router.get('/countries/by-estado/:estado', verifyToken, formatResponse, countryController.getCountryByEstado);
 router.get('/countries/by-nombre/:nombre', verifyToken, formatResponse, countryController.getCountryByNombre);
-
+router.get('/countries/estado/:estado/tipoUnidad/:tipoUnidad',  verifyToken, formatResponse, countryController.getCountryByEstadoYTipoUnidad);
 
 
 router.put('/countries/:codigo', verifyToken, formatResponse, countryController.updateCountryByCode);
-router.delete('/countries/:id', verifyToken, formatResponse, countryController.deleteCountryById);  // Agregado para eliminar por ID
 
-router.post('/countries/save-points', verifyToken, formatResponse, countryController.savePointsAsCountries);
+router.delete('/countries/:id', verifyToken, formatResponse, countryController.deleteCountryById);   
 
 
-router.post('/countries/save-points', verifyToken, formatResponse, countryController.savePointsAsCountries);
-
-router.get('/countries/estado/:estado/tipoUnidad/:tipoUnidad',  verifyToken, formatResponse, countryController.getCountryByEstadoYTipoUnidad);
 
 
 

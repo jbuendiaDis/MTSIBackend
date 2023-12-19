@@ -2,6 +2,8 @@
 const Peajes = require('../models/peajes');
 const Gastos = require('../models/gastos');
 const responseError = require('../functions/responseError');
+const getDestinationName = require('../functions/getDestinationName');
+
 
 // Controlador para crear un nuevo registro de peajes
 const createPeaje = async (req, res) => {
@@ -51,14 +53,27 @@ const createPeaje = async (req, res) => {
 };
 
 
-
-// Controlador para obtener todos los registros de peajes
 const getPeajes = async (req, res) => {
   try {
     const peajes = await Peajes.find();
-    res.formatResponse('ok', 200, 'Consulta exitosa', peajes);
+
+    // Agrega los nombres de origen y destino al resultado
+    const peajesWithDestinationNames = await Promise.all(
+      peajes.map(async (peaje) => {
+        const nombreOrigen = await getDestinationName(peaje.localidadOrigen);
+        const nombreDestino = await getDestinationName(peaje.localidadDestino);
+
+        return {
+          ...peaje.toObject(),
+          nombreOrigen,
+          nombreDestino,
+        };
+      })
+    );
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', peajesWithDestinationNames);
   } catch (error) {
-    await responseError(409,error,res);
+    await responseError(409, error, res);
   }
 };
 

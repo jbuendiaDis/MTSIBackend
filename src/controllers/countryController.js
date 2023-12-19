@@ -1,9 +1,10 @@
-// controllers/countryController.js
 const fs = require('fs/promises');
 const path = require('path');
-const Country = require('../models/country');
+
 const responseError = require('../functions/responseError');
-const Catalog = require('../models/catalog');
+const getStateName = require('../functions/getStateName');
+
+const Country = require('../models/country');
 
 const createCountry = async (req, res) => {
   try {
@@ -38,38 +39,23 @@ const createCountry = async (req, res) => {
 };
 
 
-/*
-const getAllCountriesOld = async (req, res) => {
-  try {
-    const countries = await Country.find();
-    res.formatResponse('ok', 200, 'Consulta exitosa', countries);
-  } catch (error) {
-    await responseError(409, error, res);
-  }
-};
-*/
-
 const getAllCountries = async (req, res) => {
-  console.log("getAllCountries->",req);
 
   try {
     const countries = await Country.find();
 
-    // Obtener el nombre del estado para cada país
     const countriesWithEstado = await Promise.all(
       countries.map(async (country) => {
-        const estadoCatalogo = await Catalog.findOne({ codigo: country.estado, idPadre: '6579211bba59a5eee8b34567' });
+        const estadoNombre = await getStateName(country.estado);
 
-        console.log("estadoCatalogo->",estadoCatalogo);
+        console.log("estadoNombre->",estadoNombre);
 
-        // Si se encuentra el estado en el catálogo, agrega el nombre al país
-        if (estadoCatalogo) {
+        if (estadoNombre) {
           return {
             ...country.toObject(),
-            estadoNombre: estadoCatalogo.descripcion,
+            estadoNombre,
           };
         } else {
-          // Si no se encuentra el estado, devuelve el país sin el nombre del estado
           return country.toObject();
         }
       })
@@ -82,16 +68,23 @@ const getAllCountries = async (req, res) => {
 };
 
 const getCountryByCode = async (req, res) => {
-  console.info("getCountryByCode",req.params);
-  const codigo= req.params.codigo;
+  const codigo = req.params.codigo;
+
   try {
-    const country = await Country.findOne({ codigo: codigo });
+    const country = await Country.findOne({ codigo });
 
     if (!country) {
       return res.formatResponse('ok', 204, 'Country no encontrado.', []);
     }
 
-    res.formatResponse('ok', 200, 'Consulta exitosa', country);
+    const estadoNombre = await getStateName(country.estado);
+
+    const countryWithEstado = {
+      ...country.toObject(),
+      estadoNombre,
+    };
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', countryWithEstado);
   } catch (error) {
     await responseError(409, error, res);
   }
