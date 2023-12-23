@@ -10,6 +10,7 @@ router.post('/countrie', verifyToken, formatResponse, countryController.createCo
 router.post('/countries/save-points', verifyToken, formatResponse, countryController.savePointsAsCountries);
 
 router.get('/countries/all', verifyToken, formatResponse, countryController.getAllCountries);
+router.get('/countries/by-id/:id', verifyToken, formatResponse, countryController.getCountryById);
 router.get('/countries/by-codigo/:codigo', verifyToken, formatResponse, countryController.getCountryByCode);
 router.get('/countries/by-estado/:estado', verifyToken, formatResponse, countryController.getCountryByEstado);
 router.get('/countries/by-nombre/:nombre', verifyToken, formatResponse, countryController.getCountryByNombre);

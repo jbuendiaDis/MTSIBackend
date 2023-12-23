@@ -89,6 +89,30 @@ const getCountryByCode = async (req, res) => {
   }
 };
 
+const getCountryById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const country = await Country.findById(id);
+
+    if (!country) {
+      res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      return;
+    }
+
+    const estadoNombre = await getStateName(country.estado);
+
+    const countryWithEstado = {
+      ...country.toObject(),
+      estadoNombre,
+    };
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', countryWithEstado);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
 const getCountryByEstado = async (req, res) => {
   const estado = parseInt(req.params.estado, 10);
 
@@ -229,6 +253,7 @@ const getCountryByEstadoYTipoUnidad = async (req, res) => {
 module.exports = {
   createCountry,
   getAllCountries,
+  getCountryById,
   updateCountryByCode,
   getCountryByCode,
   deleteCountryById,
