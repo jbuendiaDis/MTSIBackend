@@ -121,13 +121,25 @@ const getCountryByEstado = async (req, res) => {
 
     if (!countries || countries.length === 0) {
       res.formatResponse('ok', 204, `No hay localidades para el estado ${estado}.`, []);
+      return;
     }
 
-    res.formatResponse('ok', 200, 'Consulta exitosa', countries);
+    // Mapear cada país y agregar el nombre del estado
+    const countriesWithEstado = await Promise.all(countries.map(async (country) => {
+      const estadoNombre = await getStateName(country.estado);
+
+      return {
+        ...country.toObject(),
+        estadoNombre,
+      };
+    }));
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', countriesWithEstado);
   } catch (error) {
     await responseError(409, error, res);
   }
 };
+
 
 const getCountryByNombre = async (req, res) => {
   const { nombre } = req.params;
