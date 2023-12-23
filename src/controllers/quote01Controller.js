@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Quote = require('../models/quotes');
 const responseError = require('../functions/responseError');
 
@@ -30,7 +31,7 @@ const responseError = require('../functions/responseError');
   }
 }; */
 
-const createQuote01 = async (req, res) => {
+const createQuote011 = async (req, res) => {
   try {
     console.log('req.body->', req.body);
     const { destinos } = req.body;
@@ -68,6 +69,50 @@ const createQuote01 = async (req, res) => {
   }
 };
 
+const createQuote01 = async (req, res) => {
+  try {
+    const { destinos } = req.body;
+
+    // Validar la existencia de destinos
+    if (!destinos || !Array.isArray(destinos) || destinos.length === 0) {
+      res.formatResponse('ok', 204, 'El campo "destinos" es obligatorio y debe ser un array no vacío.', []);
+      return;
+    }
+
+    const quotes = await Promise.all(destinos.map(async (destino) => {
+      const { origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus } = destino;
+
+      // Obtener el último folio registrado
+      const lastQuote = await Quote.findOne().sort({ folio: -1 });
+
+      // Calcular el nuevo folio
+      const newFolio = lastQuote && !isNaN(lastQuote.folio) ? lastQuote.folio + 1 : 1;
+
+      // Crear la instancia de Quote con userId
+      const quote = new Quote({
+        origenId,
+        destinoId,
+        tipoUnidad,
+        tipoTraslado,
+        tipoViaje,
+        estatus,
+        folio: newFolio,
+        userId: req.user.data.id, // Agregado el campo userId
+      });
+
+      // Guardar el nuevo registro
+      return quote.save();
+    }));
+
+    res.formatResponse('ok', 200, 'Quotes registrados con éxito.', quotes);
+
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+
+ 
 const getQuotes01 = async (req, res) => {
   try {
     const quotes = await Quote.find().select('origenId destinoId tipoUnidad tipoTraslado tipoViaje _id');
@@ -140,10 +185,37 @@ const deleteQuote01 = async (req, res) => {
   }
 };
 
+
+const cancelQuote = async (req, res) => {
+  try {
+    const { folio } = req.params;
+
+    // Buscar todas las cotizaciones con el folio proporcionado
+    const quotes = await Quote.find({ folio });
+
+    // Verificar si se encontraron cotizaciones
+    if (!quotes || quotes.length === 0) {
+      res.formatResponse('fail', 404, 'No se encontraron cotizaciones con el folio proporcionado.', []);
+      return;
+    }
+
+    // Actualizar el estatus de todas las cotizaciones encontradas a 'Cancelada'
+    await Quote.updateMany({ folio }, { estatus: 'Cancelada' });
+
+    res.formatResponse('ok', 200, `Cotizaciones con folio ${folio} canceladas con éxito.`, []);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+
+
+
 module.exports = {
   createQuote01,
   getQuotes01,
   getQuote01ById,
   updateQuote01,
   deleteQuote01,
+  cancelQuote
 };

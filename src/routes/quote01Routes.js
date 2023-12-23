@@ -13,6 +13,9 @@ router.get('/quotes01/:id', verifyToken, formatResponse, quote01Controller.getQu
 router.put('/quotes01/:id', verifyToken, formatResponse, quote01Controller.updateQuote01);
 router.delete('/quotes01/:id', verifyToken, formatResponse, quote01Controller.deleteQuote01);
 
+router.put('/quotes01/cancel/:folio', verifyToken,formatResponse, quote01Controller.cancelQuote);
+
+
 module.exports = {
   quote01Routes: router,
 };

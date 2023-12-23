@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const Catalog = require('../models/catalog');
+const User = require('../models/User');
+
 
 const dataSchema = new mongoose.Schema({
   origen: { type: String },
@@ -48,6 +51,40 @@ const dataSchema = new mongoose.Schema({
   fechaActualizacion: {
     type: Date,
   },
+
+  estatus: {
+    type: String,
+    required: true,
+    default:'Pendiente',
+    validate: {
+      validator: async function (value) {
+        try {
+          // Validar que el valor de tipoUnidad coincide con el catálogo padre con ID 65827bdb73bd91d97dbe222b
+          const catalogEntry = await Catalog.findOne({ descripcion: value, idPadre: '65827bdb73bd91d97dbe222b' });
+
+          if (!catalogEntry) {
+            throw new Error(`El valor de \'estatus\' "${value}" no coincide con el catálogo padre con ID '65827bdb73bd91d97dbe222b'.`);
+          }
+
+          return true;
+        } catch (error) {
+          return false;
+        }
+      },
+      message: 'El valor de \'estatus\' no es válido, no coincide con el catálogo padre con ID  65827bdb73bd91d97dbe222b' ,
+    },
+  },
+   
+  folio: { type: Number, required: true },
+
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',  
+    required: true,
+  },
+  
+  
+  
 
   
 });
