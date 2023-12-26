@@ -177,6 +177,31 @@ const updateCountryByCode = async (req, res) => {
   }
 };
 
+
+const updateCountryById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedCountry = await Country.findByIdAndUpdate(
+      id,
+      { ...req.body, fechaActualizacion: new Date() },
+      { new: true },
+    );
+
+    if (!updatedCountry) {
+      res.formatResponse('ok', 204, 'Country no encontrado.', []);
+    }
+
+    res.formatResponse('ok', 200, 'Country actualizado con éxito.', updatedCountry);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+
+
+
+
 const deleteCountryById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -276,4 +301,5 @@ module.exports = {
   getCountryByEstado,
   getCountryByNombre,
   getCountryByEstadoYTipoUnidad,
+  updateCountryById,
 };

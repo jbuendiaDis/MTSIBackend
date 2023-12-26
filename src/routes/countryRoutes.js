@@ -16,7 +16,10 @@ router.get('/countries/by-estado/:estado', verifyToken, formatResponse, countryC
 router.get('/countries/by-nombre/:nombre', verifyToken, formatResponse, countryController.getCountryByNombre);
 router.get('/countries/estado/:estado/tipoUnidad/:tipoUnidad', verifyToken, formatResponse, countryController.getCountryByEstadoYTipoUnidad);
 
-router.put('/countries/:codigo', verifyToken, formatResponse, countryController.updateCountryByCode);
+//router.put('/countries/:codigo', verifyToken, formatResponse, countryController.updateCountryByCode);
+router.put('/countries/:id', verifyToken, formatResponse, countryController.updateCountryById);
+
+
 
 router.delete('/countries/:id', verifyToken, formatResponse, countryController.deleteCountryById);
 
