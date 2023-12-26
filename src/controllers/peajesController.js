@@ -3,6 +3,7 @@ const Peajes = require('../models/peajes');
 const Gastos = require('../models/gastos');
 const responseError = require('../functions/responseError');
 const getDestinationName = require('../functions/getDestinationName');
+const getDestinationIdEstado = require('../functions/getDestinationIdEstado');
 
 const createPeaje = async (req, res) => {
   try {
@@ -59,10 +60,17 @@ const getPeajes = async (req, res) => {
         const nombreOrigen = await getDestinationName(peaje.localidadOrigen);
         const nombreDestino = await getDestinationName(peaje.localidadDestino);
 
+        const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
+        const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
+
+        getDestinationIdEstado
+
         return {
           ...peaje.toObject(),
           nombreOrigen,
           nombreDestino,
+          idEstadoOrigen,
+          idEstadoDestino,
         };
       }),
     );

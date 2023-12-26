@@ -1,7 +1,7 @@
 // functions/getDestinationName.js
 const Country = require('../models/country');
 
-const getDestinationName = async (codigo) => {
+const getDestinationIdEstado = async (codigo) => {
   try {
     const catalogEntry = await Country.findOne({ codigo });
 
@@ -9,11 +9,11 @@ const getDestinationName = async (codigo) => {
       return null;
     }
 
-    return catalogEntry.nombre;
+    return catalogEntry.estado;
   } catch (error) {
-    console.error('Error al obtener el nombre del destino/origen:', error);
+    console.error('Error al obtener el id del estado:', error);
     return null;
   }
 };
-module.exports = getDestinationName;
- 
+
+module.exports = getDestinationIdEstado;
