@@ -20,7 +20,7 @@ const createCountry = async (req, res) => {
     });
 
     if (existingCountry) {
-      res.formatResponse('error', 204, 'Ya existe un peaje con estos datos.', []);
+      return res.formatResponse('error', 204, 'Ya existe un peaje con estos datos.', []);
     }
 
     const lastCountry = await Country.findOne().sort({ codigo: -1 });
