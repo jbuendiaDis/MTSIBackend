@@ -247,13 +247,15 @@ const getCountryByEstadoYTipoUnidad = async (req, res) => {
 
     // Verificar si el estado y tipo de unidad son proporcionados
     if (!estado || !tipoUnidad) {
-      res.formatResponse('error', 204, 'Los parámetros estado y tipoUnidad son requeridos.', []);
+      return  res.formatResponse('error', 204, 'Los parámetros estado y tipoUnidad son requeridos.', []);
+       // Importante: terminar la ejecución después de enviar la respuesta
     }
 
     const countries = await Country.find({ estado, tipoUnidad });
 
     if (!countries || countries.length === 0) {
-      res.formatResponse('ok', 204, `No hay localidades para el estado ${estado} y tipo de unidad ${tipoUnidad}.`, []);
+      return  res.formatResponse('ok', 204, `No hay localidades para el estado ${estado} y tipo de unidad ${tipoUnidad}.`, []);
+       // Importante: terminar la ejecución después de enviar la respuesta
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', countries);
@@ -261,6 +263,7 @@ const getCountryByEstadoYTipoUnidad = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
 
 module.exports = {
   createCountry,
