@@ -2,6 +2,10 @@ const Gastos = require('../models/gastos');
 const Peajes = require('../models/peajes');
 const responseError = require('../functions/responseError');
 
+const getDestinationName = require('../functions/getDestinationName');
+const getDestinationIdEstado = require('../functions/getDestinationIdEstado');
+const getStateName = require('../functions/getStateName');
+
 // Controlador para crear un nuevo registro de gastos
 const createGastos = async (req, res) => {
   try {
@@ -38,7 +42,7 @@ const getGastosById = async (req, res) => {
 };
 
 // Controlador gastos con peages
-const getGastosConPeajes = async (req, res) => {
+const getGastosConPeajesOld = async (req, res) => {
   try {
     const gastos = await Gastos.find();
 
@@ -52,6 +56,44 @@ const getGastosConPeajes = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
+
+const getGastosConPeajes = async (req, res) => {
+  try {
+    const gastos = await Gastos.find();
+
+    const gastosConPeajes = await Promise.all(gastos.map(async (gasto) => {
+      const peajesRelacionados = await Peajes.find({ idgasto: gasto._id });
+      const peajesWithDestinationNames = await Promise.all(
+        peajesRelacionados.map(async (peaje) => {
+          const nombreOrigen = await getDestinationName(peaje.localidadOrigen);
+          const nombreDestino = await getDestinationName(peaje.localidadDestino);
+          const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
+          const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
+
+          return {
+            ...peaje.toObject(),
+            nombreOrigen,
+            nombreDestino,
+            idEstadoOrigen,
+            idEstadoDestino,
+          };
+        })
+      );
+
+      return {
+        ...gasto.toObject(),
+        peajes: peajesWithDestinationNames,
+      };
+    }));
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastosConPeajes);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+
 
 // Controlador para actualizar un registro de gastos por su ID
 const updateGastos = async (req, res) => {
