@@ -289,6 +289,22 @@ const getCountryByEstadoYTipoUnidad = async (req, res) => {
   }
 };
 
+const getLocalidadesByEstado = async (req, res) => {
+  try {
+    const { estado } = req.params;
+
+    const localidades = await Country.distinct('nombre', { estado: parseInt(estado, 10) });
+
+    if (localidades.length > 0) {
+      res.formatResponse('ok', 200, 'Consulta exitosa', localidades);
+    } else {
+      res.formatResponse('ok', 204, 'No se encontraron localidades para el estado especificado', []);
+    }
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
 
 module.exports = {
   createCountry,
@@ -302,4 +318,5 @@ module.exports = {
   getCountryByNombre,
   getCountryByEstadoYTipoUnidad,
   updateCountryById,
+  getLocalidadesByEstado
 };
