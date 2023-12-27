@@ -9,6 +9,8 @@ const formatResponse = require('../utils/formatResponse');
 
 router.post('/quotes01', verifyToken, formatResponse, quote01Controller.createQuote01);
 router.get('/quotes01', verifyToken, formatResponse, quote01Controller.getQuotes01);
+router.get('/quotes-01/all', verifyToken, formatResponse, quote01Controller.getQuotes01);
+router.get('/quotes-01/byclienteId/:clientId', verifyToken, formatResponse, quote01Controller.getQuotesByClientId);
 router.get('/quotes01/:id', verifyToken, formatResponse, quote01Controller.getQuote01ById);
 router.put('/quotes01/:id', verifyToken, formatResponse, quote01Controller.updateQuote01);
 router.delete('/quotes01/:id', verifyToken, formatResponse, quote01Controller.deleteQuote01);

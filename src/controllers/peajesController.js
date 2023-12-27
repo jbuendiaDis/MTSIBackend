@@ -16,6 +16,18 @@ const createPeaje = async (req, res) => {
       puntos,
     } = req.body;
 
+    // Verificar si ya existe un peaje con los mismos datos
+    const existingPeaje = await Peajes.findOne({
+      localidadOrigen,
+      localidadDestino,
+      tipoUnidad,
+    });
+
+    if (existingPeaje) {
+      res.formatResponse('error', 204, 'Ya existe un peaje con los mismos datos.', []);
+      return;
+    }
+
     // Buscar el registro de gastos para las localidades proporcionadas
     const gastosQuery = {
       localidadOrigen,
@@ -50,6 +62,7 @@ const createPeaje = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
 
 const getPeajes = async (req, res) => {
   try {

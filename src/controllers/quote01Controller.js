@@ -1,35 +1,10 @@
 const mongoose = require('mongoose');
 const Quote = require('../models/quotes');
 const responseError = require('../functions/responseError');
+const getClientNameById = require('../functions/getClientNameById');  
+const getUserNameById = require('../functions/getUserNameById'); 
 
-/* const createQuote01Old = async (req, res) => {
-  try {
-    const {
-      origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje,
-    } = req.body;
-
-    // Validar campos
-    if (!tipoUnidad || !tipoTraslado || !tipoViaje || !origenId || !destinoId) {
-      res.formatResponse('ok', 204, 'Campos origen,destino,
-       tipoUnidad, tipoTraslado y tipoViaje son obligatorios.', []);
-      return;
-    }
-
-    const quote = new Quote({
-      origenId,
-      destinoId,
-      tipoUnidad,
-      tipoTraslado,
-      tipoViaje,
-    });
-
-    const resultado = await quote.save();
-
-    res.formatResponse('ok', 200, 'Quote registrado con éxito.', resultado);
-  } catch (error) {
-    await responseError(409, error, res);
-  }
-}; */
+ 
 
 const createQuote011 = async (req, res) => {
   try {
@@ -112,12 +87,32 @@ const createQuote01 = async (req, res) => {
 };
 
 
- 
 const getQuotes01 = async (req, res) => {
   try {
-    const quotes = await Quote.find().select('origenId destinoId tipoUnidad tipoTraslado tipoViaje _id');
+    const quotes = await Quote.find().select('folio origenId destinoId tipoUnidad tipoTraslado tipoViaje _id estatus fechaCreacion userId');
+
     if (quotes.length > 0) {
-      res.formatResponse('ok', 200, 'Consulta exitosa', quotes);
+      const quotesWithClientName = await Promise.all(
+        quotes.map(async (quote) => {
+          const clientName = await getClientNameById(quote.userId);
+
+          if (!clientName) {
+            // Si el nombre del cliente no existe, buscar el nombre del usuario
+            const userName = await getUserNameById(quote.userId);
+            return {
+              ...quote.toObject(),
+              clientName: userName,
+            };
+          }
+
+          return {
+            ...quote.toObject(),
+            clientName,
+          };
+        })
+      );
+
+      res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithClientName);
     } else {
       res.formatResponse('ok', 204, 'No se encontraron datos', []);
     }
@@ -125,6 +120,46 @@ const getQuotes01 = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
+
+const getQuotesByClientId = async (req, res) => {
+  try {
+    const { clientId } = req.params;
+
+    const quotes = await Quote.find({ userId: clientId }).select('folio origenId destinoId tipoUnidad tipoTraslado tipoViaje _id estatus fechaCreacion userId');
+
+    if (quotes.length > 0) {
+      const quotesWithClientName = await Promise.all(
+        quotes.map(async (quote) => {
+          const clientName = await getClientNameById(quote.userId);
+
+          if (!clientName) {
+            // Si el nombre del cliente no existe, buscar el nombre del usuario
+            const userName = await getUserNameById(quote.userId);
+            return {
+              ...quote.toObject(),
+              clientName: userName,
+            };
+          }
+
+          return {
+            ...quote.toObject(),
+            clientName,
+          };
+        })
+      );
+
+      res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithClientName);
+    } else {
+      res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el cliente especificado', []);
+    }
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+ 
+
 
 const getQuote01ById = async (req, res) => {
   try {
@@ -217,5 +252,7 @@ module.exports = {
   getQuote01ById,
   updateQuote01,
   deleteQuote01,
-  cancelQuote
+  cancelQuote,
+  getQuotesByClientId,
+   
 };
