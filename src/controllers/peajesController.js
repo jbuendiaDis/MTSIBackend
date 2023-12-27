@@ -85,14 +85,30 @@ const getPeajes = async (req, res) => {
 const getPeajeById = async (req, res) => {
   try {
     const peaje = await Peajes.findById(req.params.id);
+
     if (!peaje) {
       await responseError(204, 'Registro de peaje no encontrado.', res);
     }
-    res.formatResponse('ok', 200, 'request success', peaje);
+
+    const nombreOrigen = await getDestinationName(peaje.localidadOrigen);
+    const nombreDestino = await getDestinationName(peaje.localidadDestino);
+    const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
+    const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
+
+    const peajeWithDestinationNames = {
+      ...peaje.toObject(),
+      nombreOrigen,
+      nombreDestino,
+      idEstadoOrigen,
+      idEstadoDestino,
+    };
+
+    res.formatResponse('ok', 200, 'request success', peajeWithDestinationNames);
   } catch (error) {
     await responseError(409, error, res);
   }
 };
+
 
 // Controlador para actualizar un registro de peaje por su ID
 const updatePeaje = async (req, res) => {
