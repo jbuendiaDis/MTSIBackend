@@ -71,6 +71,11 @@ const getGastosConPeajes = async (req, res) => {
           const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
           const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
 
+          console.log("nombreOrigen->",nombreOrigen);
+          console.log("nombreDestino->",nombreDestino);
+          console.log("idEstadoOrigen->",idEstadoOrigen);
+          console.log("idEstadoDestino->",idEstadoDestino);
+
           return {
             ...peaje.toObject(),
             nombreOrigen,
