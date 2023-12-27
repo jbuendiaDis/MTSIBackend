@@ -63,31 +63,33 @@ const getGastosConPeajes = async (req, res) => {
     const gastos = await Gastos.find();
 
     const gastosConPeajes = await Promise.all(gastos.map(async (gasto) => {
+      let nombreOrigen, nombreDestino, idEstadoOrigen, idEstadoDestino;  
+
       const peajesRelacionados = await Peajes.find({ idgasto: gasto._id });
       const peajesWithDestinationNames = await Promise.all(
         peajesRelacionados.map(async (peaje) => {
-          const nombreOrigen = await getDestinationName(peaje.localidadOrigen);
-          const nombreDestino = await getDestinationName(peaje.localidadDestino);
-          const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
-          const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
+          nombreOrigen = await getDestinationName(peaje.localidadOrigen);
+          nombreDestino = await getDestinationName(peaje.localidadDestino);
+          idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
+          idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
 
-          console.log("nombreOrigen->",nombreOrigen);
-          console.log("nombreDestino->",nombreDestino);
-          console.log("idEstadoOrigen->",idEstadoOrigen);
-          console.log("idEstadoDestino->",idEstadoDestino);
+          console.log("nombreOrigen->", nombreOrigen);
+          console.log("nombreDestino->", nombreDestino);
+          console.log("idEstadoOrigen->", idEstadoOrigen);
+          console.log("idEstadoDestino->", idEstadoDestino);
 
           return {
             ...peaje.toObject(),
-            nombreOrigen,
-            nombreDestino,
-            idEstadoOrigen,
-            idEstadoDestino,
           };
         })
       );
 
       return {
         ...gasto.toObject(),
+        nombreOrigen: nombreOrigen,
+        nombreDestino: nombreDestino,
+        idEstadoOrigen: idEstadoOrigen,
+        idEstadoDestino: idEstadoDestino,
         peajes: peajesWithDestinationNames,
       };
     }));
@@ -97,6 +99,7 @@ const getGastosConPeajes = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
 
 
 
