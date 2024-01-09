@@ -82,6 +82,20 @@ const dataSchema = new mongoose.Schema({
     ref: 'User',  
     required: true,
   },
+  hoteles: { type: Number },
+  totalLitros: { type: Number },
+  precioDiesel: { type: Number },
+  costoComidas: { type: Number },
+  costoPasajes: { type: Number },
+  costoPeajes: { type: Number },
+  costoSueldo: { type: Number },
+  subtotal: { type: Number },
+  gastosAdministrativos: { type: Number },
+  total: { type: Number },
+  costoInflacion: { type: Number },
+  financiamiento: { type: Number },
+  ganancia: { type: Number },
+  costoTotal: { type: Number },
   
   
   

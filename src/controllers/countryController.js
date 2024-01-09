@@ -293,7 +293,9 @@ const getLocalidadesByEstado = async (req, res) => {
   try {
     const { estado } = req.params;
 
-    const localidades = await Country.distinct('nombre', { estado: parseInt(estado, 10) });
+    const localidadesNombres = await Country.distinct('nombre', { estado: parseInt(estado, 10) });
+    
+    const localidades = await Country.find({ estado: parseInt(estado, 10), nombre: { $in: localidadesNombres } }, '_id nombre');
 
     if (localidades.length > 0) {
       res.formatResponse('ok', 200, 'Consulta exitosa', localidades);
@@ -304,6 +306,9 @@ const getLocalidadesByEstado = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
+
+
 
 
 module.exports = {

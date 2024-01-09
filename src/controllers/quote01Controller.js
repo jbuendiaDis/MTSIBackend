@@ -44,6 +44,7 @@ const createQuote011 = async (req, res) => {
   }
 };
 
+
 const createQuote01 = async (req, res) => {
   try {
     const { destinos } = req.body;
@@ -89,7 +90,7 @@ const createQuote01 = async (req, res) => {
 
 const getQuotes01 = async (req, res) => {
   try {
-    const quotes = await Quote.find().select('folio origenId destinoId tipoUnidad tipoTraslado tipoViaje _id estatus fechaCreacion userId');
+    const quotes = await Quote.find().select('folio           _id estatus fechaCreacion userId');
 
     if (quotes.length > 0) {
       const quotesWithClientName = await Promise.all(
@@ -159,30 +160,51 @@ const getQuotesByClientId = async (req, res) => {
 };
 
  
-
-
 const getQuote01ById = async (req, res) => {
   try {
-    const quote = await Quote.findById(req.params.id);
+    const quotes = await Quote.find({ folio: req.params.folio });
 
-    // Verificar si el registro ha sido modificado (tiene fecha de actualización)
-    if (!quote.fechaActualizacion) {
-      // TODO: Asignar valores consultados en cada elemento si el registro es nuevo
-      quote.origen = 'Ejemplo Origen';
-      quote.destino = 'Ejemplo Destino';
-      quote.kms = 1000;
-      quote.rend = 100;
-      quote.lts = 10000;
-      quote.tipoUnidad = 222;
-      quote.tipoTraslado = 333;
-      quote.tipoViaje = 444;
+    if (!quotes || quotes.length === 0) {
+      res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
+      return;
     }
 
-    res.formatResponse('ok', 200, 'Consulta exitosa', quote);
+    // Puedes mantener la lógica de configurar los valores predeterminados para cada cotización si lo deseas
+    for (const quote of quotes) {
+      if (!quote.fechaActualizacion) {
+        quote.origen = 'Ejemplo Origen';
+        quote.destino = 'Ejemplo Destino';
+        quote.kms = 1000;
+        quote.rend = 100;
+        quote.lts = 10000;
+        quote.tipoUnidad = 222;
+        quote.tipoTraslado = 333;
+        quote.tipoViaje = 444;
+
+        quote.hoteles=32; //    km/800 por (costo de tabla de gastos)
+
+        quote.totalLitros=32;
+        quote.precioDiesel=32;
+        quote.costoComidas=32;
+        quote.costoPasajes=32;
+        quote.costoPeajes=32;
+        quote.costoSueldo=32;
+        quote.subtotal=32;
+        quote.gastosAdministrativos=32;
+        quote.total=32;
+        quote.costoInflacion=32;
+        quote.financiamiento=32;
+        quote.ganancia=32;
+        quote.costoTotal=32;
+      }
+    }
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', quotes);
   } catch (error) {
     await responseError(409, error, res);
   }
 };
+
 
 const updateQuote01 = async (req, res) => {
   try {
@@ -207,6 +229,7 @@ const updateQuote01 = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
 
 const deleteQuote01 = async (req, res) => {
   try {
