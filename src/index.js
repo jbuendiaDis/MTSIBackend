@@ -25,7 +25,7 @@ const { banderaRoutes } = require('./routes/banderaRoutes');
 const connectToDatabase = require('./db');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 2024;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -45,7 +45,7 @@ const swaggerOptions = {
       description: 'Documentation for your API',
     },
   },
-  apis: ['controllers/configureDataController.js'],  // Ajusta esta ruta según la ubicación de tus archivos de documentación
+  apis: ['controllers/configureDataController.js'],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
