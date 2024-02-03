@@ -3,6 +3,7 @@ const Quote = require('../models/quotes');
 const responseError = require('../functions/responseError');
 const getClientNameById = require('../functions/getClientNameById');  
 const getUserNameById = require('../functions/getUserNameById'); 
+const getDestinationName = require('../functions/getDestinationName');
 
  
 
@@ -161,8 +162,14 @@ const getQuotesByClientId = async (req, res) => {
 
  
 const getQuote01ById = async (req, res) => {
+  
+    let v_lts=0;
+    let v_kms=0;
+    let v_rend=0;
+
   try {
     const quotes = await Quote.find({ folio: req.params.folio });
+    
 
     if (!quotes || quotes.length === 0) {
       res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
@@ -172,11 +179,18 @@ const getQuote01ById = async (req, res) => {
     // Puedes mantener la lógica de configurar los valores predeterminados para cada cotización si lo deseas
     for (const quote of quotes) {
       if (!quote.fechaActualizacion) {
-        quote.origen = 'Ejemplo Origen';
-        quote.destino = 'Ejemplo Destino';
-        quote.kms = 1000;
-        quote.rend = 100;
-        quote.lts = 10000;
+        quote.origen = await getDestinationName(quote.origenId);
+        quote.destino = await getDestinationName(quote.destinoId);
+
+        v_kms=1;
+        quote.kms = v_kms;
+        
+        v_rend=1;
+        quote.rend = v_rend;
+
+        v_lts=v_kms/v_rend;
+        quote.lts = v_lts;
+        
         quote.tipoUnidad = 222;
         quote.tipoTraslado = 333;
         quote.tipoViaje = 444;

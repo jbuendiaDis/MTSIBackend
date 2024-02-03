@@ -27,6 +27,11 @@ const connectToDatabase = require('./db');
 const app = express();
 const port = process.env.PORT || 2024;
 
+// Aumentar el límite del tamaño del cuerpo de la solicitud para JSON
+app.use(express.json({ limit: '50mb' }));
+// Aumentar el límite del tamaño del cuerpo de la solicitud para datos codificados en URL
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
