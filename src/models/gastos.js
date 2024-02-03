@@ -16,7 +16,7 @@ const gastosSchema = new mongoose.Schema({
   pasajeDestino: Number,
   comidas: Number,
   hoteles: Number,
-  peajes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Peajes' }],
+  peajes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Peajes' }]
 });
 
 const Gastos = mongoose.model('Gastos', gastosSchema);

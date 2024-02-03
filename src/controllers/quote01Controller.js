@@ -1,5 +1,14 @@
 const mongoose = require('mongoose');
 const Quote = require('../models/quotes');
+const Peajes = require('../models/peajes');
+const CountryModel = require('../models/country');
+const RendimientoModel = require('../models/rednimiento');
+const configureDataModel = require('../models/configureData');
+const GastosModel = require('../models/gastos');
+const BanderaModel = require('../models/bandera');
+const TrasladoModel = require('../models/trasladoModel');
+const GananciaModel = require('../models/ganancias');
+
 const responseError = require('../functions/responseError');
 const getClientNameById = require('../functions/getClientNameById');  
 const getUserNameById = require('../functions/getUserNameById'); 
@@ -160,8 +169,153 @@ const getQuotesByClientId = async (req, res) => {
   }
 };
 
- 
+
 const getQuote01ById = async (req, res) => {
+  try {
+    const quotes = await Quote.find({ folio: req.params.folio });
+    //console.log("quotes:", quotes);
+
+    if (!quotes || quotes.length === 0) {
+      res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
+      return;
+    }
+
+    const quotesWithKms = await Promise.all(quotes.map(async (quote) => {
+      // Buscar el documento de Peajes que coincide con origenId y destinoId
+      const peaje = await Peajes.findOne({
+        localidadOrigen: quote.origenId.toString(),
+        localidadDestino: quote.destinoId.toString(),
+      });
+
+      // Buscar la localidad de origen y destino en la colección countries
+      const origen = await CountryModel.findOne({ codigo: quote.origenId, tipoUnidad: peaje ? peaje.tipoUnidad : null });
+      const destino = await CountryModel.findOne({ codigo: quote.destinoId, tipoUnidad: peaje ? peaje.tipoUnidad : null });
+
+      // Realizar la consulta para obtener el rendimiento basado en el tipoUnidad
+      const rendimiento = await RendimientoModel.findById(quote.tipoUnidad);
+
+      // Buscar el único registro activo
+      const configureData = await configureDataModel.findOne({ status: 'Activo' });
+
+      // Buscar gastos
+      const gastos = await GastosModel.findOne({
+        localidadOrigen: quote.origenId.toString(),
+        localidadDestino: quote.destinoId.toString(),
+      });
+      //console.log("gastos:", gastos);
+
+
+      const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: "pasajeOrigen" });
+      const banderaPasajeDestino = await BanderaModel.findOne({ nombre: "pasajeDestino" });
+
+      const traslado = await TrasladoModel.findById(quote.tipoTraslado);
+
+      const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: "limite sueldos" });
+      const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5;  // Usar 5 como valor predeterminado si no se encuentra
+
+      const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: "PorcentajeAdmon" });
+      const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8;  // Usar 8 como valor predeterminado si no se encuentra
+
+
+
+
+      let v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
+      let v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
+
+      let v_financiamiento = configureData ? configureData.financiamiento : 0;
+      let v_otrosGastos = configureData ? configureData.otros : 0;
+
+
+      // Añadir nombres de las localidades y otros valores a la cotización
+      let nombreOrigen = origen ? origen.nombre : 'Origen no encontrado';
+      let nombreDestino = destino ? destino.nombre : 'Destino no encontrado';
+      let v_kms = peaje ? peaje.kms : 0;
+      let v_rend = rendimiento ? rendimiento.rendimiento : 0;
+      let v_totalLitros = v_kms / v_rend;
+      let v_costoDiesel = configureData ? configureData.combustible : 0;
+      let v_diesel = v_costoDiesel * v_totalLitros;
+      let v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
+      let v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
+      let v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
+      let v_totalPeajes = peaje ? peaje.totalPeajes : 0;
+      let v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
+      let v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
+
+      let v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
+      let v_subtotal = v_diesel + 
+                 v_comidas + 
+                 v_costoPasajeOrigen + 
+                 v_costoPasajeDestino + 
+                 v_totalPeajes +   
+                 v_seguroTraslado + 
+                 v_sueldo + 
+                 v_pagoEstadia;
+
+      let v_admon = (v_subtotal * porcentajeAdmon) / 100;
+
+      let v_total = v_subtotal + v_admon + v_financiamiento + v_otrosGastos;
+
+      let porcentajeInflacion  = configureData ? configureData.inflacion : 0;
+
+      let v_inflacion = v_total * (porcentajeInflacion / 100);
+
+
+      const gananciaEntry = await GananciaModel.findOne({ 
+        desde: { $lte: v_kms },
+        hasta: { $gte: v_kms }
+      });
+      
+      let v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
+
+      let v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
+
+
+
+
+
+
+
+
+      return {
+        id: quote._id,
+        folio: quote.folio,
+        origen: nombreOrigen,
+        destino: nombreDestino,
+        kms: parseFloat(v_kms.toFixed(2)),
+        rendimiento: parseFloat(v_rend.toFixed(2)),
+        litros: parseFloat(v_totalLitros.toFixed(2)),
+        diesel: parseFloat(v_diesel.toFixed(2)),
+        comidas: parseFloat(v_comidas.toFixed(2)),
+        pasajeOrigen: parseFloat(v_costoPasajeOrigen.toFixed(2)),
+        pasajeDestino: parseFloat(v_costoPasajeDestino.toFixed(2)),
+        peajesViapass: parseFloat(v_totalPeajes.toFixed(2)),
+        seguroTraslado: parseFloat(v_seguroTraslado.toFixed(2)),
+        sueldo: parseFloat(v_sueldo.toFixed(2)),
+        pagoEstadia: parseFloat(v_pagoEstadia.toFixed(2)),
+        subTotal: parseFloat(v_subtotal.toFixed(2)),
+        admon: parseFloat(v_admon.toFixed(2)),
+        total: parseFloat(v_total.toFixed(2)),
+        inflacion: parseFloat(v_inflacion.toFixed(2)),
+        financiamiento: parseFloat(v_financiamiento.toFixed(2)),
+        ganancia: parseFloat(v_ganancia.toFixed(2)),
+        costo : parseFloat(v_costoTotal.toFixed(2))
+ 
+
+
+        
+      };
+      
+    }));
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithKms);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+
+ 
+const getQuote01ByIdOld = async (req, res) => {
   
     let v_lts=0;
     let v_kms=0;

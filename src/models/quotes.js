@@ -9,8 +9,8 @@ const dataSchema = new mongoose.Schema({
 
   origenId: { type: Number },
   destinoId: { type: Number },
-  tipoUnidad: { type: Number },
-  tipoTraslado: { type: Number },
+  tipoUnidad: { type: String },
+  tipoTraslado: { type: String },
   tipoViaje: { type: Number },
   kms: { type: Number },
   rend: { type: Number },
@@ -45,7 +45,7 @@ const dataSchema = new mongoose.Schema({
   cliente: { type: String },
 
   fechaCreacion: {
-    type: Date,
+    type: Date, 
     default: Date.now,
   },
   fechaActualizacion: {
@@ -96,6 +96,7 @@ const dataSchema = new mongoose.Schema({
   financiamiento: { type: Number },
   ganancia: { type: Number },
   costoTotal: { type: Number },
+  
   
   
   
