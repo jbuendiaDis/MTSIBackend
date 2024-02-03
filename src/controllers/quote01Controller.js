@@ -222,7 +222,9 @@ const getQuote01ById = async (req, res) => {
       let v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
       let v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
 
-      let v_financiamiento = configureData ? configureData.financiamiento : 0;
+      let porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
+      
+
       let v_otrosGastos = configureData ? configureData.otros : 0;
 
 
@@ -253,7 +255,8 @@ const getQuote01ById = async (req, res) => {
 
       let v_admon = (v_subtotal * porcentajeAdmon) / 100;
 
-      let v_total = v_subtotal + v_admon + v_financiamiento + v_otrosGastos;
+      let v_total = v_subtotal + v_admon + v_otrosGastos;
+      let v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
 
       let porcentajeInflacion  = configureData ? configureData.inflacion : 0;
 
