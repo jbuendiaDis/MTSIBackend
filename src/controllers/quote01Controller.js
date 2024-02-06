@@ -9,6 +9,7 @@ const BanderaModel = require('../models/bandera');
 const TrasladoModel = require('../models/trasladoModel');
 const GananciaModel = require('../models/ganancias');
 const UserClientModel = require('../models/userClient');
+const QuoteHistoryModel = require('../models/quoteHistory');
 
 const responseError = require('../functions/responseError');
 const getClientNameById = require('../functions/getClientNameById');  
@@ -241,20 +242,48 @@ const getQuotesByClientId = async (req, res) => {
 };
 
 
+const getQuotesByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const quotes = await Quote.find({ userId: userId }).select('folio origenId destinoId tipoUnidad tipoTraslado tipoViaje _id estatus fechaCreacion userId');
+
+    if (quotes.length > 0) {
+      const quotesWithDetails = await Promise.all(quotes.map(async (quote) => {
+        // Buscar por código para obtener el nombre de la localidad de origen
+        const origen = await CountryModel.findOne({ codigo: quote.origenId });
+        const destino = await CountryModel.findOne({ codigo: quote.destinoId });
+
+        // Intentar obtener el nombre del cliente o usuario
+        const clientName = await getClientNameById(quote.userId) || await getUserNameById(quote.userId);
+
+        return {
+          ...quote.toObject(),
+          clientName,
+          nombreOrigen: origen ? origen.nombre : 'Origen no encontrado',
+          nombreDestino: destino ? destino.nombre : 'Destino no encontrado',
+        };
+      }));
+
+      res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithDetails);
+    } else {
+      res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el cliente especificado', []);
+    }
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
+
 const getQuote01ById = async (req, res) => {
   try {
     const quotes = await Quote.find({ folio: req.params.folio });
-    //console.log("quotes:", quotes);
 
     if (!quotes || quotes.length === 0) {
       res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
       return;
     }
-
-
-
-
-    //cambiar
 
     const quotesWithKms = await Promise.all(quotes.map(async (quote) => {
       // Buscar el documento de Peajes que coincide con origenId y destinoId
@@ -347,6 +376,37 @@ const getQuote01ById = async (req, res) => {
       let v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
 
       let v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
+
+
+
+      // Aquí guardamos en quote_history
+      const quoteHistory = new QuoteHistoryModel({
+        quoteId: quote._id,
+        // Incluir todos los campos
+        folio: quote.folio,
+        origen: nombreOrigen,
+        destino: nombreDestino,
+        kms: v_kms,
+        rendimiento: v_rend,
+        litros: v_totalLitros,
+        diesel: v_diesel,
+        comidas: v_comidas,
+        pasajeOrigen: v_costoPasajeOrigen,
+        pasajeDestino: v_costoPasajeDestino,
+        peajesViapass: v_totalPeajes,
+        seguroTraslado: v_seguroTraslado,
+        sueldo: v_sueldo,
+        pagoEstadia: v_pagoEstadia,
+        subTotal: v_subtotal,
+        admon: v_admon,
+        total: v_total,
+        inflacion: v_inflacion,
+        financiamiento: v_financiamiento,
+        ganancia: v_ganancia,
+        costo: v_costoTotal,
+        fechaCreacion: new Date()
+      });
+      await quoteHistory.save();
 
 
 
@@ -506,6 +566,25 @@ const cancelQuote = async (req, res) => {
 };
 
 
+const getQuoteHistoryByFolio = async (req, res) => {
+  try {
+    const { folio } = req.params;  
+
+    const quoteHistories = await QuoteHistoryModel.find({ folio: folio }).populate('quoteId').exec();  
+
+    if (quoteHistories.length > 0) {
+      res.formatResponse('ok', 200, 'Historial de cotizaciones encontrado', quoteHistories);
+    } else {
+      res.formatResponse('ok', 204, 'No se encontraron historiales para el folio especificado', []);
+    }
+  } catch (error) {
+    console.error(error);
+    res.formatResponse('error', 409, error.message, []);
+  }
+};
+
+
+
 
 
 module.exports = {
@@ -516,5 +595,7 @@ module.exports = {
   deleteQuote01,
   cancelQuote,
   getQuotesByClientId,
+  getQuotesByUserId,
+  getQuoteHistoryByFolio
    
 };

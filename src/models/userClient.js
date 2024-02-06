@@ -52,4 +52,8 @@ const userClientSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('UserClient', userClientSchema);
+const UserClient = mongoose.model('UserClient', userClientSchema);
+
+module.exports = UserClient;
+
+ 
