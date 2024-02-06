@@ -8,6 +8,7 @@ const GastosModel = require('../models/gastos');
 const BanderaModel = require('../models/bandera');
 const TrasladoModel = require('../models/trasladoModel');
 const GananciaModel = require('../models/ganancias');
+const UserClientModel = require('../models/userClient');
 
 const responseError = require('../functions/responseError');
 const getClientNameById = require('../functions/getClientNameById');  
@@ -55,7 +56,7 @@ const createQuote011 = async (req, res) => {
 };
 
 
-const createQuote01 = async (req, res) => {
+const createQuote01_old = async (req, res) => {
   try {
     const { destinos } = req.body;
 
@@ -65,8 +66,14 @@ const createQuote01 = async (req, res) => {
       return;
     }
 
+    // Buscar el cliente asociado al userId
+    const userClient = await UserClientModel.findOne({ _id: req.user.data.id });
+    if (!userClient) {
+      return res.formatResponse('ok', 204, 'Cliente no encontrado para el usuario proporcionado.', []);
+    }
+
     const quotes = await Promise.all(destinos.map(async (destino) => {
-      const { origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus } = destino;
+      const { localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus } = destino;
 
       // Obtener el último folio registrado
       const lastQuote = await Quote.findOne().sort({ folio: -1 });
@@ -76,14 +83,15 @@ const createQuote01 = async (req, res) => {
 
       // Crear la instancia de Quote con userId
       const quote = new Quote({
-        origenId,
-        destinoId,
+        localidadOrigenId,
+        localidadDestinoId,
         tipoUnidad,
         tipoTraslado,
         tipoViaje,
         estatus,
         folio: newFolio,
         userId: req.user.data.id, // Agregado el campo userId
+        clienteId:userClient.idCliente.toString()
       });
 
       // Guardar el nuevo registro
@@ -96,6 +104,61 @@ const createQuote01 = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
+
+const createQuote01 = async (req, res) => {
+  try {
+    const { destinos } = req.body;
+    if (!destinos || !Array.isArray(destinos) || destinos.length === 0) {
+      return res.formatResponse('ok', 204, 'El campo "destinos" es obligatorio y debe ser un array no vacío.', []);
+    }
+
+    const quotes = await Promise.all(destinos.map(async (destino) => {
+      const { localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus } = destino;
+
+      const localidadOrigen = await CountryModel.findById(localidadOrigenId);
+      const localidadDestino = await CountryModel.findById(localidadDestinoId);
+
+      if (!localidadOrigen || !localidadDestino) {
+        return res.formatResponse('ok', 204, 'Información de localidad no encontrada para origen o destino.', []);
+      }
+
+      const rutaExiste = await Peajes.findOne({
+        localidadOrigen: localidadOrigen.codigo,
+        localidadDestino: localidadDestino.codigo
+      });
+
+      if (!rutaExiste) {
+        return res.formatResponse('ok', 204, `No existe una ruta para los códigos ${localidadOrigen.codigo} y ${localidadDestino.codigo}.`, []);
+      }
+
+      const lastQuote = await Quote.findOne().sort({ folio: -1 });
+      const newFolio = lastQuote && !isNaN(lastQuote.folio) ? lastQuote.folio + 1 : 1;
+
+      const quote = new Quote({
+        origenId: localidadOrigen.codigo,
+        destinoId: localidadDestino.codigo,
+        tipoUnidad,
+        tipoTraslado,
+        tipoViaje,
+        estatus,
+        folio: newFolio,
+        userId: req.user.data.id,
+        clienteId: "32" // Asegúrate de que este valor sea correcto según tu lógica de negocio
+      });
+
+      return quote.save();
+    }));
+
+    res.formatResponse('ok', 200, 'Quotes registrados con éxito.', quotes);
+  } catch (error) {
+    console.error(error);
+    res.formatResponse('error', 409, error.message, []);
+  }
+};
+
+
+
 
 
 const getQuotes01 = async (req, res) => {
@@ -179,6 +242,11 @@ const getQuote01ById = async (req, res) => {
       res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
       return;
     }
+
+
+
+
+    //cambiar
 
     const quotesWithKms = await Promise.all(quotes.map(async (quote) => {
       // Buscar el documento de Peajes que coincide con origenId y destinoId
@@ -274,11 +342,6 @@ const getQuote01ById = async (req, res) => {
 
 
 
-
-
-
-
-
       return {
         id: quote._id,
         folio: quote.folio,
@@ -302,10 +365,7 @@ const getQuote01ById = async (req, res) => {
         financiamiento: parseFloat(v_financiamiento.toFixed(2)),
         ganancia: parseFloat(v_ganancia.toFixed(2)),
         costo : parseFloat(v_costoTotal.toFixed(2))
- 
-
-
-        
+     
       };
       
     }));

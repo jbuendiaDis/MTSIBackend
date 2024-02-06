@@ -4,14 +4,17 @@ const User = require('../models/User');
 
 
 const dataSchema = new mongoose.Schema({
+  clienteId:  { type: String },
   origen: { type: String },
   destino: { type: String },
+  localidadOrigenId: { type: String },
+  localidadDestinoId: { type: String },
 
   origenId: { type: Number },
   destinoId: { type: Number },
   tipoUnidad: { type: String },
   tipoTraslado: { type: String },
-  tipoViaje: { type: Number },
+  tipoViaje: { type: String },
   kms: { type: Number },
   rend: { type: Number },
   lts: { type: Number },
