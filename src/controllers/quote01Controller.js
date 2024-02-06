@@ -113,8 +113,14 @@ const createQuote01 = async (req, res) => {
       return res.formatResponse('ok', 204, 'El campo "destinos" es obligatorio y debe ser un array no vacío.', []);
     }
 
+    // Buscar el cliente asociado al userId
+    const userClient = await UserClientModel.findOne({ _id: req.user.data.id });
+    if (!userClient) {
+      return res.formatResponse('ok', 204, 'Cliente no encontrado para el usuario proporcionado.', []);
+    }
+
     const quotes = await Promise.all(destinos.map(async (destino) => {
-      const { localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus } = destino;
+      const { localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus,manual, dimensiones } = destino;
 
       const localidadOrigen = await CountryModel.findById(localidadOrigenId);
       const localidadDestino = await CountryModel.findById(localidadDestinoId);
@@ -123,13 +129,15 @@ const createQuote01 = async (req, res) => {
         return res.formatResponse('ok', 204, 'Información de localidad no encontrada para origen o destino.', []);
       }
 
+      let existeRuta = false;
+
       const rutaExiste = await Peajes.findOne({
         localidadOrigen: localidadOrigen.codigo,
         localidadDestino: localidadDestino.codigo
       });
 
-      if (!rutaExiste) {
-        return res.formatResponse('ok', 204, `No existe una ruta para los códigos ${localidadOrigen.codigo} y ${localidadDestino.codigo}.`, []);
+      if (rutaExiste) {
+        existeRuta = true;
       }
 
       const lastQuote = await Quote.findOne().sort({ folio: -1 });
@@ -144,7 +152,10 @@ const createQuote01 = async (req, res) => {
         estatus,
         folio: newFolio,
         userId: req.user.data.id,
-        clienteId: "32" // Asegúrate de que este valor sea correcto según tu lógica de negocio
+        clienteId: userClient.idCliente.toString(),
+        manual, 
+        dimensiones,
+        existeRuta:existeRuta
       });
 
       return quote.save();
@@ -200,34 +211,31 @@ const getQuotesByClientId = async (req, res) => {
   try {
     const { clientId } = req.params;
 
-    const quotes = await Quote.find({ userId: clientId }).select('folio origenId destinoId tipoUnidad tipoTraslado tipoViaje _id estatus fechaCreacion userId');
+    const quotes = await Quote.find({ clienteId: clientId }).select('folio origenId destinoId tipoUnidad tipoTraslado tipoViaje _id estatus fechaCreacion userId');
 
     if (quotes.length > 0) {
-      const quotesWithClientName = await Promise.all(
-        quotes.map(async (quote) => {
-          const clientName = await getClientNameById(quote.userId);
+      const quotesWithDetails = await Promise.all(quotes.map(async (quote) => {
+        // Buscar por código para obtener el nombre de la localidad de origen
+        const origen = await CountryModel.findOne({ codigo: quote.origenId });
+        const destino = await CountryModel.findOne({ codigo: quote.destinoId });
 
-          if (!clientName) {
-            // Si el nombre del cliente no existe, buscar el nombre del usuario
-            const userName = await getUserNameById(quote.userId);
-            return {
-              ...quote.toObject(),
-              clientName: userName,
-            };
-          }
+        // Intentar obtener el nombre del cliente o usuario
+        const clientName = await getClientNameById(quote.userId) || await getUserNameById(quote.userId);
 
-          return {
-            ...quote.toObject(),
-            clientName,
-          };
-        })
-      );
+        return {
+          ...quote.toObject(),
+          clientName,
+          nombreOrigen: origen ? origen.nombre : 'Origen no encontrado',
+          nombreDestino: destino ? destino.nombre : 'Destino no encontrado',
+        };
+      }));
 
-      res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithClientName);
+      res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithDetails);
     } else {
       res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el cliente especificado', []);
     }
   } catch (error) {
+    console.error(error);
     await responseError(409, error, res);
   }
 };

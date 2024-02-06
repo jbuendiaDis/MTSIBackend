@@ -10,6 +10,11 @@ const dataSchema = new mongoose.Schema({
   localidadOrigenId: { type: String },
   localidadDestinoId: { type: String },
 
+  manual : { type: String },
+  dimensiones: { type: String },
+
+  existeRuta:{type:Boolean},
+
   origenId: { type: Number },
   destinoId: { type: Number },
   tipoUnidad: { type: String },
