@@ -87,8 +87,11 @@ const obtenerModelosPorMarca = async (req, res) => {
       return res.formatResponse('error', 400, 'La marca es obligatoria.', []);
     }
 
-    // Obtener modelos relacionados a la marca
-    const modelosPorMarca = await Rendimientos.find({ marca }).distinct('modelo');
+    const nombresModelos = await Rendimientos.find({ marca }).distinct('modelo');
+    const modelosPorMarca = await Promise.all(nombresModelos.map(async (modelo) => {
+      const documento = await Rendimientos.findOne({ marca, modelo });
+      return { id: documento._id.toString(), nombre: modelo };
+    }));
 
     res.formatResponse('ok', 200, 'Modelos obtenidos por marca con éxito.', modelosPorMarca);
   } catch (error) {
