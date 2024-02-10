@@ -22,74 +22,24 @@ const getDestinationName = require('../functions/getDestinationName');
 const CatalogModel = require('../models/catalog');
 
 
-const createSolicitudss = async (req, res) => {
-  try {
-    const { destinos } = req.body;
-    if (!destinos || !Array.isArray(destinos) || destinos.length === 0) {
-      return res.formatResponse('ok', 204, 'El campo "destinos" es obligatorio y debe ser un array no vacío.', []);
-    }
-
-    // Buscar el cliente asociado al userId
-    const userClient = await UserClientModel.findOne({ _id: req.user.data.id });
-    if (!userClient) {
-      return res.formatResponse('ok', 204, 'Cliente no encontrado para el usuario proporcionado.', []);
-    }
-
-    // Obtener el nombre del cliente (razón social) usando el clienteId
-    const cliente = await ClienteModel.findById(userClient.idCliente); // Asumiendo que idCliente es el _id en la colección de clientes
-    if (!cliente) {
-      return res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
-    }
-
-    const solicitudes = await Promise.all(destinos.map(async (destino) => {
-      const { localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus, manual, dimensiones } = destino;
-
-      const localidadOrigen = await CountryModel.findById(localidadOrigenId);
-      const localidadDestino = await CountryModel.findById(localidadDestinoId);
-
-      if (!localidadOrigen || !localidadDestino) {
-        return res.formatResponse('ok', 204, 'Información de localidad no encontrada para origen o destino.', []);
-      }
-
-      let existeRuta = false;
-
-      const rutaExiste = await Peajes.findOne({
-        localidadOrigen: localidadOrigen.codigo,
-        localidadDestino: localidadDestino.codigo
-      });
-
-      if (rutaExiste) {
-        existeRuta = true;
-      }
-
-      const lastSolicitud = await SolicitudModel.findOne().sort({ folio: -1 });
-      const newFolio = lastSolicitud && !isNaN(lastSolicitud.folio) ? lastSolicitud.folio + 1 : 1;
-       
-
-      const solicitud = new SolicitudModel({
-        folio: newFolio,
-        estatus,
-        userId: req.user.data.id,
-        clienteId: userClient.idCliente.toString(),
-        clienteName: cliente.razonSocial,
-        
-      });
-
-      return solicitud.save();
-    }));
-
-    res.formatResponse('ok', 200, 'Solicitudes registradas con éxito.', solicitudes);
-  } catch (error) {
-    console.error(error);
-    res.formatResponse('error', 409, error.message, []);
-  }
-};
-
 const createSolicitud = async (req, res) => {
   try {
     const { destinos } = req.body;
     if (!destinos || !Array.isArray(destinos) || destinos.length === 0) {
       return res.formatResponse('ok', 204, 'El campo "destinos" es obligatorio y debe ser un array no vacío.', []);
+    }
+
+    // Verificar que todos los destinos tienen el mismo tipoViaje
+    const primerTipoViaje = destinos[0].tipoViaje;
+    const tiposViajeSonIguales = destinos.every(destino => destino.tipoViaje === primerTipoViaje);
+
+    if (!tiposViajeSonIguales) {
+      return res.formatResponse('ok', 204, 'Todos los destinos deben tener el mismo tipo de viaje.', []);
+    }
+    // Buscar la descripción del tipo de viaje usando primerTipoViajeId
+    const tipoViaje = await CatalogModel.findById(primerTipoViaje);
+    if (!tipoViaje) {
+      return res.formatResponse('ok', 204, 'Tipo de viaje no encontrado.', []);
     }
 
     // Buscar el cliente asociado al userId
@@ -114,11 +64,13 @@ const createSolicitud = async (req, res) => {
       userId: req.user.data.id,
       clienteId: userClient.idCliente.toString(),
       clienteName: cliente.razonSocial,
+      tipoViajeId:tipoViaje._id,
+      tipoViajeName:tipoViaje.descripcion,
+      
     }).save();
 
     // Iterar sobre 'destinos' para crear detalles de la solicitud-------------------------------------------------------------------------------------------------------------
     const detallesPromesas = destinos.map(async (destino) => {
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
       // Realizar la consulta para obtener el dato catalogos basado en el tipoViaje
       let v_tipoViaje=null;
@@ -177,6 +129,229 @@ const createSolicitud = async (req, res) => {
   }
 };
 
+const getCotizacionByFolio = async (req, res) =>{
+  try {
+    const folio = parseInt(req.params.folio, 10);
+    const solicitud = await SolicitudModel.findOne({ folio: folio });
+    let solicitudDetalle = await SolicitudDetalleModel.find({ folio: folio });
+
+    // Verifica si la solicitud no se encontró
+    if (!solicitud) {
+      return res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
+    }
+
+    // Verifica si el array de cotizaciones está vacío
+    if (solicitudDetalle.length === 0) {
+      res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
+      return;
+    }
+
+    // Buscar la descripción del tipo de viaje usando tipoViajeId de la solicitud
+    const tipoViaje = await CatalogModel.findById(solicitud.tipoViajeId);
+    if (!tipoViaje) {
+      return res.formatResponse('ok', 204, 'Tipo de viaje no encontrado.', []);
+    }
+
+    let v_tipoViaje=0;
+
+    switch (tipoViaje._id.toString()) {
+      case "657d410b090a350a86310db8": // Rodando
+        v_tipoViaje=1;
+        break;
+        case "657d411f090a350a86310dc0": // Sin rodar
+        v_tipoViaje = 2;
+
+        //TODO:CAmbiar por algo dinamico o catalogo
+        const idUbicacionC = "6582738f73bd91d97dbd8f28";
+        const idUbicacionCName = "Santiago Tianguistenco";
+        const idUbicacionCcodigo = 1428;
+      
+        // Crear nuevo detalle de viaje de C a A (el primer destino original)
+        const viajeDeCA = {
+          ...solicitudDetalle[0].toObject(), // Clonar el primer objeto y ajustar para viaje de C a A
+          localidadOrigenId: idUbicacionC,
+          localidadOrigenName: idUbicacionCName,
+          localidadOrigenCodigo: idUbicacionCcodigo,
+
+          localidadDestinoId: solicitudDetalle[0].localidadOrigenId,
+          localidadDestinoName:   solicitudDetalle[0].localidadOrigenName, 
+          localidadDestinoCodigo: solicitudDetalle[0].localidadOrigenCodigo, 
+          
+        };
+      
+        // Crear nuevo detalle de viaje de B a C (el último destino original)
+        const viajeDeBC = {
+          ...solicitudDetalle[solicitudDetalle.length - 1].toObject(), // Clonar el último objeto y ajustar para viaje de B a C
+          localidadOrigenId: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoId,
+          localidadOrigenName: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoName, 
+          localidadOrigenCodigo: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoCodigo, 
+
+          localidadDestinoId: idUbicacionC,
+          localidadDestinoName: idUbicacionCName, 
+          localidadDestinoCodigo: idUbicacionCcodigo 
+        };
+      
+        // Insertar los nuevos detalles al inicio y al final del array de detalles
+        solicitudDetalle = [viajeDeCA, ...solicitudDetalle, viajeDeBC];
+        break;
+      case "657d4127090a350a86310dc4": // Local
+        v_tipoViaje=3;
+        break;
+      default:
+        return res.formatResponse('ok', 204, 'Tipo de viaje no válido.', []);
+    }
+
+     
+       
+    let rutasFaltantes = [];
+
+for (const detalle of solicitudDetalle) {
+  const peaje = await Peajes.findOne({
+    localidadOrigen: detalle.localidadOrigenCodigo.toString(),
+    localidadDestino: detalle.localidadDestinoCodigo.toString(),
+  });
+
+  if (!peaje) {
+    // Agregar al array los códigos de origen y destino que no tienen peaje
+    rutasFaltantes.push(`de ${detalle.localidadOrigenCodigo} a ${detalle.localidadDestinoCodigo}`);
+  }
+}
+
+if (rutasFaltantes.length > 0) {
+  // Si hay rutas faltantes, regresa un error 204 con los detalles de las rutas faltantes
+  return res.formatResponse('ok', 204, `No se encontraron rutas para los siguientes trayectos: ${rutasFaltantes.join(', ')}`, []);
+}
+
+// Continuar con el procesamiento si todas las rutas existen...
+
+const configureData = await configureDataModel.findOne({ status: 'Activo' });
+    
+    const response = await Promise.all(solicitudDetalle.map(async (detalle) => {
+
+      //console.log("detalle:",detalle);
+
+      let v_kms=-1;
+      let v_rend=-1;
+      let v_totalLitros=-1;
+      let v_diesel=-1;
+      let v_comidas=-1;
+      let v_costoPasajeOrigen=-1;
+      let v_costoPasajeDestino=-1;
+      let v_totalPeajes=-1;
+      let v_seguroTraslado=-1;
+      let v_sueldo=-1;
+      let v_pagoEstadia=-1;
+      let v_subtotal=-1;
+      let v_admon=-1;
+      let v_total=-1;
+      let v_inflacion=-1;
+      let v_financiamiento=-1;
+      let v_ganancia=-1;
+      let v_costoTotal=-1;
+
+
+      // Buscar el documento de Peajes(rutas) que coincide con origenId y destinoId
+      const peaje = await Peajes.findOne({
+        localidadOrigen: detalle.localidadOrigenCodigo.toString(),
+        localidadDestino: detalle.localidadDestinoCodigo.toString(),
+      });
+      const rendimiento = await RendimientoModel.findById(detalle.unidadId);
+      const gastos = await GastosModel.findOne({
+        localidadOrigen: detalle.localidadOrigenCodigo.toString(),
+        localidadDestino: detalle.localidadDestinoCodigo.toString(),
+      });
+      const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: "pasajeOrigen" });
+      const banderaPasajeDestino = await BanderaModel.findOne({ nombre: "pasajeDestino" });
+      const traslado = await TrasladoModel.findById(detalle.trasladoId);
+      const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: "limite sueldos" });
+      const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: "PorcentajeAdmon" });
+
+
+
+      let v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
+      let v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
+      const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5;  // Usar 5 como valor predeterminado si no se encuentra
+      const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8;  // Usar 8 como valor predeterminado si no se encuentra
+
+
+      let porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
+      let v_otrosGastos = configureData ? configureData.otros : 0;
+      
+
+
+      v_kms=peaje ? peaje.kms : 0;
+      v_rend = rendimiento ? rendimiento.rendimiento : 0;
+      v_totalLitros = v_kms / v_rend;
+      v_costoDiesel = configureData ? configureData.combustible : 0;
+      v_diesel = v_costoDiesel * v_totalLitros;
+      v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
+      v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
+      v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
+      v_totalPeajes = peaje ? peaje.totalPeajes : 0;
+      v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
+      v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
+      v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
+      v_subtotal = v_diesel + 
+                 v_comidas + 
+                 v_costoPasajeOrigen + 
+                 v_costoPasajeDestino + 
+                 v_totalPeajes +   
+                 v_seguroTraslado + 
+                 v_sueldo + 
+                 v_pagoEstadia;
+      v_admon = (v_subtotal * porcentajeAdmon) / 100;
+      v_total = v_subtotal + v_admon + v_otrosGastos;
+      v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
+      porcentajeInflacion  = configureData ? configureData.inflacion : 0;
+      v_inflacion = v_total * (porcentajeInflacion / 100);
+
+      const gananciaEntry = await GananciaModel.findOne({ 
+        desde: { $lte: v_kms },
+        hasta: { $gte: v_kms }
+      });
+
+      v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
+      v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
+      
+
+      return {
+        //id: detalle._id,
+        //folio: folio,
+        clienteNombre:solicitud.clienteName,
+        origen: detalle.localidadOrigenName,
+        destino: detalle.localidadDestinoName,
+        kms: parseFloat(v_kms.toFixed(2)),
+        rendimiento: parseFloat(v_rend.toFixed(2)),
+        litros: parseFloat(v_totalLitros.toFixed(2)),
+        diesel: parseFloat(v_diesel.toFixed(2)),
+        comidas: parseFloat(v_comidas.toFixed(2)),
+        pasajeOrigen: parseFloat(v_costoPasajeOrigen.toFixed(2)),
+        pasajeDestino: parseFloat(v_costoPasajeDestino.toFixed(2)),
+        peajesViapass: parseFloat(v_totalPeajes.toFixed(2)),
+        seguroTraslado: parseFloat(v_seguroTraslado.toFixed(2)),
+        sueldo: parseFloat(v_sueldo.toFixed(2)),
+
+        pagoEstadia: parseFloat(v_pagoEstadia.toFixed(2)),
+        subTotal: parseFloat(v_subtotal.toFixed(2)),
+        admon: parseFloat(v_admon.toFixed(2)),
+        total: parseFloat(v_total.toFixed(2)),
+        inflacion: parseFloat(v_inflacion.toFixed(2)),
+        financiamiento: parseFloat(v_financiamiento.toFixed(2)),
+        ganancia: parseFloat(v_ganancia.toFixed(2)),
+        costo : parseFloat(v_costoTotal.toFixed(2))
+     
+      };
+
+    
+    }));
+    
+
+    res.formatResponse('ok', 200, 'Datos consultados con éxito.', response);
+} catch (error) {
+  await responseError(409, error, res);
+}
+
+};
 
 
 const createQuote011 = async (req, res) => {
@@ -329,9 +504,6 @@ const createQuote01 = async (req, res) => {
     res.formatResponse('error', 409, error.message, []);
   }
 };
-
-
-
 
 
 const getQuotes01 = async (req, res) => {
@@ -885,7 +1057,6 @@ const getQuote01ById_old_ok = async (req, res) => {
       // Aquí guardamos en quote_history
       const quoteHistory = new QuoteHistoryModel({
         quoteId: quote._id,
-        // Incluir todos los campos
         folio: quote.folio,
         origen: nombreOrigen,
         destino: nombreDestino,
@@ -1092,6 +1263,7 @@ const getQuoteHistoryByFolio = async (req, res) => {
 
 module.exports = {
   createSolicitud,
+  getCotizacionByFolio,
   createQuote01,
   getQuotes01,
   getQuoteDetailsByFolio,

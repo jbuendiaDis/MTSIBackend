@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+function getCurrentFormattedDate() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = ('0' + (now.getMonth() + 1)).slice(-2);
+    const day = ('0' + now.getDate()).slice(-2);
+    const hours = ('0' + now.getHours()).slice(-2);
+    const minutes = ('0' + now.getMinutes()).slice(-2);
+  
+    return `${year}/${month}/${day} ${hours}:${minutes}`;
+  }
+
 const SolicitudDetalleSchema = new mongoose.Schema({
   solicitudId: {
     type: mongoose.Schema.Types.ObjectId, // O type: Number, si vas a usar el folio como referencia
@@ -88,8 +99,21 @@ const SolicitudDetalleSchema = new mongoose.Schema({
   dimensiones: {
     type: String,
     required: true
+  },
+  createdAt: {
+    type: String,
+    default: getCurrentFormattedDate // Establece la fecha en el formato deseado al crear
+  },
+  updatedAt: {
+    type: String,
+    default: getCurrentFormattedDate // Establece la fecha en el formato deseado al crear
   }
-}, { timestamps: true });
+});
+
+SolicitudDetalleSchema.pre('save', function(next) {
+    this.updatedAt = getCurrentFormattedDate(); // Actualiza la fecha en el formato deseado antes de guardar
+    next();
+  });
 
 const SolicitudDetalle = mongoose.model('SolicitudDetalle', SolicitudDetalleSchema);
 
