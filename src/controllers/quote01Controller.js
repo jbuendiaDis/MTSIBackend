@@ -9,7 +9,7 @@ const BanderaModel = require('../models/bandera');
 const TrasladoModel = require('../models/trasladoModel');
 const GananciaModel = require('../models/ganancias');
 const UserClientModel = require('../models/userClient');
-const QuoteHistoryModel = require('../models/quoteHistory');
+const CotizacionHistorialModel = require('../models/cotizacionHistorialModel');
 const SolicitudModel = require('../models/solicitud');
 const ClienteModel  = require('../models/clients');
 const SolicitudDetalleModel = require('../models/solicitudDetalle');
@@ -312,6 +312,36 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
 
       v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
       v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
+
+
+      // Aquí guardamos en quote_history
+      const quoteHistory = new CotizacionHistorialModel({
+        quoteId: detalle._id,
+        folio: folio,
+        clienteNombre:solicitud.clienteName,
+        origen: detalle.localidadOrigenName,
+        destino: detalle.localidadDestinoName,
+        kms: v_kms,
+        rendimiento: v_rend,
+        litros: v_totalLitros,
+        diesel: v_diesel,
+        comidas: v_comidas,
+        pasajeOrigen: v_costoPasajeOrigen,
+        pasajeDestino: v_costoPasajeDestino,
+        peajesViapass: v_totalPeajes,
+        seguroTraslado: v_seguroTraslado,
+        sueldo: v_sueldo,
+        pagoEstadia: v_pagoEstadia,
+        subTotal: v_subtotal,
+        admon: v_admon,
+        total: v_total,
+        inflacion: v_inflacion,
+        financiamiento: v_financiamiento,
+        ganancia: v_ganancia,
+        costo: v_costoTotal,
+        fechaCreacion: new Date()
+      });
+      await quoteHistory.save();
       
 
       return {

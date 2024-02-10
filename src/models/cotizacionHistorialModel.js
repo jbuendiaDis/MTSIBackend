@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const quoteHistorySchema = new mongoose.Schema({
   quoteId: mongoose.Schema.Types.ObjectId,
   folio: Number,
+  clienteNombre: String,
   origen: String,
   destino: String,
   kms: Number,
@@ -26,7 +27,7 @@ const quoteHistorySchema = new mongoose.Schema({
   fechaCreacion: { type: Date, default: Date.now }
 });
 
-const QuoteHistory = mongoose.model('QuoteHistory', quoteHistorySchema);
+const QuoteHistory = mongoose.model('cotizacionHistorial', quoteHistorySchema);
 
 module.exports = QuoteHistory;
 
