@@ -13,6 +13,7 @@ const CotizacionHistorialModel = require('../models/cotizacionHistorialModel');
 const SolicitudModel = require('../models/solicitud');
 const ClienteModel  = require('../models/clients');
 const SolicitudDetalleModel = require('../models/solicitudDetalle');
+const UserModel  = require('../models/User');
 
 
 const responseError = require('../functions/responseError');
@@ -382,6 +383,260 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
 }
 
 };
+
+const getSolicitudesSimples = async (req, res) => {
+  try {
+    // Buscar todas las solicitudes
+    const solicitudes = await SolicitudModel.find().select('-_id folio  estatus createdAt userId tipoViajeId');
+
+    if (solicitudes.length > 0) {
+      const solicitudesConNombres = await Promise.all(
+        solicitudes.map(async (solicitud) => {
+          // Buscar el nombre del cliente usando el userId de la solicitud
+          let clientName = await getClientNameById(solicitud.userId);
+
+          // Si no se encuentra el nombre del cliente, buscar el nombre del usuario
+          if (!clientName) {
+            clientName = await getUserNameById(solicitud.userId);
+          }
+
+          // Buscar la descripción del tipo de viaje
+          const tipoViaje = await CatalogModel.findById(solicitud.tipoViajeId);
+          const tipoViajeDescripcion = tipoViaje ? tipoViaje.descripcion : 'Desconocido';
+
+          return {
+            ...solicitud.toObject(),
+            clientName,
+            tipoViajeDescripcion,
+            // detalles: No se incluyen detalles específicos de SolicitudDetalleModel aquí
+          };
+        })
+      );
+
+      res.formatResponse('ok', 200, 'Consulta exitosa', solicitudesConNombres);
+    } else {
+      res.formatResponse('ok', 204, 'No se encontraron datos', []);
+    }
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
+const getSolicitudesByClienteId = async (req, res) => {
+  try {
+    const { clientId } = req.params;
+
+    // Asumiendo que ClienteModel es tu modelo para los clientes
+    const cliente = await ClienteModel.findById(clientId);
+    if (!cliente) {
+      return res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
+    }
+
+    const solicitudes = await SolicitudModel.find({ clienteId: clientId })
+      .select('-_id folio estatus createdAt userId tipoViajeId')
+      .sort({ folio: -1 }); // Ordena las solicitudes de forma descendente por folio
+
+    if (solicitudes.length === 0) {
+      return res.formatResponse('ok', 204, 'No se encontraron solicitudes para el cliente especificado', []);
+    }
+
+    // Agregar el nombre del cliente y el nombre del usuario a cada solicitud
+    const response = await Promise.all(solicitudes.map(async (solicitud) => {
+      const userName = await getUserNameById(solicitud.userId);
+      
+      return {
+        ...solicitud.toObject(),
+        clientName: cliente.razonSocial,  
+        userName: userName || 'Usuario no encontrado'
+      };
+    }));
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', response);
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
+const getSolicitudesByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Buscar el nombre del usuario primero para incluirlo en la respuesta
+    const userName = await getUserNameById(userId);
+    if (!userName) {
+      return res.formatResponse('ok', 204, 'Usuario no encontrado.', []);
+    }
+
+    const solicitudes = await SolicitudModel.find({ userId: userId })
+      .select('-_id folio estatus createdAt userId tipoViajeId')
+      .sort({ folio: -1 }); // Ordena las solicitudes de forma descendente por folio
+
+    if (solicitudes.length === 0) {
+      return res.formatResponse('ok', 204, 'No se encontraron solicitudes para el usuario especificado', []);
+    }
+
+    // No es necesario buscar el cliente aquí, ya que el método es específico para el userId
+    const response = solicitudes.map((solicitud) => ({
+      ...solicitud.toObject(),
+      userName: userName // Incluye el nombre del usuario obtenido previamente
+    }));
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', response);
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
+ 
+
+
+
+
+
+const getSolicitudDetalleByFolio_ok = async (req, res) => {
+  try {
+    const { folio } = req.params;
+    const folioNum = parseInt(folio, 10);
+
+    const detallesSolicitud = await SolicitudDetalleModel.find({ folio: folioNum });
+    if (detallesSolicitud.length === 0) {
+      return res.formatResponse('ok', 204, 'No se encontraron detalles para la solicitud con el folio especificado', []);
+    }
+
+    const detallesEnriquecidos = await Promise.all(detallesSolicitud.map(async (detalle) => {
+      const origen = await CountryModel.findById(detalle.localidadOrigenId);
+      const destino = await CountryModel.findById(detalle.localidadDestinoId);
+
+      const ultimoHistorial = await CotizacionHistorialModel.findOne({ quoteId: detalle._id })
+        .sort({ fechaCreacion: -1 });
+
+      // Extraer datos de ultimoHistorial directamente
+      let historialData = ultimoHistorial ? {
+        kms: ultimoHistorial.kms,
+        rendimiento: ultimoHistorial.rendimiento,
+        litros: ultimoHistorial.litros,
+        diesel: ultimoHistorial.diesel,
+        comidas: ultimoHistorial.comidas,
+        pasajeOrigen: ultimoHistorial.pasajeOrigen,
+        pasajeDestino: ultimoHistorial.pasajeDestino,
+        peajesViapass: ultimoHistorial.peajesViapass,
+        seguroTraslado: ultimoHistorial.seguroTraslado,
+        sueldo: ultimoHistorial.sueldo,
+        pagoEstadia: ultimoHistorial.pagoEstadia,
+        subTotal: ultimoHistorial.subTotal,
+        admon: ultimoHistorial.admon,
+        total: ultimoHistorial.total,
+        inflacion: ultimoHistorial.inflacion,
+        financiamiento: ultimoHistorial.financiamiento,
+        ganancia: ultimoHistorial.ganancia,
+        costo: ultimoHistorial.costo,
+        fechaCreacion: ultimoHistorial.fechaCreacion,
+      } : {};
+
+      return {
+        ...detalle.toObject(),
+        nombreOrigen: origen ? origen.nombre : 'Origen no encontrado',
+        nombreDestino: destino ? destino.nombre : 'Destino no encontrado',
+        // Extiende aquí con los datos de historialData
+        ...historialData,
+      };
+    }));
+
+    res.formatResponse('ok', 200, 'Detalles de la solicitud encontrados con éxito', detallesEnriquecidos);
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
+const getSolicitudDetalleByFolio = async (req, res) => {
+  try {
+    const { folio } = req.params;
+    const folioNum = parseInt(folio, 10);
+
+    const detallesSolicitud = await SolicitudDetalleModel.find({ folio: folioNum });
+    if (detallesSolicitud.length === 0) {
+      return res.formatResponse('ok', 204, 'No se encontraron detalles para la solicitud con el folio especificado', []);
+    }
+
+    const detallesEnriquecidos = await Promise.all(detallesSolicitud.map(async (detalle) => {
+      const ultimoHistorial = await CotizacionHistorialModel.findOne({ quoteId: detalle._id })
+        .sort({ fechaCreacion: -1 });
+
+      let historialData = ultimoHistorial ? ultimoHistorial.toObject() : {};
+      
+      const fechaCreacionCotizacion = new Date(historialData.fechaCreacion);
+      const formattedFechaCreacionCotizacion = `${fechaCreacionCotizacion.getFullYear()}/${
+        String(fechaCreacionCotizacion.getMonth() + 1).padStart(2, '0')}/${
+        String(fechaCreacionCotizacion.getDate()).padStart(2, '0')} ${
+        String(fechaCreacionCotizacion.getHours()).padStart(2, '0')}:${
+        String(fechaCreacionCotizacion.getMinutes()).padStart(2, '0')}`;
+        
+      return {
+        folio: detalle.folio,
+        localidadOrigenName: detalle.localidadOrigenName,
+        localidadOrigenCodigo: detalle.localidadOrigenCodigo,
+        localidadOrigenTipoCobro: detalle.localidadOrigenTipoCobro,
+        localidadDestinoName: detalle.localidadDestinoName,
+        localidadDestinoCodigo: detalle.localidadDestinoCodigo,
+        localidadDestinoTipoCobro: detalle.localidadDestinoTipoCobro,
+        unidadMarca: detalle.unidadMarca,
+        unidadModelo: detalle.unidadModelo,
+        trasladoTipo: detalle.trasladoTipo,
+        trasladoConcepto: detalle.trasladoConcepto,
+        tipoViajeName: detalle.tipoViajeName,
+        manual: detalle.manual,
+        dimensiones: detalle.dimensiones,
+        fechacreacionsolicitud: detalle.createdAt,
+        // Datos de historial
+        kms: historialData.kms,
+        rendimiento: historialData.rendimiento,
+        litros: historialData.litros,
+        diesel: historialData.diesel,
+        comidas: historialData.comidas,
+        pasajeOrigen: historialData.pasajeOrigen,
+        pasajeDestino: historialData.pasajeDestino,
+        peajesViapass: historialData.peajesViapass,
+        seguroTraslado: historialData.seguroTraslado,
+        sueldo: historialData.sueldo,
+        pagoEstadia: historialData.pagoEstadia,
+        subTotal: historialData.subTotal,
+        admon: historialData.admon,
+        total: historialData.total,
+        inflacion: historialData.inflacion,
+        financiamiento: historialData.financiamiento,
+        ganancia: historialData.ganancia,
+        costo: historialData.costo,
+        fechacreacioncotizacion: historialData.fechaCreacion,
+        "fechacreacioncotizacions": formattedFechaCreacionCotizacion
+
+      };
+    }));
+
+    res.formatResponse('ok', 200, 'Detalles de la solicitud encontrados con éxito', detallesEnriquecidos);
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const createQuote011 = async (req, res) => {
@@ -1294,6 +1549,11 @@ const getQuoteHistoryByFolio = async (req, res) => {
 module.exports = {
   createSolicitud,
   getCotizacionByFolio,
+  getSolicitudesSimples,
+  getSolicitudesByClienteId,
+  getSolicitudesByUserId,
+  getSolicitudDetalleByFolio,
+
   createQuote01,
   getQuotes01,
   getQuoteDetailsByFolio,
