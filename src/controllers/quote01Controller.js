@@ -282,6 +282,9 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
 
       v_kms=peaje ? peaje.kms : 0;
       v_rend = rendimiento ? rendimiento.rendimiento : 0;
+      if (v_tipoViaje === 2) {
+        v_rend -= 1;
+      }
       v_totalLitros = v_kms / v_rend;
       v_costoDiesel = configureData ? configureData.combustible : 0;
       v_diesel = v_costoDiesel * v_totalLitros;
