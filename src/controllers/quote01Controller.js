@@ -623,6 +623,58 @@ const getSolicitudDetalleByFolio = async (req, res) => {
   }
 };
 
+const getSolicitudDetallesimpleByFolio = async (req, res) => {
+  try {
+    const { folio } = req.params;
+    const folioNum = parseInt(folio, 10);
+
+    const detallesSolicitud = await SolicitudDetalleModel.find({ folio: folioNum });
+    if (detallesSolicitud.length === 0) {
+      return res.formatResponse('ok', 204, 'No se encontraron detalles para la solicitud con el folio especificado', []);
+    }
+
+    const detallesEnriquecidos = await Promise.all(detallesSolicitud.map(async (detalle) => {
+      const ultimoHistorial = await CotizacionHistorialModel.findOne({ quoteId: detalle._id })
+        .sort({ fechaCreacion: -1 });
+
+      let historialData = ultimoHistorial ? ultimoHistorial.toObject() : {};
+      
+      const fechaCreacionCotizacion = new Date(historialData.fechaCreacion);
+      const formattedFechaCreacionCotizacion = `${fechaCreacionCotizacion.getFullYear()}/${
+        String(fechaCreacionCotizacion.getMonth() + 1).padStart(2, '0')}/${
+        String(fechaCreacionCotizacion.getDate()).padStart(2, '0')} ${
+        String(fechaCreacionCotizacion.getHours()).padStart(2, '0')}:${
+        String(fechaCreacionCotizacion.getMinutes()).padStart(2, '0')}`;
+        
+      return {
+        folio: detalle.folio,
+        localidadOrigenName: detalle.localidadOrigenName,
+        localidadOrigenCodigo: detalle.localidadOrigenCodigo,
+        localidadOrigenTipoCobro: detalle.localidadOrigenTipoCobro,
+        localidadDestinoName: detalle.localidadDestinoName,
+        localidadDestinoCodigo: detalle.localidadDestinoCodigo,
+        localidadDestinoTipoCobro: detalle.localidadDestinoTipoCobro,
+        unidadMarca: detalle.unidadMarca,
+        unidadModelo: detalle.unidadModelo,
+        trasladoTipo: detalle.trasladoTipo,
+        trasladoConcepto: detalle.trasladoConcepto,
+        tipoViajeName: detalle.tipoViajeName,
+        manual: detalle.manual,
+        dimensiones: detalle.dimensiones,
+        fechacreacionsolicitud: detalle.createdAt,
+      };
+    }));
+
+    res.formatResponse('ok', 200, 'Detalles de la solicitud encontrados con éxito', detallesEnriquecidos);
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
+
+
+
 
 
 
@@ -1553,6 +1605,7 @@ module.exports = {
   getSolicitudesByClienteId,
   getSolicitudesByUserId,
   getSolicitudDetalleByFolio,
+  getSolicitudDetallesimpleByFolio,
 
   createQuote01,
   getQuotes01,

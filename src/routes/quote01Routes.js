@@ -23,6 +23,9 @@ router.put('/quotes01/cancel/:folio', verifyToken,formatResponse, quote01Control
 router.post('/v2/solicitud/01', verifyToken, formatResponse, quote01Controller.createSolicitud);
 router.get('/v2/cotizacion/:folio', verifyToken, formatResponse, quote01Controller.getCotizacionByFolio);
 router.get('/v2/solicitud/detalle/:folio', verifyToken, formatResponse, quote01Controller.getSolicitudDetalleByFolio);
+router.get('/v2/solicitud/detallesimple/:folio', verifyToken, formatResponse, quote01Controller.getSolicitudDetallesimpleByFolio);
+
+
 
 
 
