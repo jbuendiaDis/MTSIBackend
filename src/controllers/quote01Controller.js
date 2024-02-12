@@ -14,6 +14,8 @@ const SolicitudModel = require('../models/solicitud');
 const ClienteModel  = require('../models/clients');
 const SolicitudDetalleModel = require('../models/solicitudDetalle');
 const UserModel  = require('../models/User');
+const SolicitudDetailModel = require('../models/solicitudDetailModel'); // Ajusta la ruta según tu estructura
+
 
 
 const responseError = require('../functions/responseError');
@@ -214,7 +216,7 @@ for (const detalle of solicitudDetalle) {
 
   if (!peaje) {
     // Agregar al array los códigos de origen y destino que no tienen peaje
-    rutasFaltantes.push(`de ${detalle.localidadOrigenCodigo} a ${detalle.localidadDestinoCodigo}`);
+    rutasFaltantes.push(`de ${detalle.localidadOrigenName} a ${detalle.localidadDestinoName}`);
   }
 }
 
@@ -686,6 +688,27 @@ const getSolicitudDetallesimpleByFolio = async (req, res) => {
   }
 };
 
+
+
+ 
+const sendSolicitudDetails = async (req, res) => {
+  try {
+    const { folio, mensaje } = req.body;
+
+    // Validación de los datos requeridos
+    if (folio === undefined || mensaje === undefined) {
+      return res.formatResponse('error', 400, 'Faltan datos requeridos: folio y/o mensaje.', []);
+    }
+
+    const newDetail = await SolicitudDetailModel.create({ folio, mensaje });
+    res.formatResponse('ok', 200, 'Detalle de solicitud guardado exitosamente.', newDetail);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+
+ 
 
 
 
@@ -1620,6 +1643,7 @@ module.exports = {
   getSolicitudesByUserId,
   getSolicitudDetalleByFolio,
   getSolicitudDetallesimpleByFolio,
+  sendSolicitudDetails,
 
   createQuote01,
   getQuotes01,
