@@ -226,7 +226,11 @@ if (rutasFaltantes.length > 0) {
 // Continuar con el procesamiento si todas las rutas existen...
 
 const configureData = await configureDataModel.findOne({ status: 'Activo' });
-    
+
+
+    // Variable para llevar el control de si es la primera iteración
+    let primeraIteracion = true;
+
     const response = await Promise.all(solicitudDetalle.map(async (detalle) => {
 
       //console.log("detalle:",detalle);
@@ -290,6 +294,13 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
       v_diesel = v_costoDiesel * v_totalLitros;
       v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
       v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
+      if (v_tipoViaje === 3 && !primeraIteracion) {
+        v_costoPasajeOrigen = 0;
+      } else {
+        primeraIteracion = false; // Cambiar el estado de la primera iteración después de la primera vuelta
+      }
+
+
       v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
       v_totalPeajes = peaje ? peaje.totalPeajes : 0;
       v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
