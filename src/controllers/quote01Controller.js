@@ -209,6 +209,8 @@ const getCotizacionByFolio = async (req, res) =>{
     let rutasFaltantes = [];
 
 for (const detalle of solicitudDetalle) {
+  console.log("detalle.localidadOrigenCodigo.toString():",detalle.localidadOrigenCodigo.toString());
+  console.log("detalle.localidadDestinoCodigo.toString():",detalle.localidadDestinoCodigo.toString());
   const peaje = await Peajes.findOne({
     localidadOrigen: detalle.localidadOrigenCodigo.toString(),
     localidadDestino: detalle.localidadDestinoCodigo.toString(),
@@ -237,24 +239,41 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
 
       //console.log("detalle:",detalle);
 
-      let v_kms=-1;
-      let v_rend=-1;
-      let v_totalLitros=-1;
-      let v_diesel=-1;
-      let v_comidas=-1;
-      let v_costoPasajeOrigen=-1;
-      let v_costoPasajeDestino=-1;
-      let v_totalPeajes=-1;
-      let v_seguroTraslado=-1;
-      let v_sueldo=-1;
-      let v_pagoEstadia=-1;
-      let v_subtotal=-1;
-      let v_admon=-1;
-      let v_total=-1;
-      let v_inflacion=-1;
-      let v_financiamiento=-1;
-      let v_ganancia=-1;
-      let v_costoTotal=-1;
+      let v_kms=0;
+      let v_rend=0;
+      let v_totalLitros=0;
+      let v_diesel=0;
+      let v_comidas=0;
+      let v_costoPasajeOrigen=0;
+      let v_costoPasajeDestino=0;
+      let v_totalPeajes=0;
+      let v_seguroTraslado=0;
+
+      //let v_pagoEstadia=0; 	
+      let v_ferry=0; 	
+      let v_hotel=0;	
+      let v_vuelo=0; 	
+      let v_taxi=0;	
+      let v_udsUsa=0;	
+      let v_liberacionPuerto=0;	
+      let v_talachas=0;
+      let v_fitosanitarias=0; 	
+      let v_urea=0;	
+      let v_extra=0;
+
+
+
+
+
+      let v_sueldo=0;
+      let v_pagoEstadia=0;
+      let v_subtotal=0;
+      let v_admon=0;
+      let v_total=0;
+      let v_inflacion=0;
+      let v_financiamiento=0;
+      let v_ganancia=0;
+      let v_costoTotal=0;
 
 
       // Buscar el documento de Peajes(rutas) que coincide con origenId y destinoId
@@ -272,6 +291,13 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
       const traslado = await TrasladoModel.findById(detalle.trasladoId);
       const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: "limite sueldos" });
       const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: "PorcentajeAdmon" });
+
+      const limiteKmHotelBandera = await BanderaModel.findOne({ nombre: "limiteKmHotel" });
+      const costoNocheHotelBandera = await BanderaModel.findOne({ nombre: "costoNocheHotel" });
+      const limiteKmHotel = limiteKmHotelBandera ? limiteKmHotelBandera.valor : 800;
+  const costoNocheHotel = costoNocheHotelBandera ? costoNocheHotelBandera.valor : 400;
+
+    
 
 
 
@@ -306,16 +332,47 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
       v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
       v_totalPeajes = peaje ? peaje.totalPeajes : 0;
       v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
+
+      v_ferry = gastos && gastos.ferry ? gastos.ferry : 0;
+      v_hotel = gastos && gastos.hotel ? gastos.hotel : 0;
+
+      // Cálculo para hoteles basado en los kilómetros totales
+      let nochesHotel = Math.ceil(v_kms / limiteKmHotel); // Usa el valor de la bandera
+    v_hotel = nochesHotel * costoNocheHotel;
+
+      v_vuelo = gastos && gastos.vuelo ? gastos.vuelo : 0;
+      v_taxi = gastos && gastos.taxi ? gastos.taxi : 0;
+      v_udsUsa = gastos && gastos.udsUsa ? gastos.udsUsa : 0;
+      v_liberacionPuerto = gastos && gastos.liberacionPuerto ? gastos.liberacionPuerto : 0;
+      v_talachas = gastos && gastos.talachas ? gastos.talachas : 0;
+      v_fitosanitarias = gastos && gastos.fitosanitarias ? gastos.fitosanitarias : 0;
+      v_urea = gastos && gastos.urea ? gastos.urea : 0;
+      v_extra = gastos && gastos.extra ? gastos.extra : 0;
+
       v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
       v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
       v_subtotal = v_diesel + 
-                 v_comidas + 
-                 v_costoPasajeOrigen + 
-                 v_costoPasajeDestino + 
-                 v_totalPeajes +   
-                 v_seguroTraslado + 
-                 v_sueldo + 
-                 v_pagoEstadia;
+             v_comidas + 
+             v_costoPasajeOrigen + 
+             v_costoPasajeDestino + 
+             v_totalPeajes +   
+             v_seguroTraslado + 
+             v_sueldo + 
+             v_pagoEstadia +
+             v_ferry + 
+             v_hotel + 
+             v_vuelo + 
+             v_taxi + 
+             v_udsUsa + 
+             v_liberacionPuerto + 
+             v_talachas + 
+             v_fitosanitarias + 
+             v_urea + 
+             v_extra;
+      
+      
+
+
       v_admon = (v_subtotal * porcentajeAdmon) / 100;
       v_total = v_subtotal + v_admon + v_otrosGastos;
       v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
@@ -349,6 +406,16 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
         seguroTraslado: v_seguroTraslado,
         sueldo: v_sueldo,
         pagoEstadia: v_pagoEstadia,
+        hotel: v_hotel,  
+        vuelo: v_vuelo,
+        taxi: v_taxi,
+        ferry: v_ferry,
+        udsUsa: v_udsUsa,
+        liberacionPuerto: v_liberacionPuerto,
+        talachas: v_talachas,
+        fitosanitarias: v_fitosanitarias,
+        urea: v_urea,
+        extra: v_extra,
         subTotal: v_subtotal,
         admon: v_admon,
         total: v_total,
@@ -376,6 +443,19 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
         pasajeDestino: parseFloat(v_costoPasajeDestino.toFixed(2)),
         peajesViapass: parseFloat(v_totalPeajes.toFixed(2)),
         seguroTraslado: parseFloat(v_seguroTraslado.toFixed(2)),
+
+        hotel: parseFloat(v_hotel.toFixed(2)),
+        vuelo: parseFloat(v_vuelo.toFixed(2)),
+        taxi: parseFloat(v_taxi.toFixed(2)),
+        ferry: parseFloat(v_ferry.toFixed(2)),
+        udsUsa: parseFloat(v_udsUsa.toFixed(2)),
+        liberacionPuerto: parseFloat(v_liberacionPuerto.toFixed(2)),
+        talachas: parseFloat(v_talachas.toFixed(2)),
+        fitosanitarias: parseFloat(v_fitosanitarias.toFixed(2)),
+        urea: parseFloat(v_urea.toFixed(2)),
+        extra: parseFloat(v_extra.toFixed(2)),
+
+
         sueldo: parseFloat(v_sueldo.toFixed(2)),
 
         pagoEstadia: parseFloat(v_pagoEstadia.toFixed(2)),
