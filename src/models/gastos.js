@@ -8,8 +8,7 @@ const gastosSchema = new mongoose.Schema({
   },
   rutaId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Peajes',
-    required: true,
+    ref: 'Peajes'
   },
   pasajeOrigen: Number,
   pasajeDestino: Number,

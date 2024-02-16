@@ -57,7 +57,7 @@ const createPeaje = async (req, res) => {
     });
 
     await peajes.save();
-    res.formatResponse('ok', 200, 'Gastos registrado con éxito.', peajes);
+    res.formatResponse('ok', 200, 'Ruta registrada con éxito.', peajes);
   } catch (error) {
     await responseError(409, error, res);
   }
