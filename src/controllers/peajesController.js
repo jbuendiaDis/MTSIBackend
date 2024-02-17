@@ -28,26 +28,10 @@ const createPeaje = async (req, res) => {
       return;
     }
 
-    // Buscar el registro de gastos para las localidades proporcionadas
-    const gastosQuery = {
-      localidadOrigen,
-      localidadDestino,
-    };
-
-    let gastos = await Gastos.findOne(gastosQuery);
-
-    if (!gastos) {
-      gastos = new Gastos({
-        ...gastosQuery,
-        idCliente: req.user.data.id,
-      });
-      await gastos.save();
-    }
-
     const totalPeajes = puntos.reduce((total, punto) => total + punto.costo, 0);
 
     const peajes = new Peajes({
-      idgasto: gastos._id,
+      //idgasto: gastos._id,
       localidadOrigen,
       localidadDestino,
       kms,

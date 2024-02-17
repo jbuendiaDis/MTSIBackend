@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const peajesSchema = new mongoose.Schema({
-  idgasto: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Gastos',
-  },
   localidadOrigen: String,
   localidadDestino: String,
   kms: Number,
