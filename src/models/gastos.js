@@ -23,7 +23,7 @@ const gastosSchema = new mongoose.Schema({
   fitosanitarias: Number,
   urea: Number,
   extra: Number,
-  peajes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Peajes' }]
+  //peajes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Peajes' }]
 });
 
 const Gastos = mongoose.model('Gastos', gastosSchema);
