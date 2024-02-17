@@ -21,6 +21,6 @@ const peajesSchema = new mongoose.Schema({
   totalPeajes: Number,
 });
 
-const Peajes = mongoose.model('Peajes', peajesSchema);
+const Peajes = mongoose.model('Ruta', peajesSchema);
 
 module.exports = Peajes;
