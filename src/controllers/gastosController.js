@@ -1,4 +1,5 @@
 const Gastos = require('../models/gastos');
+const GastosModel = require('../models/gastos');
 const Peajes = require('../models/peajes');
 const responseError = require('../functions/responseError');
 
@@ -31,66 +32,53 @@ const getGastos = async (req, res) => {
 // Controlador para obtener un registro de gastos por su ID
 const getGastosById = async (req, res) => {
   try {
-    const gastos = await Gastos.findById(req.params.id);
-    if (!gastos) {
-      await responseError(204, 'Registro de gastos no encontrado.', res);
+    // Ahora gasto es un solo documento, no un array
+    const gasto = await Gastos.findById(req.params.id);
+
+    if (!gasto) {
+      return res.formatResponse('error', 404, 'Gasto no encontrado', {});
     }
-    res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
+
+    // No necesitas mapear ya que es un solo documento
+    const ruta = await Peajes.findById(gasto.rutaId);
+    if (!ruta) {
+      // Maneja el caso en que la ruta no se encuentre
+      console.log('Ruta no encontrada para el gasto con id:', gasto._id);
+      // Puedes decidir cómo manejar este caso, por ejemplo, devolver el gasto sin los nombres de origen y destino
+      return res.formatResponse('ok', 200, 'Consulta exitosa, pero ruta no encontrada', gasto.toObject());
+    }
+
+    const nombreOrigen = await getDestinationName(ruta.localidadOrigen);
+    const nombreDestino = await getDestinationName(ruta.localidadDestino);
+
+    const gastosConPeajes = {
+      ...gasto.toObject(),
+      nombreOrigen: nombreOrigen,
+      nombreDestino: nombreDestino
+    };
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastosConPeajes);
   } catch (error) {
-    await responseError(409, error, res);
+      await responseError(409, error, res);
   }
 };
 
-// Controlador gastos con peages
-const getGastosConPeajesOld = async (req, res) => {
+
+const getGastosConPeajes_ok = async (req, res) => {
   try {
-    const gastos = await Gastos.find();
+    const gastosList = await GastosModel.find();
 
-    for (const gasto of gastos) {
-      const peajesRelacionados = await Peajes.find({ idgasto: gasto._id });
-      gasto.peajes = peajesRelacionados;
-    }
+    const gastosConPeajes = await Promise.all(gastosList.map(async (gasto) => {
 
-    res.formatResponse('ok', 200, 'Consulta exitosa', gastos);
-  } catch (error) {
-    await responseError(409, error, res);
-  }
-};
-
-
-const getGastosConPeajes = async (req, res) => {
-  try {
-    const gastos = await Gastos.find();
-
-    const gastosConPeajes = await Promise.all(gastos.map(async (gasto) => {
-      let nombreOrigen, nombreDestino, idEstadoOrigen, idEstadoDestino;  
-
-      const peajesRelacionados = await Peajes.find({ idgasto: gasto._id });
-      const peajesWithDestinationNames = await Promise.all(
-        peajesRelacionados.map(async (peaje) => {
-          nombreOrigen = await getDestinationName(peaje.localidadOrigen);
-          nombreDestino = await getDestinationName(peaje.localidadDestino);
-          idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
-          idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
-
-          console.log("nombreOrigen->", nombreOrigen);
-          console.log("nombreDestino->", nombreDestino);
-          console.log("idEstadoOrigen->", idEstadoOrigen);
-          console.log("idEstadoDestino->", idEstadoDestino);
-
-          return {
-            ...peaje.toObject(),
-          };
-        })
-      );
+      const ruta = await Peajes.findById(gasto.rutaId);
+      const nombreOrigen = await getDestinationName(ruta.localidadOrigen);
+      const nombreDestino = await getDestinationName(ruta.localidadDestino);
 
       return {
         ...gasto.toObject(),
         nombreOrigen: nombreOrigen,
-        nombreDestino: nombreDestino,
-        idEstadoOrigen: idEstadoOrigen,
-        idEstadoDestino: idEstadoDestino,
-        peajes: peajesWithDestinationNames,
+        nombreDestino: nombreDestino
+        
       };
     }));
 
@@ -99,6 +87,39 @@ const getGastosConPeajes = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
+
+const getGastosConPeajes = async (req, res) => {
+  try {
+    const gastosList = await GastosModel.find();
+
+    const gastosConPeajes = await Promise.all(gastosList.map(async (gasto) => {
+      const ruta = await Peajes.findById(gasto.rutaId);
+      const peajes = ruta ? ruta.puntos : [];
+      const peajesCostos = peajes.reduce((acc, curr) => acc + curr.costo, 0);
+
+      const nombreOrigen = ruta ? await getDestinationName(ruta.localidadOrigen) : null;
+      const nombreDestino = ruta ? await getDestinationName(ruta.localidadDestino) : null;
+      const kilometraje = ruta ? ruta.kms : 0; // Accede al kilometraje de la ruta
+
+      return {
+        ...gasto.toObject(),
+        nombreOrigen: nombreOrigen,
+        nombreDestino: nombreDestino,
+        peajes: peajes, // La lista de peajes
+        peajesCostos: peajesCostos, // La suma de los costos de los peajes
+        kms: kilometraje // El kilometraje total de la ruta
+      };
+    }));
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', gastosConPeajes);
+  } catch (error) {
+    await responseError(409, error, res);
+  }
+};
+
+
+
 
 
 
