@@ -146,7 +146,7 @@ const deletePeaje = async (req, res) => {
 
 const GastosModel = require('../models/gastos'); // Asume que este es tu modelo de gastos
  
-const listarRutasSinGasto = async (req, res) => {
+const listarRutasSinGasto_old = async (req, res) => {
   try {
     // Obtener todos los IDs de ruta que están ligados a algún gasto
     const gastos = await GastosModel.find().select('rutaId -_id');
@@ -156,6 +156,38 @@ const listarRutasSinGasto = async (req, res) => {
     const rutasSinGasto = await Peajes.find({
       _id: { $nin: rutaIdsConGasto }
     });
+
+    res.formatResponse('ok', 200, 'Rutas sin gastos encontradas', rutasSinGasto);
+  } catch (error) {
+    console.error('Error al buscar rutas sin gastos:', error);
+    // Asume que responseError es una función de manejo de errores
+    await responseError(409, error, res);
+  }
+};
+
+
+const listarRutasSinGasto = async (req, res) => {
+  try {
+    // Obtener todos los IDs de ruta que están ligados a algún gasto
+    const gastos = await GastosModel.find().select('rutaId -_id');
+    const rutaIdsConGasto = gastos.map(gasto => gasto.rutaId);
+
+    // Buscar todas las rutas que NO están en la lista de IDs obtenida
+    let rutasSinGasto = await Peajes.find({
+      _id: { $nin: rutaIdsConGasto }
+    });
+
+    // Enriquecer cada ruta con nombreOrigen y nombreDestino
+    rutasSinGasto = await Promise.all(rutasSinGasto.map(async (ruta) => {
+      const nombreOrigen = await getDestinationName(ruta.localidadOrigen);
+      const nombreDestino = await getDestinationName(ruta.localidadDestino);
+      
+      return {
+        ...ruta.toObject(), // Asume que ruta es un documento de Mongoose y necesitas convertirlo a objeto
+        nombreOrigen,
+        nombreDestino,
+      };
+    }));
 
     res.formatResponse('ok', 200, 'Rutas sin gastos encontradas', rutasSinGasto);
   } catch (error) {
