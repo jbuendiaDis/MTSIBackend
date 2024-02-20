@@ -22,7 +22,9 @@ const gastosSchema = new mongoose.Schema({
   talachas: Number,
   fitosanitarias: Number,
   urea: Number,
-  extra: Number
+  extra: Number,
+  seguroTraslado: Number,
+  pagoEstadia: Number,
 });
 
 const Gastos = mongoose.model('Gastos', gastosSchema);

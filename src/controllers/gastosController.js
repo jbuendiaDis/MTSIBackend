@@ -64,31 +64,6 @@ const getGastosById = async (req, res) => {
 };
 
 
-const getGastosConPeajes_ok = async (req, res) => {
-  try {
-    const gastosList = await GastosModel.find();
-
-    const gastosConPeajes = await Promise.all(gastosList.map(async (gasto) => {
-
-      const ruta = await Peajes.findById(gasto.rutaId);
-      const nombreOrigen = await getDestinationName(ruta.localidadOrigen);
-      const nombreDestino = await getDestinationName(ruta.localidadDestino);
-
-      return {
-        ...gasto.toObject(),
-        nombreOrigen: nombreOrigen,
-        nombreDestino: nombreDestino
-        
-      };
-    }));
-
-    res.formatResponse('ok', 200, 'Consulta exitosa', gastosConPeajes);
-  } catch (error) {
-    await responseError(409, error, res);
-  }
-};
-
-
 const getGastosConPeajes = async (req, res) => {
   try {
     const gastosList = await GastosModel.find();
