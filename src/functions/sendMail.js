@@ -1,24 +1,35 @@
 const nodemailer = require('nodemailer');
 const generarCorreoHTML = require('../utils/generarCorreoHTML');
+require('dotenv').config(); // Cargar variables de entorno desde el archivo .env
 
+const emailMTS = process.env.EMAIL;
+const pwMTS = process.env.SMTP_PW;
+console.log({
+  user: emailMTS, // 'juan.buendia@callytek.com', // Cambia por tu dirección de correo
+  pass: pwMTS, // 'uwwd klbx wkjr iygq', // Cambia por tu contraseña
+});
 // Configura el transporte de Nodemailer
 const transporter = nodemailer.createTransport({
-  service: 'Gmail', // Cambia el proveedor de correo según tu necesidad
+  host: 'mail.mtsi.com.mx', // Cambia el proveedor de correo según tu necesidad
+  port: 26,
+  secure: false,
+  tls: {
+    rejectUnauthorized: false, // Desactivar la validación del nombre de host
+  },
   auth: {
-    user: 'juan.buendia@callytek.com', // Cambia por tu dirección de correo
-    pass: 'uwwd klbx wkjr iygq', // Cambia por tu contraseña
+    user: emailMTS, // 'juan.buendia@callytek.com', // Cambia por tu dirección de correo
+    pass: pwMTS, // 'uwwd klbx wkjr iygq', // Cambia por tu contraseña
   },
 });
 
 async function enviarCorreo(quotesData) {
   try {
+    const { cliente } = quotesData;
     const tablaHTML = generarCorreoHTML(quotesData);
-    console.log(quotesData.cliente);
     const correoOptions = {
-      from: 'juan.buendia@mtsisystem.com',
-      /*       to: 'juan.carlos.buendia@outlook.com', */
-      to: 'feber32@gmail.com',
-      subject: `Cotización ${quotesData[0].cliente}`,
+      from: 'cotizaciones@mtsi.com.mx',
+      to: 'juan.carlos.buendia@outlook.com', // email,
+      subject: `Cotización ${cliente}`,
       html: tablaHTML,
     };
 

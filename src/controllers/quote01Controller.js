@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 const Quote = require('../models/quotes');
 const Peajes = require('../models/peajes');
 const CountryModel = require('../models/country');
@@ -11,19 +11,17 @@ const GananciaModel = require('../models/ganancias');
 const UserClientModel = require('../models/userClient');
 const CotizacionHistorialModel = require('../models/cotizacionHistorialModel');
 const SolicitudModel = require('../models/solicitud');
-const ClienteModel  = require('../models/clients');
+const ClienteModel = require('../models/clients');
 const SolicitudDetalleModel = require('../models/solicitudDetalle');
-const UserModel  = require('../models/User');
-const SolicitudDetailModel = require('../models/solicitudDetailModel'); // Ajusta la ruta según tu estructura
-
-
 
 const responseError = require('../functions/responseError');
-const getClientNameById = require('../functions/getClientNameById');  
-const getUserNameById = require('../functions/getUserNameById'); 
+const getClientNameById = require('../functions/getClientNameById');
+const getUserNameById = require('../functions/getUserNameById');
 const getDestinationName = require('../functions/getDestinationName');
 const CatalogModel = require('../models/catalog');
-
+const UserClient = require('../models/userClient');
+const QuoteHistory = require('../models/cotizacionHistorialModel');
+const enviarCorreo = require('../functions/sendMail');
 
 const createSolicitud = async (req, res) => {
   try {
@@ -34,7 +32,7 @@ const createSolicitud = async (req, res) => {
 
     // Verificar que todos los destinos tienen el mismo tipoViaje
     const primerTipoViaje = destinos[0].tipoViaje;
-    const tiposViajeSonIguales = destinos.every(destino => destino.tipoViaje === primerTipoViaje);
+    const tiposViajeSonIguales = destinos.every((destino) => destino.tipoViaje === primerTipoViaje);
 
     if (!tiposViajeSonIguales) {
       return res.formatResponse('ok', 204, 'Todos los destinos deben tener el mismo tipo de viaje.', []);
@@ -67,20 +65,19 @@ const createSolicitud = async (req, res) => {
       userId: req.user.data.id,
       clienteId: userClient.idCliente.toString(),
       clienteName: cliente.razonSocial,
-      tipoViajeId:tipoViaje._id,
-      tipoViajeName:tipoViaje.descripcion,
-      
+      tipoViajeId: tipoViaje._id,
+      tipoViajeName: tipoViaje.descripcion,
+
     }).save();
 
     // Iterar sobre 'destinos' para crear detalles de la solicitud-------------------------------------------------------------------------------------------------------------
     const detallesPromesas = destinos.map(async (destino) => {
-
       // Realizar la consulta para obtener el dato catalogos basado en el tipoViaje
-      let v_tipoViaje=null;
+      let v_tipoViaje = null;
       const tipoViaje = await CatalogModel.findById(destino.tipoViaje);
-      v_tipoViaje=tipoViaje.descripcion;
+      v_tipoViaje = tipoViaje.descripcion;
 
-      //Consulta tipo traslado
+      // Consulta tipo traslado
       const traslado = await TrasladoModel.findById(destino.tipoTraslado);
 
       // Realizar la consulta para obtener el dato rendimiento basado en el tipoUnidad
@@ -88,38 +85,37 @@ const createSolicitud = async (req, res) => {
 
       // Buscar la localidad de origen y destino en la colección countries
       const origenData = await CountryModel.findById(destino.localidadOrigenId);
-      //console.log("origenData:",origenData);
+      // console.log("origenData:",origenData);
       const destinoData = await CountryModel.findById(destino.localidadDestinoId);
-      //console.log("destinoData:",destinoData);
+      // console.log("destinoData:",destinoData);
 
-      const peaje = await Peajes.findOne({        localidadOrigen: origenData.codigo,        localidadDestino: destinoData.codigo     });
+      const peaje = await Peajes.findOne({ localidadOrigen: origenData.codigo, localidadDestino: destinoData.codigo });
 
-      //console.log("peaje:",peaje);
- 
+      // console.log("peaje:",peaje);
 
       return new SolicitudDetalleModel({
         solicitudId: nuevaSolicitud._id,
         folio: nuevaSolicitud.folio,
         localidadOrigenId: destino.localidadOrigenId,
-        localidadOrigenName:origenData.nombre,
-        localidadOrigenCodigo:origenData.codigo,
-        localidadOrigenTipoCobro:origenData.tipoUnidad,
+        localidadOrigenName: origenData.nombre,
+        localidadOrigenCodigo: origenData.codigo,
+        localidadOrigenTipoCobro: origenData.tipoUnidad,
 
         localidadDestinoId: destino.localidadDestinoId,
-        localidadDestinoName:destinoData.nombre,
-        localidadDestinoCodigo:destinoData.codigo,
-        localidadDestinoTipoCobro:destinoData.tipoUnidad,
+        localidadDestinoName: destinoData.nombre,
+        localidadDestinoCodigo: destinoData.codigo,
+        localidadDestinoTipoCobro: destinoData.tipoUnidad,
 
         unidadId: destino.tipoUnidad,
         unidadMarca: rendimiento.marca,
         unidadModelo: rendimiento.modelo,
         trasladoId: destino.tipoTraslado,
-        trasladoTipo:traslado.tipoTraslado,
-        trasladoConcepto:traslado.concepto,
+        trasladoTipo: traslado.tipoTraslado,
+        trasladoConcepto: traslado.concepto,
         tipoViajeId: destino.tipoViaje,
-        tipoViajeName:v_tipoViaje,
+        tipoViajeName: v_tipoViaje,
         manual: destino.manual,
-        dimensiones: destino.dimensiones
+        dimensiones: destino.dimensiones,
       }).save();
     });
 
@@ -132,11 +128,11 @@ const createSolicitud = async (req, res) => {
   }
 };
 
-const getCotizacionByFolio = async (req, res) =>{
+const getCotizacionByFolio = async (req, res) => {
   try {
     const folio = parseInt(req.params.folio, 10);
-    const solicitud = await SolicitudModel.findOne({ folio: folio });
-    let solicitudDetalle = await SolicitudDetalleModel.find({ folio: folio });
+    const solicitud = await SolicitudModel.findOne({ folio });
+    let solicitudDetalle = await SolicitudDetalleModel.find({ folio });
 
     // Verifica si la solicitud no se encontró
     if (!solicitud) {
@@ -155,126 +151,117 @@ const getCotizacionByFolio = async (req, res) =>{
       return res.formatResponse('ok', 204, 'Tipo de viaje no encontrado.', []);
     }
 
-    let v_tipoViaje=0;
+    let v_tipoViaje = 0;
 
     switch (tipoViaje._id.toString()) {
-      case "657d410b090a350a86310db8": // Rodando
-        v_tipoViaje=1;
-        break;
-        case "657d411f090a350a86310dc0": // Sin rodar
-        v_tipoViaje = 2;
+    case '657d410b090a350a86310db8': // Rodando
+      v_tipoViaje = 1;
+      break;
+    case '657d411f090a350a86310dc0': // Sin rodar
+      v_tipoViaje = 2;
 
-        //TODO:CAmbiar por algo dinamico o catalogo
-        const idUbicacionC = "6582738f73bd91d97dbd8f28";
-        const idUbicacionCName = "Santiago Tianguistenco";
-        const idUbicacionCcodigo = 1428;
-      
-        // Crear nuevo detalle de viaje de C a A (el primer destino original)
-        const viajeDeCA = {
-          ...solicitudDetalle[0].toObject(), // Clonar el primer objeto y ajustar para viaje de C a A
-          localidadOrigenId: idUbicacionC,
-          localidadOrigenName: idUbicacionCName,
-          localidadOrigenCodigo: idUbicacionCcodigo,
+      // TODO:CAmbiar por algo dinamico o catalogo
+      const idUbicacionC = '6582738f73bd91d97dbd8f28';
+      const idUbicacionCName = 'Santiago Tianguistenco';
+      const idUbicacionCcodigo = 1428;
 
-          localidadDestinoId: solicitudDetalle[0].localidadOrigenId,
-          localidadDestinoName:   solicitudDetalle[0].localidadOrigenName, 
-          localidadDestinoCodigo: solicitudDetalle[0].localidadOrigenCodigo, 
-          
-        };
-      
-        // Crear nuevo detalle de viaje de B a C (el último destino original)
-        const viajeDeBC = {
-          ...solicitudDetalle[solicitudDetalle.length - 1].toObject(), // Clonar el último objeto y ajustar para viaje de B a C
-          localidadOrigenId: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoId,
-          localidadOrigenName: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoName, 
-          localidadOrigenCodigo: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoCodigo, 
+      // Crear nuevo detalle de viaje de C a A (el primer destino original)
+      const viajeDeCA = {
+        ...solicitudDetalle[0].toObject(), // Clonar el primer objeto y ajustar para viaje de C a A
+        localidadOrigenId: idUbicacionC,
+        localidadOrigenName: idUbicacionCName,
+        localidadOrigenCodigo: idUbicacionCcodigo,
 
-          localidadDestinoId: idUbicacionC,
-          localidadDestinoName: idUbicacionCName, 
-          localidadDestinoCodigo: idUbicacionCcodigo 
-        };
-      
-        // Insertar los nuevos detalles al inicio y al final del array de detalles
-        solicitudDetalle = [viajeDeCA, ...solicitudDetalle, viajeDeBC];
-        break;
-      case "657d4127090a350a86310dc4": // Local
-        v_tipoViaje=3;
-        break;
-      default:
-        return res.formatResponse('ok', 204, 'Tipo de viaje no válido.', []);
+        localidadDestinoId: solicitudDetalle[0].localidadOrigenId,
+        localidadDestinoName: solicitudDetalle[0].localidadOrigenName,
+        localidadDestinoCodigo: solicitudDetalle[0].localidadOrigenCodigo,
+
+      };
+
+      // Crear nuevo detalle de viaje de B a C (el último destino original)
+      const viajeDeBC = {
+        ...solicitudDetalle[solicitudDetalle.length - 1].toObject(), // Clonar el último objeto y ajustar para viaje de B a C
+        localidadOrigenId: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoId,
+        localidadOrigenName: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoName,
+        localidadOrigenCodigo: solicitudDetalle[solicitudDetalle.length - 1].localidadDestinoCodigo,
+
+        localidadDestinoId: idUbicacionC,
+        localidadDestinoName: idUbicacionCName,
+        localidadDestinoCodigo: idUbicacionCcodigo,
+      };
+
+      // Insertar los nuevos detalles al inicio y al final del array de detalles
+      solicitudDetalle = [viajeDeCA, ...solicitudDetalle, viajeDeBC];
+      break;
+    case '657d4127090a350a86310dc4': // Local
+      v_tipoViaje = 3;
+      break;
+    default:
+      return res.formatResponse('ok', 204, 'Tipo de viaje no válido.', []);
     }
 
-     
-       
-    let rutasFaltantes = [];
+    const rutasFaltantes = [];
 
-for (const detalle of solicitudDetalle) {
-  console.log("detalle.localidadOrigenCodigo.toString():",detalle.localidadOrigenCodigo.toString());
-  console.log("detalle.localidadDestinoCodigo.toString():",detalle.localidadDestinoCodigo.toString());
-  const peaje = await Peajes.findOne({
-    localidadOrigen: detalle.localidadOrigenCodigo.toString(),
-    localidadDestino: detalle.localidadDestinoCodigo.toString(),
-  });
+    for (const detalle of solicitudDetalle) {
+      console.log('detalle.localidadOrigenCodigo.toString():', detalle.localidadOrigenCodigo.toString());
+      console.log('detalle.localidadDestinoCodigo.toString():', detalle.localidadDestinoCodigo.toString());
+      const peaje = await Peajes.findOne({
+        localidadOrigen: detalle.localidadOrigenCodigo.toString(),
+        localidadDestino: detalle.localidadDestinoCodigo.toString(),
+      });
 
-  if (!peaje) {
-    // Agregar al array los códigos de origen y destino que no tienen peaje
-    rutasFaltantes.push(`de ${detalle.localidadOrigenName} a ${detalle.localidadDestinoName}`);
-  }
-}
+      if (!peaje) {
+        // Agregar al array los códigos de origen y destino que no tienen peaje
+        rutasFaltantes.push(`de ${detalle.localidadOrigenName} a ${detalle.localidadDestinoName}`);
+      }
+    }
 
-if (rutasFaltantes.length > 0) {
-  // Si hay rutas faltantes, regresa un error 204 con los detalles de las rutas faltantes
-  return res.formatResponse('ok', 204, `No se encontraron rutas para los siguientes trayectos: ${rutasFaltantes.join(', ')}`, []);
-}
+    if (rutasFaltantes.length > 0) {
+      // Si hay rutas faltantes, regresa un error 204 con los detalles de las rutas faltantes
+      return res.formatResponse('ok', 204, `No se encontraron rutas para los siguientes trayectos: ${rutasFaltantes.join(', ')}`, []);
+    }
 
-// Continuar con el procesamiento si todas las rutas existen...
+    // Continuar con el procesamiento si todas las rutas existen...
 
-const configureData = await configureDataModel.findOne({ status: 'Activo' });
-
+    const configureData = await configureDataModel.findOne({ status: 'Activo' });
 
     // Variable para llevar el control de si es la primera iteración
     let primeraIteracion = true;
 
     const response = await Promise.all(solicitudDetalle.map(async (detalle) => {
+      // console.log("detalle:",detalle);
 
-      //console.log("detalle:",detalle);
+      let v_kms = 0;
+      let v_rend = 0;
+      let v_totalLitros = 0;
+      let v_diesel = 0;
+      let v_comidas = 0;
+      let v_costoPasajeOrigen = 0;
+      let v_costoPasajeDestino = 0;
+      let v_totalPeajes = 0;
+      let v_seguroTraslado = 0;
 
-      let v_kms=0;
-      let v_rend=0;
-      let v_totalLitros=0;
-      let v_diesel=0;
-      let v_comidas=0;
-      let v_costoPasajeOrigen=0;
-      let v_costoPasajeDestino=0;
-      let v_totalPeajes=0;
-      let v_seguroTraslado=0;
+      // let v_pagoEstadia=0;
+      let v_ferry = 0;
+      let v_hotel = 0;
+      let v_vuelo = 0;
+      let v_taxi = 0;
+      let v_udsUsa = 0;
+      let v_liberacionPuerto = 0;
+      let v_talachas = 0;
+      let v_fitosanitarias = 0;
+      let v_urea = 0;
+      let v_extra = 0;
 
-      //let v_pagoEstadia=0; 	
-      let v_ferry=0; 	
-      let v_hotel=0;	
-      let v_vuelo=0; 	
-      let v_taxi=0;	
-      let v_udsUsa=0;	
-      let v_liberacionPuerto=0;	
-      let v_talachas=0;
-      let v_fitosanitarias=0; 	
-      let v_urea=0;	
-      let v_extra=0;
-
-
-
-
-
-      let v_sueldo=0;
-      let v_pagoEstadia=0;
-      let v_subtotal=0;
-      let v_admon=0;
-      let v_total=0;
-      let v_inflacion=0;
-      let v_financiamiento=0;
-      let v_ganancia=0;
-      let v_costoTotal=0;
-
+      let v_sueldo = 0;
+      let v_pagoEstadia = 0;
+      let v_subtotal = 0;
+      let v_admon = 0;
+      let v_total = 0;
+      let v_inflacion = 0;
+      let v_financiamiento = 0;
+      let v_ganancia = 0;
+      let v_costoTotal = 0;
 
       // Buscar el documento de Peajes(rutas) que coincide con origenId y destinoId
       const peaje = await Peajes.findOne({
@@ -286,33 +273,26 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
         localidadOrigen: detalle.localidadOrigenCodigo.toString(),
         localidadDestino: detalle.localidadDestinoCodigo.toString(),
       });
-      const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: "pasajeOrigen" });
-      const banderaPasajeDestino = await BanderaModel.findOne({ nombre: "pasajeDestino" });
+      const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: 'pasajeOrigen' });
+      const banderaPasajeDestino = await BanderaModel.findOne({ nombre: 'pasajeDestino' });
       const traslado = await TrasladoModel.findById(detalle.trasladoId);
-      const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: "limite sueldos" });
-      const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: "PorcentajeAdmon" });
+      const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: 'limite sueldos' });
+      const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: 'PorcentajeAdmon' });
 
-      const limiteKmHotelBandera = await BanderaModel.findOne({ nombre: "limiteKmHotel" });
-      const costoNocheHotelBandera = await BanderaModel.findOne({ nombre: "costoNocheHotel" });
+      const limiteKmHotelBandera = await BanderaModel.findOne({ nombre: 'limiteKmHotel' });
+      const costoNocheHotelBandera = await BanderaModel.findOne({ nombre: 'costoNocheHotel' });
       const limiteKmHotel = limiteKmHotelBandera ? limiteKmHotelBandera.valor : 800;
-  const costoNocheHotel = costoNocheHotelBandera ? costoNocheHotelBandera.valor : 400;
+      const costoNocheHotel = costoNocheHotelBandera ? costoNocheHotelBandera.valor : 400;
 
-    
+      const v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
+      const v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
+      const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5; // Usar 5 como valor predeterminado si no se encuentra
+      const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8; // Usar 8 como valor predeterminado si no se encuentra
 
+      const porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
+      const v_otrosGastos = configureData ? configureData.otros : 0;
 
-
-      let v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
-      let v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
-      const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5;  // Usar 5 como valor predeterminado si no se encuentra
-      const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8;  // Usar 8 como valor predeterminado si no se encuentra
-
-
-      let porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
-      let v_otrosGastos = configureData ? configureData.otros : 0;
-      
-
-
-      v_kms=peaje ? peaje.kms : 0;
+      v_kms = peaje ? peaje.kms : 0;
       v_rend = rendimiento ? rendimiento.rendimiento : 0;
       if (v_tipoViaje === 2) {
         v_rend -= 1;
@@ -328,7 +308,6 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
         primeraIteracion = false; // Cambiar el estado de la primera iteración después de la primera vuelta
       }
 
-
       v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
       v_totalPeajes = peaje ? peaje.totalPeajes : 0;
       v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
@@ -337,8 +316,8 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
       v_hotel = gastos && gastos.hotel ? gastos.hotel : 0;
 
       // Cálculo para hoteles basado en los kilómetros totales
-      let nochesHotel = Math.ceil(v_kms / limiteKmHotel); // Usa el valor de la bandera
-    v_hotel = nochesHotel * costoNocheHotel;
+      const nochesHotel = Math.ceil(v_kms / limiteKmHotel); // Usa el valor de la bandera
+      v_hotel = nochesHotel * costoNocheHotel;
 
       v_vuelo = gastos && gastos.vuelo ? gastos.vuelo : 0;
       v_taxi = gastos && gastos.taxi ? gastos.taxi : 0;
@@ -351,48 +330,44 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
 
       v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
       v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
-      v_subtotal = v_diesel + 
-             v_comidas + 
-             v_costoPasajeOrigen + 
-             v_costoPasajeDestino + 
-             v_totalPeajes +   
-             v_seguroTraslado + 
-             v_sueldo + 
-             v_pagoEstadia +
-             v_ferry + 
-             v_hotel + 
-             v_vuelo + 
-             v_taxi + 
-             v_udsUsa + 
-             v_liberacionPuerto + 
-             v_talachas + 
-             v_fitosanitarias + 
-             v_urea + 
-             v_extra;
-      
-      
-
+      v_subtotal = v_diesel
+             + v_comidas
+             + v_costoPasajeOrigen
+             + v_costoPasajeDestino
+             + v_totalPeajes
+             + v_seguroTraslado
+             + v_sueldo
+             + v_pagoEstadia
+             + v_ferry
+             + v_hotel
+             + v_vuelo
+             + v_taxi
+             + v_udsUsa
+             + v_liberacionPuerto
+             + v_talachas
+             + v_fitosanitarias
+             + v_urea
+             + v_extra;
 
       v_admon = (v_subtotal * porcentajeAdmon) / 100;
       v_total = v_subtotal + v_admon + v_otrosGastos;
       v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
-      porcentajeInflacion  = configureData ? configureData.inflacion : 0;
+      porcentajeInflacion = configureData ? configureData.inflacion : 0;
       v_inflacion = v_total * (porcentajeInflacion / 100);
 
-      const gananciaEntry = await GananciaModel.findOne({ 
+      const gananciaEntry = await GananciaModel.findOne({
         desde: { $lte: v_kms },
-        hasta: { $gte: v_kms }
+        hasta: { $gte: v_kms },
       });
 
       v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
       v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
 
-
       // Aquí guardamos en quote_history
       const quoteHistory = new CotizacionHistorialModel({
         quoteId: detalle._id,
-        folio: folio,
-        clienteNombre:solicitud.clienteName,
+        folio,
+        clienteNombre: solicitud.clienteName,
         origen: detalle.localidadOrigenName,
         destino: detalle.localidadDestinoName,
         kms: v_kms,
@@ -406,7 +381,7 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
         seguroTraslado: v_seguroTraslado,
         sueldo: v_sueldo,
         pagoEstadia: v_pagoEstadia,
-        hotel: v_hotel,  
+        hotel: v_hotel,
         vuelo: v_vuelo,
         taxi: v_taxi,
         ferry: v_ferry,
@@ -423,15 +398,14 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
         financiamiento: v_financiamiento,
         ganancia: v_ganancia,
         costo: v_costoTotal,
-        fechaCreacion: new Date()
+        fechaCreacion: new Date(),
       });
       await quoteHistory.save();
-      
 
       return {
-        //id: detalle._id,
-        //folio: folio,
-        clienteNombre:solicitud.clienteName,
+        // id: detalle._id,
+        // folio: folio,
+        clienteNombre: solicitud.clienteName,
         origen: detalle.localidadOrigenName,
         destino: detalle.localidadDestinoName,
         kms: parseFloat(v_kms.toFixed(2)),
@@ -455,7 +429,6 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
         urea: parseFloat(v_urea.toFixed(2)),
         extra: parseFloat(v_extra.toFixed(2)),
 
-
         sueldo: parseFloat(v_sueldo.toFixed(2)),
 
         pagoEstadia: parseFloat(v_pagoEstadia.toFixed(2)),
@@ -465,19 +438,15 @@ const configureData = await configureDataModel.findOne({ status: 'Activo' });
         inflacion: parseFloat(v_inflacion.toFixed(2)),
         financiamiento: parseFloat(v_financiamiento.toFixed(2)),
         ganancia: parseFloat(v_ganancia.toFixed(2)),
-        costo : parseFloat(v_costoTotal.toFixed(2))
-     
-      };
+        costo: parseFloat(v_costoTotal.toFixed(2)),
 
-    
+      };
     }));
-    
 
     res.formatResponse('ok', 200, 'Datos consultados con éxito.', response);
-} catch (error) {
-  await responseError(409, error, res);
-}
-
+  } catch (error) {
+    await responseError(409, error, res);
+  }
 };
 
 const getSolicitudesSimples = async (req, res) => {
@@ -506,7 +475,7 @@ const getSolicitudesSimples = async (req, res) => {
             tipoViajeDescripcion,
             // detalles: No se incluyen detalles específicos de SolicitudDetalleModel aquí
           };
-        })
+        }),
       );
 
       res.formatResponse('ok', 200, 'Consulta exitosa', solicitudesConNombres);
@@ -540,11 +509,11 @@ const getSolicitudesByClienteId = async (req, res) => {
     // Agregar el nombre del cliente y el nombre del usuario a cada solicitud
     const response = await Promise.all(solicitudes.map(async (solicitud) => {
       const userName = await getUserNameById(solicitud.userId);
-      
+
       return {
         ...solicitud.toObject(),
-        clientName: cliente.razonSocial,  
-        userName: userName || 'Usuario no encontrado'
+        clientName: cliente.razonSocial,
+        userName: userName || 'Usuario no encontrado',
       };
     }));
 
@@ -565,7 +534,7 @@ const getSolicitudesByUserId = async (req, res) => {
       return res.formatResponse('ok', 204, 'Usuario no encontrado.', []);
     }
 
-    const solicitudes = await SolicitudModel.find({ userId: userId })
+    const solicitudes = await SolicitudModel.find({ userId })
       .select('-_id folio estatus createdAt userId tipoViajeId')
       .sort({ folio: -1 }); // Ordena las solicitudes de forma descendente por folio
 
@@ -576,7 +545,7 @@ const getSolicitudesByUserId = async (req, res) => {
     // No es necesario buscar el cliente aquí, ya que el método es específico para el userId
     const response = solicitudes.map((solicitud) => ({
       ...solicitud.toObject(),
-      userName: userName // Incluye el nombre del usuario obtenido previamente
+      userName, // Incluye el nombre del usuario obtenido previamente
     }));
 
     res.formatResponse('ok', 200, 'Consulta exitosa', response);
@@ -585,12 +554,6 @@ const getSolicitudesByUserId = async (req, res) => {
     await responseError(409, error, res);
   }
 };
-
- 
-
-
-
-
 
 const getSolicitudDetalleByFolio_ok = async (req, res) => {
   try {
@@ -610,7 +573,7 @@ const getSolicitudDetalleByFolio_ok = async (req, res) => {
         .sort({ fechaCreacion: -1 });
 
       // Extraer datos de ultimoHistorial directamente
-      let historialData = ultimoHistorial ? {
+      const historialData = ultimoHistorial ? {
         kms: ultimoHistorial.kms,
         rendimiento: ultimoHistorial.rendimiento,
         litros: ultimoHistorial.litros,
@@ -662,15 +625,15 @@ const getSolicitudDetalleByFolio = async (req, res) => {
       const ultimoHistorial = await CotizacionHistorialModel.findOne({ quoteId: detalle._id })
         .sort({ fechaCreacion: -1 });
 
-      let historialData = ultimoHistorial ? ultimoHistorial.toObject() : {};
-      
+      const historialData = ultimoHistorial ? ultimoHistorial.toObject() : {};
+
       const fechaCreacionCotizacion = new Date(historialData.fechaCreacion);
       const formattedFechaCreacionCotizacion = `${fechaCreacionCotizacion.getFullYear()}/${
         String(fechaCreacionCotizacion.getMonth() + 1).padStart(2, '0')}/${
         String(fechaCreacionCotizacion.getDate()).padStart(2, '0')} ${
         String(fechaCreacionCotizacion.getHours()).padStart(2, '0')}:${
         String(fechaCreacionCotizacion.getMinutes()).padStart(2, '0')}`;
-        
+
       return {
         folio: detalle.folio,
         localidadOrigenName: detalle.localidadOrigenName,
@@ -707,7 +670,7 @@ const getSolicitudDetalleByFolio = async (req, res) => {
         ganancia: historialData.ganancia,
         costo: historialData.costo,
         fechacreacioncotizacion: historialData.fechaCreacion,
-        "fechacreacioncotizacions": formattedFechaCreacionCotizacion
+        fechacreacioncotizacions: formattedFechaCreacionCotizacion,
 
       };
     }));
@@ -733,15 +696,15 @@ const getSolicitudDetallesimpleByFolio = async (req, res) => {
       const ultimoHistorial = await CotizacionHistorialModel.findOne({ quoteId: detalle._id })
         .sort({ fechaCreacion: -1 });
 
-      let historialData = ultimoHistorial ? ultimoHistorial.toObject() : {};
-      
+      const historialData = ultimoHistorial ? ultimoHistorial.toObject() : {};
+
       const fechaCreacionCotizacion = new Date(historialData.fechaCreacion);
       const formattedFechaCreacionCotizacion = `${fechaCreacionCotizacion.getFullYear()}/${
         String(fechaCreacionCotizacion.getMonth() + 1).padStart(2, '0')}/${
         String(fechaCreacionCotizacion.getDate()).padStart(2, '0')} ${
         String(fechaCreacionCotizacion.getHours()).padStart(2, '0')}:${
         String(fechaCreacionCotizacion.getMinutes()).padStart(2, '0')}`;
-        
+
       return {
         folio: detalle.folio,
         localidadOrigenName: detalle.localidadOrigenName,
@@ -768,45 +731,57 @@ const getSolicitudDetallesimpleByFolio = async (req, res) => {
   }
 };
 
-
-
- 
 const sendSolicitudDetails = async (req, res) => {
   try {
     const { folio, mensaje } = req.body;
+    const token = req.header('Authorization');
 
-    // Validación de los datos requeridos
+    const decoded = jwt.verify(token.split(' ')[1], process.env.TOKEN_SECRET);
+    const { data } = decoded;
+
     if (folio === undefined || mensaje === undefined) {
-      return res.formatResponse('error', 400, 'Faltan datos requeridos: folio y/o mensaje.', []);
+      res.formatResponse('error', 400, 'Faltan datos requeridos: folio y/o mensaje.', []);
+      return;
     }
 
-    const newDetail = await SolicitudDetailModel.create({ folio, mensaje });
-    res.formatResponse('ok', 200, 'Detalle de solicitud guardado exitosamente.', newDetail);
+    const folioNum = parseInt(folio, 10);
+
+    const solicitud = await SolicitudModel.find({ folio: 1 });
+
+    const dataUserClient = await UserClient.findById(solicitud[0].userId);
+    const detallesSolicitud = await SolicitudDetalleModel.find({ folio: folioNum });
+    const cotizacionesConDetalles = await Promise.all(detallesSolicitud.map(async (cotizacion) => {
+      const quoteHistory = await QuoteHistory.findOne({ quoteId: cotizacion._id }).exec();
+      const { _doc } = quoteHistory;
+      const coast = _doc.costo;
+      const origen = cotizacion.localidadOrigenName;
+      const arrived = cotizacion.localidadDestinoName;
+      const model = cotizacion.unidadModelo;
+      return {
+        origen,
+        destino: arrived,
+        modelo: model,
+        costo: coast,
+      };
+    }));
+
+    enviarCorreo({
+      cliente: dataUserClient.nombreCliente,
+      nameClient: dataUserClient.nombre,
+      message: mensaje,
+      nameUser: `${data.name} ${data.lastname}`,
+      userPuesto: data.position,
+      clientPuesto: dataUserClient.puesto,
+      firma: 'https://upload.wikimedia.org/wikipedia/commons/7/73/Firma_Lic.Len%C3%ADn_Moreno.png',
+      destinos: cotizacionesConDetalles,
+    });
+    // const newDetail = await SolicitudDetailModel.create({ folio, mensaje });
+
+    res.formatResponse('ok', 200, 'Detalle de solicitud guardado exitosamente.', 'detalle');
   } catch (error) {
     await responseError(409, error, res);
   }
 };
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const createQuote011 = async (req, res) => {
   try {
@@ -846,7 +821,6 @@ const createQuote011 = async (req, res) => {
   }
 };
 
-
 const createQuote01_old = async (req, res) => {
   try {
     const { destinos } = req.body;
@@ -864,7 +838,9 @@ const createQuote01_old = async (req, res) => {
     }
 
     const quotes = await Promise.all(destinos.map(async (destino) => {
-      const { localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus } = destino;
+      const {
+        localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus,
+      } = destino;
 
       // Obtener el último folio registrado
       const lastQuote = await Quote.findOne().sort({ folio: -1 });
@@ -882,7 +858,7 @@ const createQuote01_old = async (req, res) => {
         estatus,
         folio: newFolio,
         userId: req.user.data.id, // Agregado el campo userId
-        clienteId:userClient.idCliente.toString()
+        clienteId: userClient.idCliente.toString(),
       });
 
       // Guardar el nuevo registro
@@ -890,12 +866,10 @@ const createQuote01_old = async (req, res) => {
     }));
 
     res.formatResponse('ok', 200, 'Quotes registrados con éxito.', quotes);
-
   } catch (error) {
     await responseError(409, error, res);
   }
 };
-
 
 const createQuote01 = async (req, res) => {
   try {
@@ -911,7 +885,9 @@ const createQuote01 = async (req, res) => {
     }
 
     const quotes = await Promise.all(destinos.map(async (destino) => {
-      const { localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus,manual, dimensiones } = destino;
+      const {
+        localidadOrigenId, localidadDestinoId, tipoUnidad, tipoTraslado, tipoViaje, estatus, manual, dimensiones,
+      } = destino;
 
       const localidadOrigen = await CountryModel.findById(localidadOrigenId);
       const localidadDestino = await CountryModel.findById(localidadDestinoId);
@@ -924,7 +900,7 @@ const createQuote01 = async (req, res) => {
 
       const rutaExiste = await Peajes.findOne({
         localidadOrigen: localidadOrigen.codigo,
-        localidadDestino: localidadDestino.codigo
+        localidadDestino: localidadDestino.codigo,
       });
 
       if (rutaExiste) {
@@ -944,9 +920,9 @@ const createQuote01 = async (req, res) => {
         folio: newFolio,
         userId: req.user.data.id,
         clienteId: userClient.idCliente.toString(),
-        manual, 
+        manual,
         dimensiones,
-        existeRuta:existeRuta
+        existeRuta,
       });
 
       return quote.save();
@@ -958,7 +934,6 @@ const createQuote01 = async (req, res) => {
     res.formatResponse('error', 409, error.message, []);
   }
 };
-
 
 const getQuotes01 = async (req, res) => {
   try {
@@ -982,7 +957,7 @@ const getQuotes01 = async (req, res) => {
             ...quote.toObject(),
             clientName,
           };
-        })
+        }),
       );
 
       res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithClientName);
@@ -993,7 +968,6 @@ const getQuotes01 = async (req, res) => {
     await responseError(409, error, res);
   }
 };
-
 
 const getQuotesByClientId = async (req, res) => {
   try {
@@ -1028,12 +1002,11 @@ const getQuotesByClientId = async (req, res) => {
   }
 };
 
-
 const getQuotesByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const quotes = await Quote.find({ userId: userId }).select('folio origenId destinoId tipoUnidad tipoTraslado tipoViaje _id estatus fechaCreacion userId');
+    const quotes = await Quote.find({ userId }).select('folio origenId destinoId tipoUnidad tipoTraslado tipoViaje _id estatus fechaCreacion userId');
 
     if (quotes.length > 0) {
       const quotesWithDetails = await Promise.all(quotes.map(async (quote) => {
@@ -1062,9 +1035,7 @@ const getQuotesByUserId = async (req, res) => {
   }
 };
 
-
 const calculateQuoteDetails = async (quote) => {
-
   const peaje = await Peajes.findOne({
     localidadOrigen: quote.origenId.toString(),
     localidadDestino: quote.destinoId.toString(),
@@ -1082,53 +1053,53 @@ const calculateQuoteDetails = async (quote) => {
     localidadDestino: quote.destinoId.toString(),
   });
 
-  const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: "pasajeOrigen" });
-  const banderaPasajeDestino = await BanderaModel.findOne({ nombre: "pasajeDestino" });
+  const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: 'pasajeOrigen' });
+  const banderaPasajeDestino = await BanderaModel.findOne({ nombre: 'pasajeDestino' });
 
   const traslado = await TrasladoModel.findById(quote.tipoTraslado);
 
-  const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: "limite sueldos" });
+  const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: 'limite sueldos' });
   const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5;
 
-  const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: "PorcentajeAdmon" });
+  const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: 'PorcentajeAdmon' });
   const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8;
 
-  let v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
-  let v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
+  const v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
+  const v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
 
-  let porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
-  let v_otrosGastos = configureData ? configureData.otros : 0;
+  const porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
+  const v_otrosGastos = configureData ? configureData.otros : 0;
 
-  let nombreOrigen = origen ? origen.nombre : 'Origen no encontrado';
-  let nombreDestino = destino ? destino.nombre : 'Destino no encontrado';
-  let v_kms = peaje ? peaje.kms : 0;
-  let v_rend = rendimiento ? rendimiento.rendimiento : 0;
-  let v_totalLitros = v_kms / v_rend;
-  let v_costoDiesel = configureData ? configureData.combustible : 0;
-  let v_diesel = v_costoDiesel * v_totalLitros;
-  let v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
-  let v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
-  let v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
-  let v_totalPeajes = peaje ? peaje.totalPeajes : 0;
-  let v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
-  let v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
-  let v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
-  let v_subtotal = v_diesel + v_comidas + v_costoPasajeOrigen + v_costoPasajeDestino + v_totalPeajes + v_seguroTraslado + v_sueldo + v_pagoEstadia;
-  let v_admon = (v_subtotal * porcentajeAdmon) / 100;
+  const nombreOrigen = origen ? origen.nombre : 'Origen no encontrado';
+  const nombreDestino = destino ? destino.nombre : 'Destino no encontrado';
+  const v_kms = peaje ? peaje.kms : 0;
+  const v_rend = rendimiento ? rendimiento.rendimiento : 0;
+  const v_totalLitros = v_kms / v_rend;
+  const v_costoDiesel = configureData ? configureData.combustible : 0;
+  const v_diesel = v_costoDiesel * v_totalLitros;
+  const v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
+  const v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
+  const v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
+  const v_totalPeajes = peaje ? peaje.totalPeajes : 0;
+  const v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
+  const v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
+  const v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
+  const v_subtotal = v_diesel + v_comidas + v_costoPasajeOrigen + v_costoPasajeDestino + v_totalPeajes + v_seguroTraslado + v_sueldo + v_pagoEstadia;
+  const v_admon = (v_subtotal * porcentajeAdmon) / 100;
 
-  let v_total = v_subtotal + v_admon + v_otrosGastos;
-  let v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
+  const v_total = v_subtotal + v_admon + v_otrosGastos;
+  const v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
 
-  let porcentajeInflacion = configureData ? configureData.inflacion : 0;
-  let v_inflacion = v_total * (porcentajeInflacion / 100);
+  const porcentajeInflacion = configureData ? configureData.inflacion : 0;
+  const v_inflacion = v_total * (porcentajeInflacion / 100);
 
   const gananciaEntry = await GananciaModel.findOne({
     desde: { $lte: v_kms },
-    hasta: { $gte: v_kms }
+    hasta: { $gte: v_kms },
   });
 
-  let v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
-  let v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
+  const v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
+  const v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
 
   return {
     origen: nombreOrigen,
@@ -1150,10 +1121,9 @@ const calculateQuoteDetails = async (quote) => {
     inflacion: parseFloat(v_inflacion.toFixed(2)),
     financiamiento: parseFloat(v_financiamiento.toFixed(2)),
     ganancia: parseFloat(v_ganancia.toFixed(2)),
-    costo: parseFloat(v_costoTotal.toFixed(2))
+    costo: parseFloat(v_costoTotal.toFixed(2)),
   };
 };
-
 
 const getQuoteDetailsByFolio = async (req, res) => {
   try {
@@ -1163,29 +1133,28 @@ const getQuoteDetailsByFolio = async (req, res) => {
       return res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
     }
 
-    let v_tipoViaje=null;
+    let v_tipoViaje = null;
 
-    console.log("quotes.tipoViaje:",quotes);
+    console.log('quotes.tipoViaje:', quotes);
 
     switch (quotes.tipoViaje.toString()) {
-      case '657d410b090a350a86310db8': // Rodando
-        v_tipoViaje="Rodando";
-        break;
-      case '657d411f090a350a86310dc0': // Sin rodar
-        v_tipoViaje="Sin rodar";
-        break;
-      case '657d4127090a350a86310dc4': // Local
-        v_tipoViaje="Local";
-        break;
+    case '657d410b090a350a86310db8': // Rodando
+      v_tipoViaje = 'Rodando';
+      break;
+    case '657d411f090a350a86310dc0': // Sin rodar
+      v_tipoViaje = 'Sin rodar';
+      break;
+    case '657d4127090a350a86310dc4': // Local
+      v_tipoViaje = 'Local';
+      break;
     }
 
-
     // Obtener el destino temporal para "Sin rodar"
-    const origenTemporal = await BanderaModel.findOne({ nombre: "destinoTemporalParaSinrodar" });
-    let origenTemporalId = origenTemporal.valor;
+    const origenTemporal = await BanderaModel.findOne({ nombre: 'destinoTemporalParaSinrodar' });
+    const origenTemporalId = origenTemporal.valor;
 
     // Preparar las cotizaciones con detalles
-    let quotesWithDetailsPromises = quotes.flatMap(async (quote) => {
+    const quotesWithDetailsPromises = quotes.flatMap(async (quote) => {
       // Generar cotización original
       const originalQuoteDetails = calculateQuoteDetails(quote);
 
@@ -1200,12 +1169,9 @@ const getQuoteDetailsByFolio = async (req, res) => {
         const bcQuoteDetails = calculateQuoteDetails(quoteDetailsBC);
 
         return [originalQuoteDetails, caQuoteDetails, bcQuoteDetails];
-      } else {
-        return [originalQuoteDetails];
       }
+      return [originalQuoteDetails];
     });
-
-
 
     const quotesWithDetails = await Promise.all(quotes.map(async (quote) => {
       const quoteDetails = await calculateQuoteDetails(quote);
@@ -1214,7 +1180,7 @@ const getQuoteDetailsByFolio = async (req, res) => {
         folio: quote.folio,
         ...quoteDetails,
         tipoViaje: v_tipoViaje,
-        origenTemporalId: origenTemporalId 
+        origenTemporalId,
       };
     }));
 
@@ -1226,8 +1192,6 @@ const getQuoteDetailsByFolio = async (req, res) => {
 };
 
 const getQuoteDetailsByFolio_old = async (req, res) => {
-
-  
   try {
     const quotes = await Quote.find({ folio: req.params.folio });
 
@@ -1236,9 +1200,6 @@ const getQuoteDetailsByFolio_old = async (req, res) => {
     }
 
     const quotesWithDetails = await Promise.all(quotes.map(async (quote) => {
-
-
-      
       const peaje = await Peajes.findOne({
         localidadOrigen: quote.origenId.toString(),
         localidadDestino: quote.destinoId.toString(),
@@ -1259,79 +1220,68 @@ const getQuoteDetailsByFolio_old = async (req, res) => {
         localidadOrigen: quote.origenId.toString(),
         localidadDestino: quote.destinoId.toString(),
       });
-      //console.log("gastos:", gastos);
+      // console.log("gastos:", gastos);
 
-
-      const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: "pasajeOrigen" });
-      const banderaPasajeDestino = await BanderaModel.findOne({ nombre: "pasajeDestino" });
+      const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: 'pasajeOrigen' });
+      const banderaPasajeDestino = await BanderaModel.findOne({ nombre: 'pasajeDestino' });
 
       const traslado = await TrasladoModel.findById(quote.tipoTraslado);
 
-      const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: "limite sueldos" });
-      const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5;  // Usar 5 como valor predeterminado si no se encuentra
+      const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: 'limite sueldos' });
+      const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5; // Usar 5 como valor predeterminado si no se encuentra
 
-      const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: "PorcentajeAdmon" });
-      const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8;  // Usar 8 como valor predeterminado si no se encuentra
+      const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: 'PorcentajeAdmon' });
+      const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8; // Usar 8 como valor predeterminado si no se encuentra
 
+      const v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
+      const v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
 
+      const porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
 
-
-      let v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
-      let v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
-
-      let porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
-      
-
-      let v_otrosGastos = configureData ? configureData.otros : 0;
-
+      const v_otrosGastos = configureData ? configureData.otros : 0;
 
       // Añadir nombres de las localidades y otros valores a la cotización
-      let nombreOrigen = origen ? origen.nombre : 'Origen no encontrado';
-      let nombreDestino = destino ? destino.nombre : 'Destino no encontrado';
-      let v_kms = peaje ? peaje.kms : 0;
-      let v_rend = rendimiento ? rendimiento.rendimiento : 0;
-      let v_totalLitros = v_kms / v_rend;
-      let v_costoDiesel = configureData ? configureData.combustible : 0;
-      let v_diesel = v_costoDiesel * v_totalLitros;
-      let v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
-      let v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
-      let v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
-      let v_totalPeajes = peaje ? peaje.totalPeajes : 0;
-      let v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
-      let v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
+      const nombreOrigen = origen ? origen.nombre : 'Origen no encontrado';
+      const nombreDestino = destino ? destino.nombre : 'Destino no encontrado';
+      const v_kms = peaje ? peaje.kms : 0;
+      const v_rend = rendimiento ? rendimiento.rendimiento : 0;
+      const v_totalLitros = v_kms / v_rend;
+      const v_costoDiesel = configureData ? configureData.combustible : 0;
+      const v_diesel = v_costoDiesel * v_totalLitros;
+      const v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
+      const v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
+      const v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
+      const v_totalPeajes = peaje ? peaje.totalPeajes : 0;
+      const v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
+      const v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
 
-      let v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
-      let v_subtotal = v_diesel + 
-                 v_comidas + 
-                 v_costoPasajeOrigen + 
-                 v_costoPasajeDestino + 
-                 v_totalPeajes +   
-                 v_seguroTraslado + 
-                 v_sueldo + 
-                 v_pagoEstadia;
+      const v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
+      const v_subtotal = v_diesel
+                 + v_comidas
+                 + v_costoPasajeOrigen
+                 + v_costoPasajeDestino
+                 + v_totalPeajes
+                 + v_seguroTraslado
+                 + v_sueldo
+                 + v_pagoEstadia;
 
-      let v_admon = (v_subtotal * porcentajeAdmon) / 100;
+      const v_admon = (v_subtotal * porcentajeAdmon) / 100;
 
-      let v_total = v_subtotal + v_admon + v_otrosGastos;
-      let v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
+      const v_total = v_subtotal + v_admon + v_otrosGastos;
+      const v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
 
-      let porcentajeInflacion  = configureData ? configureData.inflacion : 0;
+      const porcentajeInflacion = configureData ? configureData.inflacion : 0;
 
-      let v_inflacion = v_total * (porcentajeInflacion / 100);
+      const v_inflacion = v_total * (porcentajeInflacion / 100);
 
-
-      const gananciaEntry = await GananciaModel.findOne({ 
+      const gananciaEntry = await GananciaModel.findOne({
         desde: { $lte: v_kms },
-        hasta: { $gte: v_kms }
+        hasta: { $gte: v_kms },
       });
-      
-      let v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
 
-      let v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
+      const v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
 
-      
-
-      
+      const v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
 
       // Aquí guardamos en quote_history
       const quoteHistory = new QuoteHistoryModel({
@@ -1358,11 +1308,9 @@ const getQuoteDetailsByFolio_old = async (req, res) => {
         financiamiento: v_financiamiento,
         ganancia: v_ganancia,
         costo: v_costoTotal,
-        fechaCreacion: new Date()
+        fechaCreacion: new Date(),
       });
       await quoteHistory.save();
-
-
 
       return {
         id: quote._id,
@@ -1386,14 +1334,10 @@ const getQuoteDetailsByFolio_old = async (req, res) => {
         inflacion: parseFloat(v_inflacion.toFixed(2)),
         financiamiento: parseFloat(v_financiamiento.toFixed(2)),
         ganancia: parseFloat(v_ganancia.toFixed(2)),
-        costo : parseFloat(v_costoTotal.toFixed(2)),
-        tipoViaje: v_tipoViaje
-     
+        costo: parseFloat(v_costoTotal.toFixed(2)),
+        tipoViaje: v_tipoViaje,
+
       };
-
-
-
-      
     }));
 
     res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithDetails);
@@ -1402,8 +1346,6 @@ const getQuoteDetailsByFolio_old = async (req, res) => {
     await responseError(409, error, res);
   }
 };
-
-
 
 const getQuote01ById_old_ok = async (req, res) => {
   try {
@@ -1436,77 +1378,68 @@ const getQuote01ById_old_ok = async (req, res) => {
         localidadOrigen: quote.origenId.toString(),
         localidadDestino: quote.destinoId.toString(),
       });
-      //console.log("gastos:", gastos);
+      // console.log("gastos:", gastos);
 
-
-      const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: "pasajeOrigen" });
-      const banderaPasajeDestino = await BanderaModel.findOne({ nombre: "pasajeDestino" });
+      const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: 'pasajeOrigen' });
+      const banderaPasajeDestino = await BanderaModel.findOne({ nombre: 'pasajeDestino' });
 
       const traslado = await TrasladoModel.findById(quote.tipoTraslado);
 
-      const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: "limite sueldos" });
-      const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5;  // Usar 5 como valor predeterminado si no se encuentra
+      const banderaLimiteSueldos = await BanderaModel.findOne({ nombre: 'limite sueldos' });
+      const limiteSueldos = banderaLimiteSueldos ? banderaLimiteSueldos.valor : 5; // Usar 5 como valor predeterminado si no se encuentra
 
-      const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: "PorcentajeAdmon" });
-      const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8;  // Usar 8 como valor predeterminado si no se encuentra
+      const banderaPorcentajeAdmon = await BanderaModel.findOne({ nombre: 'PorcentajeAdmon' });
+      const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8; // Usar 8 como valor predeterminado si no se encuentra
 
+      const v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
+      const v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
 
+      const porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
 
-
-      let v_valorExtraPasajeOrigen = banderaPasajeOrigen ? banderaPasajeOrigen.valor : 0;
-      let v_valorExtraPasajeDestino = banderaPasajeDestino ? banderaPasajeDestino.valor : 0;
-
-      let porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
-      
-
-      let v_otrosGastos = configureData ? configureData.otros : 0;
-
+      const v_otrosGastos = configureData ? configureData.otros : 0;
 
       // Añadir nombres de las localidades y otros valores a la cotización
-      let nombreOrigen = origen ? origen.nombre : 'Origen no encontrado';
-      let nombreDestino = destino ? destino.nombre : 'Destino no encontrado';
-      let v_kms = peaje ? peaje.kms : 0;
-      let v_rend = rendimiento ? rendimiento.rendimiento : 0;
-      let v_totalLitros = v_kms / v_rend;
-      let v_costoDiesel = configureData ? configureData.combustible : 0;
-      let v_diesel = v_costoDiesel * v_totalLitros;
-      let v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
-      let v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
-      let v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
-      let v_totalPeajes = peaje ? peaje.totalPeajes : 0;
-      let v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
-      let v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
+      const nombreOrigen = origen ? origen.nombre : 'Origen no encontrado';
+      const nombreDestino = destino ? destino.nombre : 'Destino no encontrado';
+      const v_kms = peaje ? peaje.kms : 0;
+      const v_rend = rendimiento ? rendimiento.rendimiento : 0;
+      const v_totalLitros = v_kms / v_rend;
+      const v_costoDiesel = configureData ? configureData.combustible : 0;
+      const v_diesel = v_costoDiesel * v_totalLitros;
+      const v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
+      const v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
+      const v_costoPasajeDestino = (gastos && gastos.pasajeDestino ? gastos.pasajeDestino : 0) + v_valorExtraPasajeDestino;
+      const v_totalPeajes = peaje ? peaje.totalPeajes : 0;
+      const v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
+      const v_sueldo = traslado ? (traslado.sueldo < limiteSueldos ? traslado.sueldo * v_kms : traslado.sueldo) : 0;
 
-      let v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
-      let v_subtotal = v_diesel + 
-                 v_comidas + 
-                 v_costoPasajeOrigen + 
-                 v_costoPasajeDestino + 
-                 v_totalPeajes +   
-                 v_seguroTraslado + 
-                 v_sueldo + 
-                 v_pagoEstadia;
+      const v_pagoEstadia = gastos && gastos.pagoDeEstadia ? gastos.pagoDeEstadia : 0;
+      const v_subtotal = v_diesel
+                 + v_comidas
+                 + v_costoPasajeOrigen
+                 + v_costoPasajeDestino
+                 + v_totalPeajes
+                 + v_seguroTraslado
+                 + v_sueldo
+                 + v_pagoEstadia;
 
-      let v_admon = (v_subtotal * porcentajeAdmon) / 100;
+      const v_admon = (v_subtotal * porcentajeAdmon) / 100;
 
-      let v_total = v_subtotal + v_admon + v_otrosGastos;
-      let v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
+      const v_total = v_subtotal + v_admon + v_otrosGastos;
+      const v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
 
-      let porcentajeInflacion  = configureData ? configureData.inflacion : 0;
+      const porcentajeInflacion = configureData ? configureData.inflacion : 0;
 
-      let v_inflacion = v_total * (porcentajeInflacion / 100);
+      const v_inflacion = v_total * (porcentajeInflacion / 100);
 
-
-      const gananciaEntry = await GananciaModel.findOne({ 
+      const gananciaEntry = await GananciaModel.findOne({
         desde: { $lte: v_kms },
-        hasta: { $gte: v_kms }
+        hasta: { $gte: v_kms },
       });
-      
-      let v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
 
-      let v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
+      const v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
 
-
+      const v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
 
       // Aquí guardamos en quote_history
       const quoteHistory = new QuoteHistoryModel({
@@ -1532,11 +1465,9 @@ const getQuote01ById_old_ok = async (req, res) => {
         financiamiento: v_financiamiento,
         ganancia: v_ganancia,
         costo: v_costoTotal,
-        fechaCreacion: new Date()
+        fechaCreacion: new Date(),
       });
       await quoteHistory.save();
-
-
 
       return {
         id: quote._id,
@@ -1560,10 +1491,9 @@ const getQuote01ById_old_ok = async (req, res) => {
         inflacion: parseFloat(v_inflacion.toFixed(2)),
         financiamiento: parseFloat(v_financiamiento.toFixed(2)),
         ganancia: parseFloat(v_ganancia.toFixed(2)),
-        costo : parseFloat(v_costoTotal.toFixed(2))
-     
+        costo: parseFloat(v_costoTotal.toFixed(2)),
+
       };
-      
     }));
 
     res.formatResponse('ok', 200, 'Consulta exitosa', quotesWithKms);
@@ -1572,17 +1502,13 @@ const getQuote01ById_old_ok = async (req, res) => {
   }
 };
 
-
- 
 const getQuote01ByIdOld = async (req, res) => {
-  
-    let v_lts=0;
-    let v_kms=0;
-    let v_rend=0;
+  let v_lts = 0;
+  let v_kms = 0;
+  let v_rend = 0;
 
   try {
     const quotes = await Quote.find({ folio: req.params.folio });
-    
 
     if (!quotes || quotes.length === 0) {
       res.formatResponse('ok', 204, 'No se encontraron cotizaciones para el folio especificado', []);
@@ -1595,34 +1521,34 @@ const getQuote01ByIdOld = async (req, res) => {
         quote.origen = await getDestinationName(quote.origenId);
         quote.destino = await getDestinationName(quote.destinoId);
 
-        v_kms=1;
+        v_kms = 1;
         quote.kms = v_kms;
-        
-        v_rend=1;
+
+        v_rend = 1;
         quote.rend = v_rend;
 
-        v_lts=v_kms/v_rend;
+        v_lts = v_kms / v_rend;
         quote.lts = v_lts;
-        
+
         quote.tipoUnidad = 222;
         quote.tipoTraslado = 333;
         quote.tipoViaje = 444;
 
-        quote.hoteles=32; //    km/800 por (costo de tabla de gastos)
+        quote.hoteles = 32; //    km/800 por (costo de tabla de gastos)
 
-        quote.totalLitros=32;
-        quote.precioDiesel=32;
-        quote.costoComidas=32;
-        quote.costoPasajes=32;
-        quote.costoPeajes=32;
-        quote.costoSueldo=32;
-        quote.subtotal=32;
-        quote.gastosAdministrativos=32;
-        quote.total=32;
-        quote.costoInflacion=32;
-        quote.financiamiento=32;
-        quote.ganancia=32;
-        quote.costoTotal=32;
+        quote.totalLitros = 32;
+        quote.precioDiesel = 32;
+        quote.costoComidas = 32;
+        quote.costoPasajes = 32;
+        quote.costoPeajes = 32;
+        quote.costoSueldo = 32;
+        quote.subtotal = 32;
+        quote.gastosAdministrativos = 32;
+        quote.total = 32;
+        quote.costoInflacion = 32;
+        quote.financiamiento = 32;
+        quote.ganancia = 32;
+        quote.costoTotal = 32;
       }
     }
 
@@ -1631,7 +1557,6 @@ const getQuote01ByIdOld = async (req, res) => {
     await responseError(409, error, res);
   }
 };
-
 
 const updateQuote01 = async (req, res) => {
   try {
@@ -1657,7 +1582,6 @@ const updateQuote01 = async (req, res) => {
   }
 };
 
-
 const deleteQuote01 = async (req, res) => {
   try {
     const quote = await Quote.findByIdAndRemove(req.params.id);
@@ -1669,7 +1593,6 @@ const deleteQuote01 = async (req, res) => {
     await responseError(409, error, res);
   }
 };
-
 
 const cancelQuote = async (req, res) => {
   try {
@@ -1693,12 +1616,11 @@ const cancelQuote = async (req, res) => {
   }
 };
 
-
 const getQuoteHistoryByFolio = async (req, res) => {
   try {
-    const { folio } = req.params;  
+    const { folio } = req.params;
 
-    const quoteHistories = await QuoteHistoryModel.find({ folio: folio }).populate('quoteId').exec();  
+    const quoteHistories = await QuoteHistoryModel.find({ folio }).populate('quoteId').exec();
 
     if (quoteHistories.length > 0) {
       res.formatResponse('ok', 200, 'Historial de cotizaciones encontrado', quoteHistories);
@@ -1710,10 +1632,6 @@ const getQuoteHistoryByFolio = async (req, res) => {
     res.formatResponse('error', 409, error.message, []);
   }
 };
-
-
-
-
 
 module.exports = {
   createSolicitud,
@@ -1733,6 +1651,6 @@ module.exports = {
   cancelQuote,
   getQuotesByClientId,
   getQuotesByUserId,
-  getQuoteHistoryByFolio
-   
+  getQuoteHistoryByFolio,
+
 };

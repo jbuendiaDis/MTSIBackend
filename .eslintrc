@@ -15,6 +15,7 @@
     // Reglas específicas para Node.js
     "global-require": "off", // Permite require en cualquier lugar del código
     "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+    "no-underscore-dangle": "off",
 
     // Reglas específicas para MongoDB
     "no-unused-vars": ["error", { "vars": "local", "args": "none" }],
