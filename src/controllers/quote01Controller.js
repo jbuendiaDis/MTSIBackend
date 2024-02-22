@@ -796,7 +796,7 @@ const sendSolicitudDetails = async (req, res) => {
     const dataUserClient = await UserClient.findById(solicitud[0].userId);
     const detallesSolicitud = await SolicitudDetalleModel.find({ folio: folioNum });
     const cotizacionesConDetalles = await Promise.all(detallesSolicitud.map(async (cotizacion) => {
-      const quoteHistory = await QuoteHistory.findOne({ quoteId: cotizacion._id }).sort({fechaCreacion: fechaCreacion -1 }).exec();
+      const quoteHistory = await QuoteHistory.findOne({ quoteId: cotizacion._id }).sort({ fechaCreacion: -1 }).limit(1).exec();
       const { _doc } = quoteHistory;
       const coast = _doc.costo;
       const origen = cotizacion.localidadOrigenName;
