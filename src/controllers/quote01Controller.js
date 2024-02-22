@@ -485,6 +485,9 @@ const getCotizacionByFolio = async (req, res) => {
         ganancia: parseFloat(v_ganancia.toFixed(2)),
         costo: parseFloat(v_costoTotal.toFixed(2)),
 
+        dimensiones: detalle.dimensiones,
+        trasladoTipo: detalle.trasladoTipo,
+
       };
     }));
 
@@ -543,7 +546,7 @@ const getSolicitudesByClienteId = async (req, res) => {
       return res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
     }
 
-    const solicitudes = await SolicitudModel.find({ clienteId: clientId })
+    const solicitudes = await SolicitudModel.find({ clienteId: clientId, estatus: "Pendiente" })
       .select('-_id folio estatus createdAt userId tipoViajeId')
       .sort({ folio: -1 }); // Ordena las solicitudes de forma descendente por folio
 
@@ -791,7 +794,9 @@ const sendSolicitudDetails = async (req, res) => {
 
     const folioNum = parseInt(folio, 10);
 
-    const solicitud = await SolicitudModel.find({ folio: 1 });
+    const solicitud = await SolicitudModel.find({ folio: folio });
+
+
 
     const dataUserClient = await UserClient.findById(solicitud[0].userId);
     const detallesSolicitud = await SolicitudDetalleModel.find({ folio: folioNum });
@@ -821,6 +826,11 @@ const sendSolicitudDetails = async (req, res) => {
       destinos: cotizacionesConDetalles,
     });
     // const newDetail = await SolicitudDetailModel.create({ folio, mensaje });
+
+    const result = await SolicitudModel.updateOne(
+      { folio: folio }, 
+      { $set: { estatus: "Atendida" } }
+    );
 
     res.formatResponse('ok', 200, 'Detalle de solicitud guardado exitosamente.', 'detalle');
   } catch (error) {
