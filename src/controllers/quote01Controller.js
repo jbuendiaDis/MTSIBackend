@@ -276,15 +276,15 @@ const getCotizacionByFolio = async (req, res) => {
         localidadDestino: detalle.localidadDestinoCodigo.toString(),
       });
 
-      console.log("rutas",rutas._id);
+      //console.log("rutas",rutas._id);
 
       const gastos = await GastosModel.findOne({
         rutaId: rutas._id
       });
 
 
-      console.log("localidadOrigenCodigo",detalle.localidadOrigenCodigo.toString());
-      console.log("localidadDestinoCodigo",detalle.localidadDestinoCodigo.toString());
+      //console.log("localidadOrigenCodigo",detalle.localidadOrigenCodigo.toString());
+      //console.log("localidadDestinoCodigo",detalle.localidadDestinoCodigo.toString());
 
       console.log("gastos",gastos);
 
@@ -329,11 +329,18 @@ const getCotizacionByFolio = async (req, res) => {
       v_seguroTraslado = gastos && gastos.seguroTraslado ? gastos.seguroTraslado : 0;
 
       v_ferry = gastos && gastos.ferry ? gastos.ferry : 0;
-      v_hotel = gastos && gastos.hotel ? gastos.hotel : 0;
+      v_hotel = gastos && gastos.hoteles ? gastos.hoteles : 0;
+
+      console.log("v_hotel",v_hotel);
 
       // Cálculo para hoteles basado en los kilómetros totales
-      const nochesHotel = Math.ceil(v_kms / limiteKmHotel); // Usa el valor de la bandera
-      v_hotel = nochesHotel * costoNocheHotel;
+      const nochesHotel = Math.floor(v_kms / limiteKmHotel); // Usa el valor de la bandera
+      console.log("v_kms",v_kms);
+      console.log("limiteKmHotel",limiteKmHotel);
+      console.log("nochesHotel",nochesHotel);
+      console.log("costoNocheHotel",costoNocheHotel);
+      
+      v_hotel = nochesHotel * v_hotel;
 
       v_vuelo = gastos && gastos.vuelo ? gastos.vuelo : 0;
       v_taxi = gastos && gastos.taxi ? gastos.taxi : 0;
@@ -341,6 +348,7 @@ const getCotizacionByFolio = async (req, res) => {
       v_liberacionPuerto = gastos && gastos.liberacionPuerto ? gastos.liberacionPuerto : 0;
       v_talachas = gastos && gastos.talachas ? gastos.talachas : 0;
       v_fitosanitarias = gastos && gastos.fitosanitarias ? gastos.fitosanitarias : 0;
+      //console.log("v_fitosanitarias",v_fitosanitarias);
       v_urea = gastos && gastos.urea ? gastos.urea : 0;
       v_extra = gastos && gastos.extra ? gastos.extra : 0;
 
@@ -364,6 +372,27 @@ const getCotizacionByFolio = async (req, res) => {
              + v_fitosanitarias
              + v_urea
              + v_extra;
+
+
+             console.log("v_diesel", v_diesel);
+             console.log("v_comidas", v_comidas);
+             console.log("v_costoPasajeOrigen", v_costoPasajeOrigen);
+             console.log("v_costoPasajeDestino", v_costoPasajeDestino);
+             console.log("v_totalPeajes", v_totalPeajes);
+             console.log("v_seguroTraslado", v_seguroTraslado);
+             console.log("v_sueldo", v_sueldo);
+             console.log("v_pagoEstadia", v_pagoEstadia);
+             console.log("v_ferry", v_ferry);
+             console.log("v_hotel", v_hotel);
+             console.log("v_vuelo", v_vuelo);
+             console.log("v_taxi", v_taxi);
+             console.log("v_udsUsa", v_udsUsa);
+             console.log("v_liberacionPuerto", v_liberacionPuerto);
+             console.log("v_talachas", v_talachas);
+             console.log("v_fitosanitarias", v_fitosanitarias);
+             console.log("v_urea", v_urea);
+             console.log("v_extra", v_extra);
+   
 
       v_admon = (v_subtotal * porcentajeAdmon) / 100;
       v_total = v_subtotal + v_admon + v_otrosGastos;
