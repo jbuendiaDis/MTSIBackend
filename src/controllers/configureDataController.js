@@ -81,7 +81,7 @@ const createConfigureData = async (req, res) => {
  *       200:
  *         description: Consulta exitosa
  *       204:
- *         description: No hay ConfigureData activa.
+ *         description: No h ay ConfigureData activa.
  *       409:
  *         description: Error al intentar obtener la ConfigureData activa.
  */
@@ -90,7 +90,7 @@ const getActiveConfigureData = async (req, res) => {
     const activeConfigureData = await ConfigureData.findOne({ status: 'Activo' });
 
     if (!activeConfigureData) {
-      return res.formatResponse('ok', 204, 'No hay ConfigureData activa.', []);
+      return res.formatResponse('ok', 204, 'No hay variables activas.', []);
     }
 
     // Verificar si ha pasado más de 24 horas

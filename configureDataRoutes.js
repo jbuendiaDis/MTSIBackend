@@ -58,7 +58,7 @@ const createConfigureData = async (req, res) => {
  *       200:
  *         description: Consulta exitosa
  *       204:
- *         description: No hay ConfigureData activa.
+ *         description: No hay Configur eData activa.
  *       409:
  *         description: Error al intentar obtener la ConfigureData activa.
  */
