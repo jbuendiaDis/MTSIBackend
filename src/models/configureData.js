@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const configureDataSchema = new mongoose.Schema({
   rendimiento: {
     type: Number,
-    required: true,
-  },
+   },
   combustible: {
     type: Number,
     required: true,
@@ -19,12 +18,10 @@ const configureDataSchema = new mongoose.Schema({
   },
   otros: {
     type: Number,
-    required: true,
-  },
+   },
   sucontrato: {
     type: Number,
-    required: true,
-  },
+   },
   status: {
     type: String,
     enum: ['Activo', 'Inactivo', 'Expirado'],
