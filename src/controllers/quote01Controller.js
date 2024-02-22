@@ -269,10 +269,26 @@ const getCotizacionByFolio = async (req, res) => {
         localidadDestino: detalle.localidadDestinoCodigo.toString(),
       });
       const rendimiento = await RendimientoModel.findById(detalle.unidadId);
-      const gastos = await GastosModel.findOne({
+
+
+      const rutas = await Peajes.findOne({
         localidadOrigen: detalle.localidadOrigenCodigo.toString(),
         localidadDestino: detalle.localidadDestinoCodigo.toString(),
       });
+
+      console.log("rutas",rutas._id);
+
+      const gastos = await GastosModel.findOne({
+        rutaId: rutas._id
+      });
+
+
+      console.log("localidadOrigenCodigo",detalle.localidadOrigenCodigo.toString());
+      console.log("localidadDestinoCodigo",detalle.localidadDestinoCodigo.toString());
+
+      console.log("gastos",gastos);
+
+
       const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: 'pasajeOrigen' });
       const banderaPasajeDestino = await BanderaModel.findOne({ nombre: 'pasajeDestino' });
       const traslado = await TrasladoModel.findById(detalle.trasladoId);
