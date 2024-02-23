@@ -80,8 +80,13 @@ const createSolicitud = async (req, res) => {
       // Consulta tipo traslado
       const traslado = await TrasladoModel.findById(destino.tipoTraslado);
 
+      let rendimiento;
       // Realizar la consulta para obtener el dato rendimiento basado en el tipoUnidad
-      const rendimiento = await RendimientoModel.findById(destino.tipoUnidad);
+      if(destino.tipoUnidad!='other'){
+          rendimiento = await RendimientoModel.findById(destino.tipoUnidad);
+
+      }
+      
 
       // Buscar la localidad de origen y destino en la colección countries
       const origenData = await CountryModel.findById(destino.localidadOrigenId);
@@ -107,8 +112,8 @@ const createSolicitud = async (req, res) => {
         localidadDestinoTipoCobro: destinoData.tipoUnidad,
 
         unidadId: destino.tipoUnidad,
-        unidadMarca: rendimiento.marca,
-        unidadModelo: rendimiento.modelo,
+        unidadMarca: rendimiento ? rendimiento.marca : undefined,
+        unidadModelo: rendimiento ? rendimiento.modelo : undefined,
         trasladoId: destino.tipoTraslado,
         trasladoTipo: traslado.tipoTraslado,
         trasladoConcepto: traslado.concepto,

@@ -63,11 +63,11 @@ const SolicitudDetalleSchema = new mongoose.Schema({
   },
   unidadMarca: {
     type: String,
-    required: true
+   
   },
   unidadModelo: {
     type: String,
-    required: true
+    
   },
   trasladoId: {
     type: String,
@@ -93,12 +93,10 @@ const SolicitudDetalleSchema = new mongoose.Schema({
 
   
   manual: {
-    type: String,
-    required: true
+    type: String 
   },
   dimensiones: {
-    type: String,
-    required: true
+    type: String 
   },
   createdAt: {
     type: String,
