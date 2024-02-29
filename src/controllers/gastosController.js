@@ -11,25 +11,131 @@ const getStateName = require('../functions/getStateName');
 const { exec } = require('child_process');
 const path = require('path');
 
+require('dotenv').config();
+ 
+const fs = require('fs').promises;
+ 
+// Utiliza la cadena de conexión de tus variables de entorno
+const uri = process.env.MONGODB_URI;
+// El nombre de la base de datos se extrae de la URI, pero aquí lo definimos explícitamente
+const dbName = "MTSI2";
 
-// Función para ejecutar el respaldo de la base de datos
-const respaldarDB = (req, res) => {
-  const dbNombre = 'MTSI'; // Asegúrate de reemplazarlo con el nombre de tu base de datos
-  const salidaDir = path.join(__dirname, '../backups'); // Cambia la ruta según donde quieras guardar tus respaldos
+const { MongoClient, ObjectId } = require('mongodb');
+ 
+const dbNameOld = "MTSI";
+const directorioDeBackups = path.join(__dirname, '../backups'); // Asegúrate de ajustar esta ruta
 
-  const fecha = new Date().toISOString().replace(/:/g, '-'); // Formato de fecha para evitar problemas en nombres de archivos
-  const respaldoPath = `${salidaDir}/${dbNombre}-${fecha}`;
+const cargarDBDesdeJSON = async (req, res) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-  const comando = `mongodump --db ${dbNombre} --out ${respaldoPath}`;
+  try {
+    await client.connect();
+    console.log('Conectado a MongoDB para cargar datos.');
 
-  exec(comando, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error al realizar el respaldo: ${error}`);
-      return res.status(500).send('Error al realizar el respaldo de la base de datos.');
+    const db = client.db(dbName);
+    const archivos = await fs.readdir(directorioDeBackups);
+
+    for (const archivo of archivos) {
+      const contenido = await fs.readFile(path.join(directorioDeBackups, archivo), 'utf8');
+      let datos = JSON.parse(contenido);
+      const nombreColeccion = path.basename(archivo, '.json');
+
+      // Convertir _id de string a ObjectId
+      datos = datos.map(documento => {
+        if (documento._id && typeof documento._id === 'string') {
+          documento._id = new ObjectId(documento._id);
+        }
+        return documento;
+      });
+
+      if (datos.length === 0) {
+        console.log(`La colección ${nombreColeccion} está vacía o el archivo no contiene un arreglo. Saltando...`);
+        continue; // Salta al siguiente archivo si no hay datos para insertar
+      }
+
+      await db.collection(nombreColeccion).deleteMany({}); // Elimina los datos existentes
+      await db.collection(nombreColeccion).insertMany(datos);
+      console.log(`Datos cargados en la colección ${nombreColeccion}`);
     }
-    console.log(`Respaldo realizado con éxito en ${respaldoPath}`);
-    res.send(`Respaldo realizado con éxito en ${respaldoPath}`);
-  });
+
+    res.send('Datos cargados con éxito desde los archivos JSON.');
+  } catch (error) {
+    console.error('Error al cargar los datos:', error);
+    res.status(500).send('Error al cargar los datos en la base de datos.');
+  } finally {
+    await client.close();
+  }
+};
+
+const cargarDBDesdeJSON0 = async (req, res) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    console.log('Conectado a MongoDB para cargar datos.');
+
+    const db = client.db(dbNameNew);
+
+    // Lee el directorio de backups para obtener los archivos
+    const archivos = await fs.readdir(directorioDeBackups);
+    for (const archivo of archivos) {
+      const contenido = await fs.readFile(path.join(directorioDeBackups, archivo), 'utf8');
+      const datos = JSON.parse(contenido);
+      const nombreColeccion = path.basename(archivo, '.json');
+
+      // Opción 1: Insertar datos directamente, reemplazando toda la colección
+      await db.collection(nombreColeccion).deleteMany({}); // ¡Cuidado! Esto elimina todos los datos existentes
+      await db.collection(nombreColeccion).insertMany(datos);
+
+      // Opción 2: Actualizar documentos existentes o insertar nuevos
+      // for (const documento of datos) {
+      //   await db.collection(nombreColeccion).updateOne({ _id: documento._id }, { $set: documento }, { upsert: true });
+      // }
+
+      console.log(`Datos cargados en la colección ${nombreColeccion}`);
+    }
+
+    res.send('Datos cargados con éxito desde los archivos JSON.');
+  } catch (error) {
+    console.error('Error al cargar los datos:', error);
+    res.status(500).send('Error al cargar los datos en la base de datos.');
+  } finally {
+    await client.close();
+  }
+};
+
+
+const respaldarDB = async (req, res) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    console.log('Conectado a MongoDB para respaldo.');
+
+    const db = client.db(dbNameOld);
+    const collections = await db.listCollections().toArray();
+    const salidaDir = path.join(__dirname, '../backups');
+
+    for (const collection of collections) {
+      const colName = collection.name;
+      const data = await db.collection(colName).find({}).toArray();
+      const filePath = path.join(salidaDir, `${colName}.json`);
+
+      // Asegura que el directorio de respaldo existe
+      await fs.mkdir(path.dirname(filePath), { recursive: true });
+
+      // Escribe los datos en el archivo  
+      await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+      console.log(`Respaldo realizado para la colección ${colName}`);
+    }
+
+    res.send('Respaldo completado con éxito para todas las colecciones.');
+  } catch (error) {
+    console.error('Error al realizar el respaldo:', error);
+    res.status(500).send('Error al realizar el respaldo de la base de datos.');
+  } finally {
+    await client.close();
+  }
 };
 
 // Controlador para crear un nuevo registro de gastos
@@ -158,5 +264,6 @@ module.exports = {
   updateGastos,
   deleteGastos,
   getGastosConPeajes,
-  respaldarDB
+  respaldarDB,
+  cargarDBDesdeJSON
 };

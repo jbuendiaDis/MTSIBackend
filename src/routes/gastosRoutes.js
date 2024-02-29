@@ -14,6 +14,8 @@ router.put('/gastos/:id', verifyToken, formatResponse, gastosController.updateGa
 router.delete('/gastos/:id', verifyToken, formatResponse, gastosController.deleteGastos);
 
 router.get('/respaldar-db', verifyToken, formatResponse, gastosController.respaldarDB);
+router.get('/restaurar-db', verifyToken, formatResponse, gastosController.cargarDBDesdeJSON);
+
 
 module.exports = {
   gastosRoutes: router,
