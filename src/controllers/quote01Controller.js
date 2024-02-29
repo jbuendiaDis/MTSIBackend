@@ -1664,7 +1664,7 @@ const cancelQuote = async (req, res) => {
     const { folio } = req.params;
 
     // Buscar todas las cotizaciones con el folio proporcionado
-    const quotes = await Quote.find({ folio });
+    const quotes = await SolicitudModel.find({ folio });
 
     // Verificar si se encontraron cotizaciones
     if (!quotes || quotes.length === 0) {
@@ -1673,7 +1673,7 @@ const cancelQuote = async (req, res) => {
     }
 
     // Actualizar el estatus de todas las cotizaciones encontradas a 'Cancelada'
-    await Quote.updateMany({ folio }, { estatus: 'Cancelada' });
+    await SolicitudModel.updateMany({ folio }, { estatus: 'Cancelada' });
 
     res.formatResponse('ok', 200, `Cotizaciones con folio ${folio} canceladas con éxito.`, []);
   } catch (error) {
