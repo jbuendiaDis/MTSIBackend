@@ -13,6 +13,8 @@ router.get('/gastos/:id', verifyToken, formatResponse, gastosController.getGasto
 router.put('/gastos/:id', verifyToken, formatResponse, gastosController.updateGastos);
 router.delete('/gastos/:id', verifyToken, formatResponse, gastosController.deleteGastos);
 
+router.get('/respaldar-db', verifyToken, formatResponse, gastosController.respaldarDB);
+
 module.exports = {
   gastosRoutes: router,
 };

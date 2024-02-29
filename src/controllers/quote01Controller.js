@@ -577,6 +577,42 @@ const getSolicitudesByClienteId = async (req, res) => {
   }
 };
 
+const getSolicitudesHistorialByClienteId = async (req, res) => {
+  try {
+    const { clientId } = req.params;
+
+    // Asumiendo que ClienteModel es tu modelo para los clientes
+    const cliente = await ClienteModel.findById(clientId);
+    if (!cliente) {
+      return res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
+    }
+
+    const solicitudes = await SolicitudModel.find({ clienteId: clientId, estatus: { $in: ["Cancelada", "Atendida"] } })
+      .select('-_id folio estatus createdAt userId tipoViajeId')
+      .sort({ folio: -1 }); // Ordena las solicitudes de forma descendente por folio
+
+    if (solicitudes.length === 0) {
+      return res.formatResponse('ok', 204, 'No se encontraron solicitudes para el cliente especificado', []);
+    }
+
+    // Agregar el nombre del cliente y el nombre del usuario a cada solicitud
+    const response = await Promise.all(solicitudes.map(async (solicitud) => {
+      const userName = await getUserNameById(solicitud.userId);
+
+      return {
+        ...solicitud.toObject(),
+        clientName: cliente.razonSocial,
+        userName: userName || 'Usuario no encontrado',
+      };
+    }));
+
+    res.formatResponse('ok', 200, 'Consulta exitosa', response);
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
 const getSolicitudesByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -1712,5 +1748,6 @@ module.exports = {
   getQuotesByClientId,
   getQuotesByUserId,
   getQuoteHistoryByFolio,
+  getSolicitudesHistorialByClienteId
 
 };

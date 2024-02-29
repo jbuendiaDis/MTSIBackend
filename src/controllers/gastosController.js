@@ -7,6 +7,31 @@ const getDestinationName = require('../functions/getDestinationName');
 const getDestinationIdEstado = require('../functions/getDestinationIdEstado');
 const getStateName = require('../functions/getStateName');
 
+
+const { exec } = require('child_process');
+const path = require('path');
+
+
+// Función para ejecutar el respaldo de la base de datos
+const respaldarDB = (req, res) => {
+  const dbNombre = 'MTSI'; // Asegúrate de reemplazarlo con el nombre de tu base de datos
+  const salidaDir = path.join(__dirname, '../backups'); // Cambia la ruta según donde quieras guardar tus respaldos
+
+  const fecha = new Date().toISOString().replace(/:/g, '-'); // Formato de fecha para evitar problemas en nombres de archivos
+  const respaldoPath = `${salidaDir}/${dbNombre}-${fecha}`;
+
+  const comando = `mongodump --db ${dbNombre} --out ${respaldoPath}`;
+
+  exec(comando, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error al realizar el respaldo: ${error}`);
+      return res.status(500).send('Error al realizar el respaldo de la base de datos.');
+    }
+    console.log(`Respaldo realizado con éxito en ${respaldoPath}`);
+    res.send(`Respaldo realizado con éxito en ${respaldoPath}`);
+  });
+};
+
 // Controlador para crear un nuevo registro de gastos
 const createGastos = async (req, res) => {
   try {
@@ -133,4 +158,5 @@ module.exports = {
   updateGastos,
   deleteGastos,
   getGastosConPeajes,
+  respaldarDB
 };

@@ -29,6 +29,8 @@ router.get('/v2/solicitud/detalle/:folio', verifyToken, formatResponse, quote01C
 router.get('/v2/solicitud/detallesimple/:folio', verifyToken, formatResponse, quote01Controller.getSolicitudDetallesimpleByFolio);
 router.post('/v1/solicitud/details/send', verifyToken, formatResponse, quote01Controller.sendSolicitudDetails);
 
+router.get('/v2/cotizacionhistorial/byclienteId/:clientId', verifyToken, formatResponse, quote01Controller.getSolicitudesHistorialByClienteId);
+
 
 
 
