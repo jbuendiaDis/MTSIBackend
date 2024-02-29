@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const gastosController = require('../controllers/gastosController');
+const respaldosController = require('../controllers/respaldosController');
 const { verifyToken } = require('../utils/verifyToken');
 const formatResponse = require('../utils/formatResponse');
 
@@ -13,8 +14,8 @@ router.get('/gastos/:id', verifyToken, formatResponse, gastosController.getGasto
 router.put('/gastos/:id', verifyToken, formatResponse, gastosController.updateGastos);
 router.delete('/gastos/:id', verifyToken, formatResponse, gastosController.deleteGastos);
 
-router.get('/respaldar-db', verifyToken, formatResponse, gastosController.respaldarDB);
-router.get('/restaurar-db', verifyToken, formatResponse, gastosController.cargarDBDesdeJSON);
+router.get('/respaldar-db', verifyToken, formatResponse, respaldosController.respaldarDB);
+router.get('/restaurar-db', verifyToken, formatResponse, respaldosController.cargarRespaldoADB);
 
 
 module.exports = {

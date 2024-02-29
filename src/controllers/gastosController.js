@@ -18,12 +18,75 @@ const fs = require('fs').promises;
 // Utiliza la cadena de conexión de tus variables de entorno
 const uri = process.env.MONGODB_URI;
 // El nombre de la base de datos se extrae de la URI, pero aquí lo definimos explícitamente
-const dbName = "MTSI2";
+const dbName = "MTSI6";
 
 const { MongoClient, ObjectId } = require('mongodb');
  
 const dbNameOld = "MTSI";
 const directorioDeBackups = path.join(__dirname, '../backups'); // Asegúrate de ajustar esta ruta
+
+// Función auxiliar para determinar si una cadena puede ser un ObjectId
+const esObjectIdValido = (cadena) => {
+  if (ObjectId.isValid(cadena)) {
+    if (String(new ObjectId(cadena)) === cadena) return true;
+  }
+  return false;
+};
+
+
+// Función para convertir cadenas a ObjectId en documentos
+const convertirCadenasAObjectId = (documento) => {
+  for (const clave in documento) {
+    if (documento.hasOwnProperty(clave)) {
+      if (typeof documento[clave] === 'string' && esObjectIdValido(documento[clave])) {
+        documento[clave] = new ObjectId(documento[clave]);
+      } else if (typeof documento[clave] === 'object' && documento[clave] !== null) {
+        // Recursividad para objetos y arreglos
+        documento[clave] = convertirCadenasAObjectId(documento[clave]);
+      }
+    }
+  }
+  return documento;
+};
+
+const cargarDBDesdeJSON_no = async (req, res) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    console.log('Conectado a MongoDB para cargar datos.');
+
+    const db = client.db(dbName);
+    const archivos = await fs.readdir(directorioDeBackups);
+
+    for (const archivo of archivos) {
+      const contenido = await fs.readFile(path.join(directorioDeBackups, archivo), 'utf8');
+      let datos = JSON.parse(contenido);
+      const nombreColeccion = path.basename(archivo, '.json');
+
+      // Convertir cadenas a ObjectId
+      datos = datos.map(documento => convertirCadenasAObjectId(documento));
+
+      if (datos.length === 0) {
+        console.log(`La colección ${nombreColeccion} está vacía o el archivo no contiene un arreglo. Saltando...`);
+        continue;
+      }
+
+      await db.collection(nombreColeccion).deleteMany({});
+      await db.collection(nombreColeccion).insertMany(datos);
+      console.log(`Datos cargados en la colección ${nombreColeccion}`);
+    }
+
+    res.send('Datos cargados con éxito desde los archivos JSON.');
+  } catch (error) {
+    console.error('Error al cargar los datos:', error);
+    res.status(500).send('Error al cargar los datos en la base de datos.');
+  } finally {
+    await client.close();
+  }
+};
+
+
 
 const cargarDBDesdeJSON = async (req, res) => {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -67,7 +130,7 @@ const cargarDBDesdeJSON = async (req, res) => {
   }
 };
 
-const cargarDBDesdeJSON0 = async (req, res) => {
+const cargarDBDesdeJSON_no0 = async (req, res) => {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
   try {
@@ -104,8 +167,19 @@ const cargarDBDesdeJSON0 = async (req, res) => {
   }
 };
 
+const salidaDir = path.join(__dirname, '../backups');
 
-const respaldarDB = async (req, res) => {
+// Replacer para JSON.stringify que maneja ObjectId
+function replacer(key, value) {
+  if (value instanceof ObjectId) {
+    return { $oid: value.toString() };
+  }
+  return value;
+}
+
+ 
+
+const respaldarDB01 = async (req, res) => {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
   try {
@@ -263,7 +337,6 @@ module.exports = {
   getGastosById,
   updateGastos,
   deleteGastos,
-  getGastosConPeajes,
-  respaldarDB,
-  cargarDBDesdeJSON
+  getGastosConPeajes 
+  
 };
