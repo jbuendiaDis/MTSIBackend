@@ -60,7 +60,7 @@ async function sendCotizacion(req, res) {
 async function getAllData(req, res) {
   try {
     const quotesData = await Quote.find();
-    res.formatResponse('ok', 200, 'request Success', quotesData);
+    res.formatResponse('ok', 200, 'Consulta exitosa', quotesData);
   } catch (error) {
     await responseError(409,error,res);
   }

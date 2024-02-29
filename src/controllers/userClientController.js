@@ -10,9 +10,9 @@ const getAllUserClients = async (req, res) => {
   try {
     const userClients = await UserClient.find();
     if (userClients.length > 0) {
-      res.formatResponse('ok', 200, 'request success', userClients);
+      res.formatResponse('ok', 200, 'Consulta exitosa', userClients);
     } else {
-      return await responseError(204, 'data not found', res);
+      return await responseError(204, 'Usuario no encontrado', res);
     }
   } catch (error) {
     await responseError(409, error, res);
@@ -25,9 +25,9 @@ const getUserClientById = async (req, res) => {
     console.log(req.params.id);
     const userClient = await UserClient.findById(req.params.id);
     if (!userClient) {
-      return await responseError(204, 'data not found', res);
+      return await responseError(204, 'Usuario no encontrado', res);
     }
-    res.formatResponse('ok', 200, 'request success', userClient);
+    res.formatResponse('ok', 200, 'Consulta exitosa', userClient);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -63,7 +63,7 @@ const createUserClient = async (req, res) => {
     });
 
     const newUserClient = await userClient.save();
-    res.formatResponse('ok', 200, 'request success', newUserClient);
+    res.formatResponse('ok', 200, 'Asuario creado exitosamente', newUserClient);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -73,7 +73,7 @@ const updateUserClient = async (req, res) => {
   try {
     const userClient = await UserClient.findById(req.params.id);
     if (!userClient) {
-      res.formatResponse('ok', 204, 'data not found', []);
+      res.formatResponse('ok', 204, 'Usuario no encontrado', []);
     }
     // eslint-disable-next-line no-underscore-dangle
     const updateUserData = { ...userClient._doc, ...req.body };
@@ -84,7 +84,7 @@ const updateUserClient = async (req, res) => {
       { new: true },
     );
 
-    res.formatResponse('ok', 200, 'request success', updatedUserClient);
+    res.formatResponse('ok', 200, 'Actualización exitosa', updatedUserClient);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -92,14 +92,20 @@ const updateUserClient = async (req, res) => {
 
 const deleteUserClient = async (req, res) => {
   try {
+    // Utiliza el ID del usuario autenticado desde req.user.data.id para la comprobación
+    if (req.user.data.id === req.params.id) {
+      res.formatResponse('error', 403, 'No puedes borrar tu propio usuario', []);
+      return;
+    }
+
     const userClient = await UserClient.findById(req.params.id);
     if (!userClient) {
-      res.formatResponse('ok', 204, 'data not found', []);
+      res.formatResponse('ok', 204, 'Usuario no encontrado', []);
       return;
     }
 
     await UserClient.findByIdAndRemove(req.params.id);
-    res.formatResponse('ok', 200, 'request success', []);
+    res.formatResponse('ok', 200, 'Usuario borrado', []);
   } catch (error) {
     await responseError(409, error, res);
   }

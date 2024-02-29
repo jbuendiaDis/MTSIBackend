@@ -61,7 +61,7 @@ const eliminarRendimiento = async (req, res) => {
     if (!rendimientoEliminado) {
       return await responseError(204, 'Rendimiento no encontrado.', res);
     }
-    res.formatResponse('ok', 200, 'Rendimiento Delete success', [{ deleteID: req.params.id }]);
+    res.formatResponse('ok', 200, 'Rendimiento borrado', [{ deleteID: req.params.id }]);
   } catch (error) {
     await responseError(409, error, res);
   }

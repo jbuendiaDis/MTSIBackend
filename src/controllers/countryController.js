@@ -20,7 +20,7 @@ const createCountry = async (req, res) => {
     });
 
     if (existingCountry) {
-      return res.formatResponse('error', 204, 'Ya existe un peaje con estos datos.', []);
+      return res.formatResponse('error', 204, 'Ya existe una localidades con estos datos.', []);
     }
 
     const lastCountry = await Country.findOne().sort({ codigo: -1 });
@@ -34,7 +34,7 @@ const createCountry = async (req, res) => {
 
     const savedCountry = await newCountry.save();
 
-    res.formatResponse('ok', 200, 'Peaje registrado con éxito.', savedCountry);
+    res.formatResponse('ok', 200, 'Localidad registrado con éxito.', savedCountry);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -73,7 +73,7 @@ const getCountryByCode = async (req, res) => {
     const country = await Country.findOne({ codigo });
 
     if (!country) {
-      res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      res.formatResponse('ok', 204, 'Localidades no encontrado.', []);
     }
 
     const estadoNombre = await getStateName(country.estado);
@@ -96,7 +96,7 @@ const getCountryById = async (req, res) => {
     const country = await Country.findById(id);
 
     if (!country) {
-      res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      res.formatResponse('ok', 204, 'Localidades no encontrado.', []);
       return;
     }
 
@@ -148,7 +148,7 @@ const getCountryByNombre = async (req, res) => {
     const countries = await Country.find({ nombre: { $regex: nombre, $options: 'i' } });
 
     if (!countries || countries.length === 0) {
-      res.formatResponse('ok', 204, `No hay países con nombre similar a "${nombre}".`, []);
+      res.formatResponse('ok', 204, `No hay localidades con nombre similar a "${nombre}".`, []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', countries);
@@ -168,10 +168,10 @@ const updateCountryByCode = async (req, res) => {
     );
 
     if (!updatedCountry) {
-      res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      res.formatResponse('ok', 204, 'Localidad no encontrada.', []);
     }
 
-    res.formatResponse('ok', 200, 'Country actualizado con éxito.', updatedCountry);
+    res.formatResponse('ok', 200, 'Localidad actualizado con éxito.', updatedCountry);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -189,10 +189,10 @@ const updateCountryById = async (req, res) => {
     );
 
     if (!updatedCountry) {
-      res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      res.formatResponse('ok', 204, 'Localidad no encontrado.', []);
     }
 
-    res.formatResponse('ok', 200, 'Country actualizado con éxito.', updatedCountry);
+    res.formatResponse('ok', 200, 'Localidad actualizado con éxito.', updatedCountry);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -209,10 +209,10 @@ const deleteCountryById = async (req, res) => {
     const deletedCountry = await Country.findByIdAndDelete(id);
 
     if (!deletedCountry) {
-      res.formatResponse('ok', 204, 'Country no encontrado.', []);
+      res.formatResponse('ok', 204, 'Localidad no encontrado.', []);
     }
 
-    res.formatResponse('ok', 200, 'Country eliminado con éxito.', deletedCountry);
+    res.formatResponse('ok', 200, 'Localidad eliminado con éxito.', deletedCountry);
   } catch (error) {
     await responseError(409, error, res);
   }

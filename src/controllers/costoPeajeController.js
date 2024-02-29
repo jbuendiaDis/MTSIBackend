@@ -37,7 +37,7 @@ const getCostoPeajeById = async (req, res) => {
   try {
     const costoPeaje = await CostoPeaje.findById(req.params.id);
     if (!costoPeaje) {
-      res.formatResponse('ok', 204, 'CostoPeaje no encontrado.', []);
+      res.formatResponse('ok', 204, 'Costo peaje no encontrado.', []);
       return;
     }
     res.formatResponse('ok', 200, 'Consulta exitosa', costoPeaje);
@@ -62,11 +62,11 @@ const updateCostoPeaje = async (req, res) => {
     );
 
     if (!costoPeajeActualizado) {
-      res.formatResponse('ok', 204, 'CostoPeaje no encontrado.', []);
+      res.formatResponse('ok', 204, 'Costo peaje no encontrado.', []);
       return;
     }
 
-    res.formatResponse('ok', 200, 'CostoPeaje actualizado con éxito.', costoPeajeActualizado);
+    res.formatResponse('ok', 200, 'Costo peaje actualizado con éxito.', costoPeajeActualizado);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -76,9 +76,9 @@ const deleteCostoPeaje = async (req, res) => {
   try {
     const costoPeaje = await CostoPeaje.findByIdAndRemove(req.params.id);
     if (!costoPeaje) {
-      res.formatResponse('ok', 204, 'CostoPeaje no encontrado.', []);
+      res.formatResponse('ok', 204, 'Costo peaje no encontrado.', []);
     }
-    res.formatResponse('ok', 200, 'CostoPeaje eliminado con éxito', [{ deleteID: req.params.id }]);
+    res.formatResponse('ok', 200, 'Costo peaje eliminado con éxito', [{ deleteID: req.params.id }]);
   } catch (error) {
     await responseError(409, error, res);
   }

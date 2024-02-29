@@ -30,9 +30,9 @@ const getTraslados = async (req, res) => {
   try {
     const traslado = await Traslado.find().select('-__v');
     if (traslado.length > 0) {
-      res.formatResponse('ok', 200, 'request success', traslado);
+      res.formatResponse('ok', 200, 'Consulta exitosa', traslado);
     } else {
-      await responseError(204, 'data not found', res);
+      await responseError(204, 'Traslado no encontrado', res);
     }
   } catch (error) {
     await responseError(409, error, res);
@@ -44,10 +44,10 @@ const getTrasladoById = async (req, res) => {
   try {
     const traslado = await Traslado.findById(req.params.id);
     if (!traslado) {
-      await responseError(204, 'data not found', res);
+      await responseError(204, 'Traslado no encontrado', res);
       return;
     }
-    res.formatResponse('ok', 200, 'request success', traslado);
+    res.formatResponse('ok', 200, 'Consulta exitosa', traslado);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -67,7 +67,7 @@ const updateTraslado = async (req, res) => {
     if (!traslado) {
       res.status(204).json({ message: 'Traslado no encontrado.' });
     }
-    res.formatResponse('ok', 200, 'request success', traslado);
+    res.formatResponse('ok', 200, 'Actualización exitosa', traslado);
   } catch (error) {
     await responseError(409, error, res);
   }

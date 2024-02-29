@@ -101,7 +101,7 @@ const getActiveConfigureData = async (req, res) => {
       // Configuración expirada
       activeConfigureData.status = 'Expirado';
       await activeConfigureData.save();
-      return res.formatResponse('ok', 204, 'ConfigureData expirada.', []);
+      return res.formatResponse('ok', 204, 'Datos expirados.', []);
     } else {
       return res.formatResponse('ok', 200, 'Consulta exitosa', activeConfigureData);
     }
@@ -135,7 +135,7 @@ const getConfigureDataById = async (req, res) => {
     const configureData = await ConfigureData.findById(req.params.id);
 
     if (!configureData) {
-      res.formatResponse('ok', 204, 'ConfigureData no encontrada.', []);
+      res.formatResponse('ok', 204, 'Datos no encontrados.', []);
     }
 
     res.formatResponse('ok', 200, 'Consulta exitosa', configureData);
@@ -209,10 +209,10 @@ const updateConfigureData = async (req, res) => {
     );
 
     if (!configureDataActualizada) {
-      res.formatResponse('ok', 204, 'ConfigureData no encontrada.', []);
+      res.formatResponse('ok', 204, 'Datos no encontrados.', []);
     }
 
-    res.formatResponse('ok', 200, 'ConfigureData actualizada con éxito.', configureDataActualizada);
+    res.formatResponse('ok', 200, 'Datos actualizados con éxito.', configureDataActualizada);
   } catch (error) {
     await responseError(409, error, res);
   }

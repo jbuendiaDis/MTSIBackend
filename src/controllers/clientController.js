@@ -94,7 +94,7 @@ const getClientes = async (req, res) => {
         };
       }));
 
-      res.formatResponse('ok', 200, 'request success', clientsWithEstadoNombre);
+      res.formatResponse('ok', 200, 'Consulta exitosa', clientsWithEstadoNombre);
     } else {
       res.formatResponse('ok', 204, 'data not found', []);
     }
@@ -111,7 +111,7 @@ const getClienteById = async (req, res) => {
       res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
       return;
     }
-    res.formatResponse('ok', 200, 'request success', cliente);
+    res.formatResponse('ok', 200, 'Consulta exitosa', cliente);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -131,7 +131,7 @@ const getClienteLike = async (req, res) => {
       return;
     }
 
-    res.formatResponse('ok', 200, 'request success', cliente);
+    res.formatResponse('ok', 200, 'Consulta exitosa', cliente);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -145,7 +145,7 @@ const updateCliente = async (req, res) => {
       res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
       return;
     }
-    res.formatResponse('ok', 200, 'request success', cliente);
+    res.formatResponse('ok', 200, 'Actualización exitosa', cliente);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -158,7 +158,7 @@ const deleteCliente = async (req, res) => {
     if (!cliente) {
       res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
     }
-    res.formatResponse('ok', 200, 'User Delete success', [{ deleteID: req.params.id }]);
+    res.formatResponse('ok', 200, 'Cliente borrado', [{ deleteID: req.params.id }]);
   } catch (error) {
     await responseError(409, error, res);
   }

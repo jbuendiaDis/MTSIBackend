@@ -106,7 +106,7 @@ const getPeajeById = async (req, res) => {
       idEstadoDestino,
     };
 
-    res.formatResponse('ok', 200, 'request success', peajeWithDestinationNames);
+    res.formatResponse('ok', 200, 'Consulta exitosa', peajeWithDestinationNames);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -121,7 +121,7 @@ const updatePeaje = async (req, res) => {
     if (!peaje) {
       await responseError(204, 'Registro de peaje no encontrado.', res);
     }
-    res.formatResponse('ok', 200, 'request success', peaje);
+    res.formatResponse('ok', 200, 'Actualización exitosa', peaje);
   } catch (error) {
     await responseError(409, error, res);
   }

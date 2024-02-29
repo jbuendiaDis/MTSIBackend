@@ -54,9 +54,9 @@ async function getUsers(req, res) {
   try {
     const users = await User.find().select('-password -__v');
     if (users.length > 0) {
-      res.formatResponse('ok', 200, 'request success', users);
+      res.formatResponse('ok', 200, 'Consulta exitosa', users);
     } else {
-      res.formatResponse('ok', 204, 'data not found', []);
+      res.formatResponse('ok', 204, 'Usuario no encontrado', []);
     }
   } catch (error) {
     const uuid = generateUUID();
@@ -76,12 +76,12 @@ async function getUserById(req, res) {
   try {
     const user = await User.findById(userId).select('-password -__v');
     if (!user) {
-      res.formatResponse('ok', 204, 'user not found', []);
+      res.formatResponse('ok', 204, 'Usuario no encontrado', []);
       return;
     }
-    res.formatResponse('ok', 200, 'request success', user);
+    res.formatResponse('ok', 200, 'Consulta exitosa', user);
   } catch (error) {
-    res.formatResponse('ok', 409, 'request decline', error);
+    res.formatResponse('ok', 409, 'error', error);
   }
 }
 
@@ -91,7 +91,7 @@ async function updateUser(req, res) {
   try {
     const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
     if (!updatedUser) {
-      res.formatResponse('ok', 204, 'user not found', []);
+      res.formatResponse('ok', 204, 'Usuario no encontrado', []);
 
       return;
     }
@@ -107,10 +107,10 @@ async function deleteUser(req, res) {
   try {
     const deletedUser = await User.findByIdAndDelete(userId);
     if (!deletedUser) {
-      res.formatResponse('ok', 204, 'user not found', []);
+      res.formatResponse('ok', 204, 'Usuario no encontrado', []);
       return;
     }
-    res.formatResponse('ok', 200, 'User Delete success', [{ deleteID: userId }]);
+    res.formatResponse('ok', 200, 'Usuario borrado', [{ deleteID: userId }]);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

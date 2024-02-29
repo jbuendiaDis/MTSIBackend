@@ -884,43 +884,7 @@ const sendSolicitudDetails = async (req, res) => {
   }
 };
 
-const createQuote011 = async (req, res) => {
-  try {
-    console.log('req.body->', req.body);
-    const { destinos } = req.body;
 
-    // Validar la existencia de destinos
-    if (!destinos || !Array.isArray(destinos) || destinos.length === 0) {
-      res.formatResponse('ok', 204, 'El campo "destinos" es obligatorio y debe ser un array no vacío.', []);
-      return;
-    }
-
-    const quotes = await Promise.all(destinos.map(async (destino) => {
-      const {
-        origenId, destinoId, tipoUnidad, tipoTraslado, tipoViaje,
-      } = destino;
-
-      // Validar campos
-      if (!tipoUnidad || !tipoTraslado || !tipoViaje || !origenId || !destinoId) {
-        return res.formatResponse('ok', 204, 'Los campos "origenId", "destinoId", "tipoUnidad", "tipoTraslado" y "tipoViaje" son obligatorios.', []);
-      }
-
-      const quote = new Quote({
-        origenId,
-        destinoId,
-        tipoUnidad,
-        tipoTraslado,
-        tipoViaje,
-      });
-
-      return quote.save();
-    }));
-
-    res.formatResponse('ok', 200, 'Quotes registrados con éxito.', quotes);
-  } catch (error) {
-    await responseError(409, error, res);
-  }
-};
 
 const createQuote01_old = async (req, res) => {
   try {
@@ -1029,7 +993,7 @@ const createQuote01 = async (req, res) => {
       return quote.save();
     }));
 
-    res.formatResponse('ok', 200, 'Quotes registrados con éxito.', quotes);
+    res.formatResponse('ok', 200, 'Solicitud registrada con éxito.', quotes);
   } catch (error) {
     console.error(error);
     res.formatResponse('error', 409, error.message, []);
@@ -1673,11 +1637,11 @@ const updateQuote01 = async (req, res) => {
     );
 
     if (!quoteActualizado) {
-      res.formatResponse('ok', 204, 'Quote no encontrado.', []);
+      res.formatResponse('ok', 204, 'Solicitud no encontrada.', []);
       return;
     }
 
-    res.formatResponse('ok', 200, 'Quote actualizado con éxito.', quoteActualizado);
+    res.formatResponse('ok', 200, 'Solicitud actualizado con éxito.', quoteActualizado);
   } catch (error) {
     await responseError(409, error, res);
   }
@@ -1687,9 +1651,9 @@ const deleteQuote01 = async (req, res) => {
   try {
     const quote = await Quote.findByIdAndRemove(req.params.id);
     if (!quote) {
-      res.formatResponse('ok', 204, 'Quote no encontrado.', []);
+      res.formatResponse('ok', 204, 'Solicitud no encontrado.', []);
     }
-    res.formatResponse('ok', 200, 'Quote eliminado con éxito', [{ deleteID: req.params.id }]);
+    res.formatResponse('ok', 200, 'Solicitud eliminado con éxito', [{ deleteID: req.params.id }]);
   } catch (error) {
     await responseError(409, error, res);
   }
