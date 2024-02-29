@@ -240,6 +240,7 @@ const getCotizacionByFolio = async (req, res) => {
       let v_rend = 0;
       let v_totalLitros = 0;
       let v_diesel = 0;
+      let v_dieselExtra = 0;
       let v_comidas = 0;
       let v_costoPasajeOrigen = 0;
       let v_costoPasajeDestino = 0;
@@ -321,6 +322,7 @@ const getCotizacionByFolio = async (req, res) => {
       v_totalLitros = v_kms / v_rend;
       v_costoDiesel = configureData ? configureData.combustible : 0;
       v_diesel = v_costoDiesel * v_totalLitros;
+      v_dieselExtra = gastos && gastos.dieselExtra ? gastos.dieselExtra : 0;
       v_comidas = gastos && gastos.comidas ? gastos.comidas : 0;
       v_costoPasajeOrigen = (gastos && gastos.pasajeOrigen ? gastos.pasajeOrigen : 0) + v_valorExtraPasajeOrigen;
       if (v_tipoViaje === 3 && !primeraIteracion) {
@@ -424,6 +426,7 @@ const getCotizacionByFolio = async (req, res) => {
         rendimiento: v_rend,
         litros: v_totalLitros,
         diesel: v_diesel,
+        dieselExtra: v_dieselExtra,
         comidas: v_comidas,
         pasajeOrigen: v_costoPasajeOrigen,
         pasajeDestino: v_costoPasajeDestino,
@@ -462,6 +465,8 @@ const getCotizacionByFolio = async (req, res) => {
         rendimiento: parseFloat(v_rend.toFixed(2)),
         litros: parseFloat(v_totalLitros.toFixed(2)),
         diesel: parseFloat(v_diesel.toFixed(2)),
+        dieselExtra: parseFloat(v_dieselExtra.toFixed(2)),
+        
         comidas: parseFloat(v_comidas.toFixed(2)),
         pasajeOrigen: parseFloat(v_costoPasajeOrigen.toFixed(2)),
         pasajeDestino: parseFloat(v_costoPasajeDestino.toFixed(2)),

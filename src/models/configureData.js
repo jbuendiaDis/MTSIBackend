@@ -16,7 +16,7 @@ const configureDataSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  otros: {
+  otros: {//moche
     type: Number,
    },
   sucontrato: {
