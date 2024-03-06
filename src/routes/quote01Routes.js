@@ -30,6 +30,8 @@ router.get('/v2/solicitud/detallesimple/:folio', verifyToken, formatResponse, qu
 router.post('/v1/solicitud/details/send', verifyToken, formatResponse, quote01Controller.sendSolicitudDetails);
 
 router.get('/v2/cotizacionhistorial/byclienteId/:clientId', verifyToken, formatResponse, quote01Controller.getSolicitudesHistorialByClienteId);
+router.put('/v2/actualizarendimiento', verifyToken, formatResponse, quote01Controller.actualizarUnidadIdEnSolicitudDetalle);
+
 
 
 

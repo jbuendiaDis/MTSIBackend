@@ -27,8 +27,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   signature: {
-    type: String,
-    required: true,
+    type: String
   },
   role: {
     type: String ,

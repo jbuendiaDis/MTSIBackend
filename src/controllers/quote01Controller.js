@@ -1698,6 +1698,25 @@ const getQuoteHistoryByFolio = async (req, res) => {
   }
 };
 
+const actualizarUnidadIdEnSolicitudDetalle = async (req, res) => {
+  try {
+    const { unidadId, solicitudDetalleId } = req.body;
+    console.log("req.body",req.body);
+
+    const actualizacion = await SolicitudDetalleModel.findByIdAndUpdate(solicitudDetalleId, { unidadId: unidadId }, { new: true });
+
+    if (actualizacion) {
+      res.formatResponse('ok', 200, 'UnidadId actualizado con éxito en la solicitud detalle', actualizacion);
+    } else {
+      res.formatResponse('ok', 204, 'No se encontró el detalle de solicitud con el ID proporcionado', {});
+    }
+  } catch (error) {
+    console.error(error);
+    res.formatResponse('error', 409, 'Error al actualizar el UnidadId en la solicitud detalle', {});
+  }
+};
+
+
 module.exports = {
   createSolicitud,
   getCotizacionByFolio,
@@ -1717,6 +1736,7 @@ module.exports = {
   getQuotesByClientId,
   getQuotesByUserId,
   getQuoteHistoryByFolio,
-  getSolicitudesHistorialByClienteId
+  getSolicitudesHistorialByClienteId,
+  actualizarUnidadIdEnSolicitudDetalle
 
 };
