@@ -329,6 +329,140 @@ const savePointsAsCountries = async (req, res) => {
       }, 'Autobuses', newCodigo);
 
       savedCountries.push(savedCountry2);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry3 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Camiones', newCodigo);
+
+      savedCountries.push(savedCountry3);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry5 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Motocicleta', newCodigo);
+
+      savedCountries.push(savedCountry5);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry6 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Camión 3 ejes', newCodigo);
+
+      savedCountries.push(savedCountry6);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry7 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Camión 4 ejes', newCodigo);
+
+      savedCountries.push(savedCountry7);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry8 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Camión 5 ejes', newCodigo);
+
+      savedCountries.push(savedCountry8);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry9 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Camión 6 ejes', newCodigo);
+
+      savedCountries.push(savedCountry9);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry10 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Camión 7 ejes', newCodigo);
+
+      savedCountries.push(savedCountry10);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry11 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Camión 8 ejes', newCodigo);
+
+      savedCountries.push(savedCountry11);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry12 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Camión 9 ejes', newCodigo);
+
+      savedCountries.push(savedCountry12);
+
+
+      // Actualiza newCodigo para el siguiente registro
+      newCodigo++;
+
+      // Crea y guarda el país con tipoUnidad2
+      const savedCountry13 = await createCountryInternal({
+        ...punto,
+        nombre: punto.nombre,
+        fechaCreacion: new Date(),
+      }, 'Otro', newCodigo);
+
+      savedCountries.push(savedCountry13);
+
+      
+
+
     }
 
     res.formatResponse('ok', 200, 'Puntos guardados como localidades con éxito.', savedCountries);
