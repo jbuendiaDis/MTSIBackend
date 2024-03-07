@@ -1,0 +1,80 @@
+[
+  {
+    "_id": {
+      "value": "65655f05182b3bd8832474e1",
+      "type": "object"
+    },
+    "desde": {
+      "value": 0,
+      "type": "number"
+    },
+    "hasta": {
+      "value": 400,
+      "type": "number"
+    },
+    "ganancia": {
+      "value": 7920,
+      "type": "number"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-28T03:31:17.557Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65714c1ff64790dda19a5996",
+      "type": "object"
+    },
+    "desde": {
+      "value": 400,
+      "type": "number"
+    },
+    "hasta": {
+      "value": 800,
+      "type": "number"
+    },
+    "ganancia": {
+      "value": 2435,
+      "type": "number"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-07T04:37:51.881Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6e8d559b062c82f347209",
+      "type": "object"
+    },
+    "desde": {
+      "value": 1000,
+      "type": "number"
+    },
+    "hasta": {
+      "value": 2000,
+      "type": "number"
+    },
+    "ganancia": {
+      "value": 3826.63,
+      "type": "number"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-22T06:25:25.926Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

@@ -1,0 +1,136 @@
+[
+  {
+    "1": {
+      "value": "Aguascalientes",
+      "type": "string"
+    },
+    "2": {
+      "value": "Baja California",
+      "type": "string"
+    },
+    "3": {
+      "value": "Baja California Sur",
+      "type": "string"
+    },
+    "4": {
+      "value": "Campeche",
+      "type": "string"
+    },
+    "5": {
+      "value": "Coahuila",
+      "type": "string"
+    },
+    "6": {
+      "value": "Colima",
+      "type": "string"
+    },
+    "7": {
+      "value": "Chiapas",
+      "type": "string"
+    },
+    "8": {
+      "value": "Chihuahua",
+      "type": "string"
+    },
+    "9": {
+      "value": "Distrito Federal",
+      "type": "string"
+    },
+    "10": {
+      "value": "Durango",
+      "type": "string"
+    },
+    "11": {
+      "value": "Guanajuato",
+      "type": "string"
+    },
+    "12": {
+      "value": "Guerrero",
+      "type": "string"
+    },
+    "13": {
+      "value": "Hidalgo",
+      "type": "string"
+    },
+    "14": {
+      "value": "Jalisco",
+      "type": "string"
+    },
+    "15": {
+      "value": "México",
+      "type": "string"
+    },
+    "16": {
+      "value": "Michoacán",
+      "type": "string"
+    },
+    "17": {
+      "value": "Morelos",
+      "type": "string"
+    },
+    "18": {
+      "value": "Nayarit",
+      "type": "string"
+    },
+    "19": {
+      "value": "Nuevo León",
+      "type": "string"
+    },
+    "20": {
+      "value": "Oaxaca",
+      "type": "string"
+    },
+    "21": {
+      "value": "Puebla",
+      "type": "string"
+    },
+    "22": {
+      "value": "Querétaro",
+      "type": "string"
+    },
+    "23": {
+      "value": "Quintana Roo",
+      "type": "string"
+    },
+    "24": {
+      "value": "San Luis Potosí",
+      "type": "string"
+    },
+    "25": {
+      "value": "Sinaloa",
+      "type": "string"
+    },
+    "26": {
+      "value": "Sonora",
+      "type": "string"
+    },
+    "27": {
+      "value": "Tabasco",
+      "type": "string"
+    },
+    "28": {
+      "value": "Tamaulipas",
+      "type": "string"
+    },
+    "29": {
+      "value": "Tlaxcala",
+      "type": "string"
+    },
+    "30": {
+      "value": "Veracruz",
+      "type": "string"
+    },
+    "31": {
+      "value": "Yucatán",
+      "type": "string"
+    },
+    "32": {
+      "value": "Zacatecas",
+      "type": "string"
+    },
+    "_id": {
+      "value": "653343837bf9336e0b74ee82",
+      "type": "object"
+    }
+  }
+]

@@ -1,0 +1,208 @@
+[
+  {
+    "_id": {
+      "value": "6545d363003e31ceead324ca",
+      "type": "object"
+    },
+    "name": {
+      "value": "Juan Carlos",
+      "type": "string"
+    },
+    "lastname": {
+      "value": "Buendia  Prieto",
+      "type": "string"
+    },
+    "age": {
+      "value": "32",
+      "type": "string"
+    },
+    "position": {
+      "value": "Admin",
+      "type": "string"
+    },
+    "email": {
+      "value": "juan.buendia@mtssistem.com",
+      "type": "string"
+    },
+    "password": {
+      "value": "$2b$15$a/l9DD3DlNJNnIKPk.YTpu1W54XR9SlNBy2.o3lZp0Tjyp3Q9KhFO",
+      "type": "string"
+    },
+    "signature": {
+      "value": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw4PDxAPDRAODQ8NDQ8PDw8PEBEQEA0PFRIXFhYRFRUYHSggJBolGxUVITEtJTUrMDUuFyAzOD8sNygtLisBCgoKDg0OFxAQFS0dHR0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSstLS0tLS0tLS0rLS0tLS0tLS0tLS0tLf/AABEIAKcBLQMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQUDBAYCB//EAEQQAAICAQMCAwQFCQYDCQAAAAECAAMEBREhEjEGE0EUIlFhMkJScYEHFSMzNGJygpEWJENEg6Fjc6IlU3WSk7GztNH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAdEQEBAQADAQEBAQAAAAAAAAAAAREhMUFRcWEC/9oADAMBAAIRAxEAPwD7jERAREQEREBERAREQEREBERAREQEREBErc3XsSljW9ytaBv5FQa+/b4iqsF/9ppah4mNVT3Lg6hdXWjWOypTUVRQSx6LrEbsOwG8YL+JzWn+LHuqryBp2orj3VLalw9kt3rYAqfLquazse3TvLnTNUoylL49gcK3S67MllT7b9FlbAMrbEcMAeYG5ERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBIJ27yu1TWa6GFSq2RkuN68arY2MOffbfhE4+k2w9OTsDpLo1uV72psliHtg1FjipxyLSdjce/0gF7e7uN4GX8/ecSmn1nL24N5Pl4iH/m7Hr/ANMNyNjtC6NbaN8/Ie/nfycfqxccd+OlWLtxwetiD8B2lwqgAAAAAAAAbAD4AT1Lo18HBpoQV49VdFa9kqRUUfgJlsqVgQw3DAqQexB4InuJBx/5Lsj+4vhkln0rMydPYsNiVqsPlt+NbJ/Qze8VVLjj851/o7cMBshgP2jBU721vsNz0qWdfUMvwZgea8LWPja/qlTbCjUMk+Vz2yqsai5h97V3sf8ASM6jx7zpeZWNurIx2xa9/W28ilB+LWKJfUX8QIkUiIgIiICIiAiJ4tsCqzHchVLHpBY7Ab8Ack/dA9xNfAy0vqS6vrCWqGUOjVuAftKwBB++bEBERAREQEREBERAREQEREBERAREQEoMzVbsix8bTiN62KZGaQGqxWHeusHh7vl9Ffrc7K2vmZluoXWYmHY1ONQ5rzcus7Ozj6WJjsOzD67j6PYe9uVv8HCqoqSmhFqqqUKiINlVR6AS9DW0fSKcVCtQZnsbruusbruyLNtuuxzyT6D0A2A2AAlhESCYkSYCIkQPn+t0Hq1TIpUvdpupYecioN2c14VPmIPm1RdfxEvbbDnZlCpzhYldWa77brk5D7nHrB7bIB5p9dzT85X6RreLTk6qbrF8y7Uj0U1g3X2V1YmNUSKUBcjqVh2mDwfmZdVT6fi4iocGw9BzLPZ9sO13al/LRXYnYFeencoeQdwN9xnp3c8uwUEsQAO5J2AlP+bcyz9ozWr+KYdKUqR8C1nW/wCIKz3T4bwgQXq9oZT1B8p7Mpw3fcG0tt+G0zwpZ4lwhuEuGQwPSVxUsy3B+BWkMR29YOrZDfqcHJO/Z7npoT8QWL/9MtlUAbDgDsB2EmTgU3/algHODic8ja7N3HyP6HY/1/Ge/wA15Dfrc7I57rSlFSfcD0Fx/wCaWsS6Kr+z2MdvM9ou+V2VkWKePsM/T/tMVnhfS1BZ8PDCgFmZ6a+AOSSSJtatrNON0K/U9tu4px6l677yNt+hPgNxux2Ub8kCaSaXdlMLNR6RWrdVWCh6ql2+i2Q3+I477fQB+0QHjkanhvHV8hsnEV8fB8g01J1OK81uoH2lKidlRQpCsAC/Wx+iEJ6mVOoa7VVZ5FavlZRAIxqAGdFPZrGJCovB5cjfbjc8TXGk5GVzqNgVD2wsV3Wnbji23h7DwePdUg7FT3gbNushmNeIhy7FJVmVunHqYbjay7YjcEbEKGYcbiWi77DfbfbnbtvPFNSIqpWqoiAKqKAqqo7AAcATJIpERAREQEREBERAREQEREBERATndezLb7hp2G5rsesWZmQv0sLGYkAL8LrNmC/AKzegB3fEer+yU9SL5t9zrRi0b7G/If6K7+ijlmPoqsfSR4c0j2WnaxhbkXO1+Vdtt5+Q23Uw+CjYKo9FVR6Sz6jd0/Bqx6kpoQV11L0oi9gP/wB9SfUkmbEmJFJEmIEQSACTwBySewEo7/EPmM1OnV+3WoSr2B+jEocb+7ZfsedxsVQMw9QO8x1+HWuPXqlxziTuMZV8rBr+Xk7kv/ql+eQBLn1Ho+JltJTTqn1BhuPNrITERhuNmyG908jYivrI+E8DSMzIBOoZRrQjnGwC1FYHwa/9a3ryprHPac7+THUb8rK1G1rbHpDhPLZt66LlvyAKql+qBSuPuB3J3nS+OMt68Kyqk7X5rJhY+3cXXnoDj+FSzn5IZeqNT8mmFVXp6WVVrWuZdk5S9I2Jqtvd6dyeTtUUHM2vElbY9lepVKzHGU15SKCWuwWO7kAd2rO1g7nYOBy0uKa6sepUBWuqitUG5AVEUbDc/cJW/wBoqrP2Ou/P3AIfHQeQQfUXuVrP4MT8pO6LitwwDKQysAQwO4YHsQfhPU5zTsLORDXSuLgVeYWWstZmGtCB7iL+jVOd9gC6j044G1+Y3f8AaMzNuG+/Sli4qL8h5Co233k94wXEmUNXg/AVi7Jdczd/aMvKyABvvwttjAfhKnU8TTq7fZ8Om980bOKsG+2lqATw9zqwRE9dn36gDsrdowdjbYqqWdgqqCzMxAVQO5JPpKMarfmDbT18uk/569D0MPjj1HYv8mOycgjr5EqdBxrL2yfzzcmU2m3117EoMNdqKrhc69KhrR5nJYbAqCoTeWJ1nIy9hpaqKT3z71byen40V8Gz7/dT13btLhrNthaYnmX2M112ytdbvdl5jjchFCjqY8sQiDYc7ACeFXPzeX69MxSeEUqc69fizjdageeF3fYjlDxNzStCpodriXyMmwbPlXkPcw+yD2VP3VAHylpJo1dO06jGTy8etal33O3LO3qzMeWY+pO5M25EmRURJkQJiRJgIiICIiAiIgIiICIiAiJR+Mc22rFNeMdsnMsTExzxullp2Nv8idb/AMkQamit7dmW5xPVj4rW4eCPRmVunJyPnuy+WD8Eb7U6YTV0vArxqKsekdNdFSVIO56VGw3PqfjNqWomIlDm61Zba+LpqpbdWem/Is3ONgng9L7EF7djv0KR6dRXcbxW7rGtUYoXzSzWWkrTRWvXfkOPq1oOT8z2A5JA5lbXpuVmjq1EnHpbtp9L9xvuPaLl5Y8cquyckHrHM2sPT8bBWzJvtBscD2jOynRXcb8KWOyqgJ4UbKN/jNrVdXx8XGsy7rFWiqs2FwQQy7cBfiTwBt3JEqNrHoStFStVrRAFREUKqqOwAHAEr/EmtJg45tKm2x2WrHoU+/lZL8V0r8yf6AE+k4/Ste1oOjKlWqnKBe7ErIoGkPyfKOR0mtgoKqwJ69wSARwLWvwtk5eRXmateVelXWjDwrHSnGVxsxN2wsawrwWXo4JA47hQeGtYXQ/aMHUUL32WPnh8Ch7ltN+xatkTdlZXDKC2wKheZaaeuo6rk1Zz1vpWJirYMSnJqD5dtli9LZJQnpQhCVUN1fSc+onZYODTjr0Y9VdKblitahQWJ3LHbuSSSSZsRoqqfD2N1K9wbMtUgi3KbzirAbdSIfcQ9/oBe8tomPIvStGstda0RSzu7BURR3LMeAJFe5p6pqlGKgfIcJ1HpRQC9lz7b9FdagszcHhQTKw6tkZfGmoEqPHt2QjCo88+RVwz/Jj0pyCC3aZKMDFwFfKyLTZaQBbmZTBrWBPCLwAqk9kQAbntuZcTWLozc0fpPM0zGb/DVl9uuH7zruKh8l3fnuhG00tS13C03pwNPqS/OtJ8nBo26msYb+be/wBUfWZmO5AJ5mrrOuZVyjoW/Dx7j0Y6IoGp6k59KUPFVfPLvsQOT0Dk2PhDwpXh9WRYlQy7l6W8vqZKK99/KR295jvyzt7ztydgFA1kxPWn4d8GOtanVrhm2mx8iylR04vtDsWaxlPNjDcAFuAFAUDadkBEmZttXERJiRUREQJiRJgREmRAmJEmAiIgIiICUeu6jkedVhYJrXJvV7XttRrK8THQgGwoCOpixVVG4+sfqkG8nPeFQbmys5+Tl5DJRwN0w6Ca6lB+DMLbf9aBseF9UtyKrFyVVMrEvfGylTfoNigMtib89LoyOPh17ekuZzoHs+rcDZNTw9zsOPacVhyT8Wrt/pTOigJy922TrNa900rDNx+HtOUSifiK67P/AFJ1E5nwWfNOoZR3JydUyEXf/uscjHUD5fomP80sSumkE7d4M5PJY6o7qSa9JpLC5+rp/ObL9JAfTGUg9R+uePog9UVlsy7tTJTDsajA3K25tZ6bcvbg14p9E9DZ+CfaHvVMo4S42n6XVQMi/q8mtgfJxqE2NuTaFO5ALAd92Zxz3M53x54vxvZqqdGy1yM1crHajG09/Oa1K3Beplq3ATo6uDxxN7w54fycuy7UtUN2O+aKlGnI/SuPj1FjXVZYuzHcszMu4U9ZDA9hUVmXnZ+o5VGLkYNdten2G7KFNy2YmXlKpWpWsPC1qSXKsGfcL7p7mzxPyZ6cbhflUUt0814dQZcKk88+WT7zckEnYH7InaY2PXWi11IlaIAqIihUQDsAo4AmWNGOqlUUKiqiqAFVQFVR8AB6T3JiRUSZT6jr9VbmihXzMoAH2bH2Zk37G1yQta/NyPlv2mp+ZcnL51SweU3+QxWZaNvhdbw9v3e6p32KmXEe8rxGbGNOm1e3WqxV7Oo14eOfXzL9iCw+ygZvj0956o8Oix1u1Gz265CGRGXoxKG+NVG5G49Gcs3wIljlZONh0F7GqxcelduemuutR2UAf0AEpevM1Ee55um4Tbe+d0zspf3VP6lT8T7/AMl7yz+FbWo+IALGxsFPbMxfpVhumnG37HIt2IXg77csfQSkyqTVchvI1jV2AajHH6PFwFO480JyK0Hve+27ttsN+w2cOwdHsWgpVVTW7Ldmleumpt/f8vc/pb9+5J2B5YkjpN/o+kU4qMtQYtY3XdbYeu7Is22Nlj+p/wBgOBsOI3E7a+jaL5TtkZD+0ZlyhbbyOkKo5FNK89NYPp3J5JJlvETN5XCIiFTEiTASJMQIiIgTEiTAiJMQEREBERAqfFme2Pg5Nte3mrSy0gnbqvf3Kl/F2UfjNrScBMbHox6/oY9FVK/wogUf+0qvGGzjCxz/AJnVMXjnkUFso/8A150EviOf8Z/o68bLAG+Bn0XMTx002E49zH5Cu52/lnQTT1rT1ysa/Gf6OTj20t8g6Fd/95g8L57ZOFjXONrHoTzR9m5R02L+Dhh+EeCzdtgT8ATOc/J1zpWG573U+e38VzG0/wC7zB4nqOblJgdTiirFfMy1rd62u6i1ePSWQg9JZbWPP+Eo7Ez59oP5S7NP0mjHfHGTkVVUVY9lTb4zq6Bq67GXci9QQCgG52332O4snB66vx74ux0u9hd70x0av86ZGOjOaK7P1eNuvIaz123IXfYbtuK3Hyf7Tf3bFS7B0PEZRZYB5b6gy8Jj1jstQ23Pc/RGw9LL8l/hMV0LqGo1mzU8yyzJse8EtQXJ6ehDwjFNt+Aeduw2n0ACTRXaLoWHg1irDorx09Qi7Fz9pm7k/M7yyiJFIldrGt42IoORZ0s5IqqUGy69vs11LuzH7gZWq2o5vffScc/8u3PsG/r3rr3/AJ25+qZcG/quvY+My1uzWX2DevGpU25Fg7bischeRux2UepErzhZ2b+1O2Bjn/K4z/3ixdu12QPo/dXz+8ZaaRo2NiKRj1hS53ssYs91zfassYlmP3kzay8qqmtrbnSqutep3dgqqPiSY/EYtO0+jGrFWPUlNYJPSigAk8lj8ST3J5MrtW8QCuz2bErbMzD/AIKHZKR9q+3si/L6R3GwM0/aszUTtjeZgYJIJymXpystP+AjD9Gh+23vfADhp6GVRh/3LTMf2jJ5ZkViErY/4uVkHfYnf16nPoDLIm/Hk4NeODnazkJfahBTdSMfFJ+jXj1ckuTxud3Y9tuBJGPk6l+0rbg4JPGN1FMrMX/jsp3rrP2B7x+sQN1O3p2g/pBk51ntmUCTWxHTTibjbpor+rwSOo7sd+TtwLuLVxjx6ErRa6kWtEUKiIoVUUdgAOAJliJlSRJiBEREBJiICIiAkSYgRERAmJEmAiRJgIiIHOauevVdNr4Iqo1DL/hZVqoU/wBMhxOinP0Dr1i87cY2mYyBueGvvuZl/pTWfxE6AS0Jy3hzKqwxqVWQ601YeoX39djBVWjJAyQ2/oOu2xR/DLfW9aqxAgYPddcxXHxqQGuyHHcKO2w3BLHZQOSROIzMFqtVxM/WRQEzK2pCAn2XByqT14wZiQHs6XyAHYDY8DbjdEZdJ87Vc7Uba7LsLD/uWM+yvTmZKV1NaFBPNdbDIJ3ADkN9WT4IxwchcDoKV+HnyQV6SEsuusYYtgPqRjlyfnaD8JdeAnNy52aP1efqVttB+3j11146WD5N5JYfIiU+I74ednaozM2LkZzYuavcY1dKJXVlD4KrBw/ycNwFMsR9CiVuq65iYiK+RcieZ+rQbvZcfs11ruzH5KDKz2rU8wkUV/mvHPHn5CrZmWD7VdHKJ99m5+KzOLq21bWcbEUNk2rV1nprXlrLW+xWi7szfJQTKkZOpZvFKfmvGI/XZCq+bYOea6eUT05fqPxUTf0rw/jYzm1Va3IcbWZV7G3IsHwLnsv7q7L8paiUVmk6BjYpL1qXucbWZNzG3It532a1udvl2HoBLOa+fnU49bXZFiU1VjdnsYKqj7zOYztZyslDZUw0jTwN31DLArvsTbvTU/CD96zn4Ke8ZaLfWdfShxRUjZeZYN68Wor19O+3mWE8JX+8fw3PEqr9PrTpzdevqsdHU04439jxrN/dFSEdVlvOwYgkn6IXtMOi7rWa9ExiiWMWt1LOFgF7nvb0t+lub5npXbbZtuJd6b4errsGRe75mX0lfaL9t6wTuVprHuov8I3Ow3Lbby8RO2oDm5/0fN0zEPqfdzslfu/wlI+9+fqGXOm6dRjVirHrWqsEnpX1Y92YnksTySdyfWbciTVxMREikREBERASJMQIkyIgTIiTARIkwEiTECIiICTIkwEREDnfDR68vVrfT2+rHU7HlasSnf8A63cf1mXWddZLRiYVYyc11DdDMVpxazx52Q47L32A95iNhxuRzehave1LY+CFbNzc7UchrHXerBxjm3IuRYPUlUARfrEfAMR2GiaPTh1lKupmdzZddY3Xdk2nvZY/q3H3AAAbAASow6Joa45e61zk5l4AvynABYDkVVr9SoHso+8kkkmwzMSq5DXfXXdW23VXaiujbHcbq3HeVeZ4mx1dqcYWZ+Qm4NGIos6G+zbYSK6/52Hy3mE4Gflftdwwaj/lsFybWX4WZRAPw/VhSD9YyK2tR13ExCtJbquKjysTHQ23so4G1Sche3J2UepE5jTFz78jLw2YaVXa5zAhSu7MtovADBWJapdnVw3Fm3WO3BbsdM0rHxUKY1SVKTuxHLWN9p2PvM3zJJnjVtJqyQvWbK7KiTVfS3l3Uk7b9LfA7DcHdTtyDLqOYwvBz6XYbtIWm5WRUsx8xj5nSo2ApytiyjYfRYFfh0yz/tSax/e8HUsU9uMf2tPvDYxfj79pmTD1ZDsuZh3IBwbsKwXHjuzV3Kp/BRIGBqrgi7Ox6gR3xMIpYv3NdbYu/wDLH6Y1Mv8AKFpdKeZdZk1oOCz4GcgB+BJq4mhl+N8rIrB0PTcrOLruuRkL7JjDccEG0qW/Db75e4vhbFVltv8ANzrkIK3ZthvZGA+kiH3EP8Cr3l3Lx4cuA0zw1qtzrkahZjLkA9S2P1ZbY52P7PR7tVRG+3UfMPxJnSYnhbGWxbrzbnZCHdb8x/NatvtVpsK0P8CrLyJL/q0xEmREipiIgRJiRAmIiAiIgIiICRJiBEmREBERAmJEmAkSYgRERAmQx2BPwG8THlNtW5+CMf8AaB89/Jx4ZyqdOpux81KjqNVebcTiJZZ5ltatt1lvogcAbfH4zqB4aFn7blZmcN9+h7Fop+41UBAw+T9UeAB/2Rpv/huH/wDCsv5bRgxMSqlFrprrprQbLXWioij4BRwJmkxIIkxEBERASJMQIkyIgTIkxAiTIiBMRECJMSIExEQEREBERASJMQIiIgIiTARIkwIiIgJ5dAwKsAQwIIPIIPcREBTWqKqIAqooVVUbBVA2AA+G09xEBERAREQEREBERASIiAkxEBIiIExEQERECJMRAREQEREBERASIiAiIgIiIH//2Q==",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e710d5dceaaf57d027d6d3",
+      "type": "object"
+    },
+    "name": {
+      "value": "Edgar",
+      "type": "string"
+    },
+    "lastname": {
+      "value": "Novoa Jardón",
+      "type": "string"
+    },
+    "age": {
+      "value": "20",
+      "type": "string"
+    },
+    "position": {
+      "value": "Gerente Operaciones y Logística",
+      "type": "string"
+    },
+    "email": {
+      "value": "edgarnj@icloud.com",
+      "type": "string"
+    },
+    "password": {
+      "value": "$2b$15$CtBjqLcnxdJzSYXoZQqLU.BTt/gNW59Y6cghPQg001sTVcmRXW4Bu",
+      "type": "string"
+    },
+    "signature": {
+      "value": "",
+      "type": "string"
+    },
+    "role": {
+      "value": "operador",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e71111dceaaf57d027d6d8",
+      "type": "object"
+    },
+    "name": {
+      "value": "María Alejandra",
+      "type": "string"
+    },
+    "lastname": {
+      "value": "Sánchez Galicia",
+      "type": "string"
+    },
+    "age": {
+      "value": "20",
+      "type": "string"
+    },
+    "position": {
+      "value": "Gerente Logística",
+      "type": "string"
+    },
+    "email": {
+      "value": "asanchez@multitrasladosyservicios.net",
+      "type": "string"
+    },
+    "password": {
+      "value": "$2b$15$EJq1L7ChMmcIdKWFmGt1wOUlSsLAMtnoqlMv3w176Ti/EGfKCXcIe",
+      "type": "string"
+    },
+    "signature": {
+      "value": "",
+      "type": "string"
+    },
+    "role": {
+      "value": "operador",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e71155dceaaf57d027d6dd",
+      "type": "object"
+    },
+    "name": {
+      "value": "José Miguel",
+      "type": "string"
+    },
+    "lastname": {
+      "value": "Molina Otamendi",
+      "type": "string"
+    },
+    "age": {
+      "value": "20",
+      "type": "string"
+    },
+    "position": {
+      "value": "Logística",
+      "type": "string"
+    },
+    "email": {
+      "value": "mmolina@multitrasladosyservicios.net",
+      "type": "string"
+    },
+    "password": {
+      "value": "$2b$15$tRq6GJFICQRSCUwP4VmXOulPvKFAauAZR26sKBdxbPAM/4XOEk8IO",
+      "type": "string"
+    },
+    "signature": {
+      "value": "",
+      "type": "string"
+    },
+    "role": {
+      "value": "operador",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e7117edceaaf57d027d6e1",
+      "type": "object"
+    },
+    "name": {
+      "value": "Hugo",
+      "type": "string"
+    },
+    "lastname": {
+      "value": "Gutiérrez Jardón",
+      "type": "string"
+    },
+    "age": {
+      "value": "20",
+      "type": "string"
+    },
+    "position": {
+      "value": "Monitoreo GPS",
+      "type": "string"
+    },
+    "email": {
+      "value": "hugojardon@multitrasladosyservicios.net",
+      "type": "string"
+    },
+    "password": {
+      "value": "$2b$15$x3W72hnaD1mZu4NaspIXUuAJH3qPsQ6CBxpL9gnIBfJVikTlyCdmO",
+      "type": "string"
+    },
+    "signature": {
+      "value": "",
+      "type": "string"
+    },
+    "role": {
+      "value": "operador",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

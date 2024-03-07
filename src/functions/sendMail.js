@@ -4,10 +4,10 @@ require('dotenv').config(); // Cargar variables de entorno desde el archivo .env
 
 const emailMTS = process.env.EMAIL;
 const pwMTS = process.env.SMTP_PW;
-console.log({
+/*console.log({
   user: emailMTS, // 'juan.buendia@callytek.com', // Cambia por tu dirección de correo
   pass: pwMTS, // 'uwwd klbx wkjr iygq', // Cambia por tu contraseña
-});
+});*/
 // Configura el transporte de Nodemailer
 const transporter = nodemailer.createTransport({
   host: 'mail.mtsi.com.mx', // Cambia el proveedor de correo según tu necesidad

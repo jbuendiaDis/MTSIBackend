@@ -1,0 +1,176 @@
+[
+  {
+    "_id": {
+      "value": "6537652daa824f6f174bb419",
+      "type": "object"
+    },
+    "codigoCliente": {
+      "value": "01ATC16111",
+      "type": "string"
+    },
+    "razonSocial": {
+      "value": "AUTOBUSES Y TRACTOCAMIONES DEL CENTRO",
+      "type": "string"
+    },
+    "rfc": {
+      "value": "ATC161116PTA",
+      "type": "string"
+    },
+    "metodoPago": {
+      "value": "Por definir",
+      "type": "string"
+    },
+    "formaPago": {
+      "value": "PPD",
+      "type": "string"
+    },
+    "regimenFiscal": {
+      "value": "General de Ley Personas Morales",
+      "type": "string"
+    },
+    "usoCFDI": {
+      "value": "Gastos en general",
+      "type": "string"
+    },
+    "telefono": {
+      "value": "55512124567",
+      "type": "string"
+    },
+    "calle": {
+      "value": "CARRETERA FEDERAL IRAPUATO SILAO",
+      "type": "string"
+    },
+    "numeroExterior": {
+      "value": "KM 144",
+      "type": "string"
+    },
+    "numeroInterior": {
+      "value": "N/P",
+      "type": "string"
+    },
+    "colonia": {
+      "value": "OTRA NO ESPECIFICADA EN EL CATALOGO",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6537673ed8b1a2f492fc975e",
+      "type": "object"
+    },
+    "codigoCliente": {
+      "value": "DE000496",
+      "type": "string"
+    },
+    "razonSocial": {
+      "value": "GRUPO TAB TOLUCA",
+      "type": "string"
+    },
+    "rfc": {
+      "value": "ATC161116PTA",
+      "type": "string"
+    },
+    "metodoPago": {
+      "value": "Por definir",
+      "type": "string"
+    },
+    "formaPago": {
+      "value": "PPD",
+      "type": "string"
+    },
+    "regimenFiscal": {
+      "value": "General de Ley Personas Morales",
+      "type": "string"
+    },
+    "usoCFDI": {
+      "value": "Gastos en general",
+      "type": "string"
+    },
+    "telefono": {
+      "value": "000000000",
+      "type": "string"
+    },
+    "calle": {
+      "value": "Carr. Toluca-Naucalpan sur",
+      "type": "string"
+    },
+    "numeroExterior": {
+      "value": "156",
+      "type": "string"
+    },
+    "numeroInterior": {
+      "value": "N/P",
+      "type": "string"
+    },
+    "colonia": {
+      "value": "Villa Cuauhtémoc",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "654827041359016c03b7f13f",
+      "type": "object"
+    },
+    "codigoCliente": {
+      "value": "01DVC9101",
+      "type": "string"
+    },
+    "razonSocial": {
+      "value": "DAIMLER VEHICULOS COMERCIALES MEXICO",
+      "type": "string"
+    },
+    "rfc": {
+      "value": "DVC910102VDA",
+      "type": "string"
+    },
+    "metodoPago": {
+      "value": "Por definir",
+      "type": "string"
+    },
+    "formaPago": {
+      "value": "PPD",
+      "type": "string"
+    },
+    "regimenFiscal": {
+      "value": "General de Ley Personas Morales",
+      "type": "string"
+    },
+    "usoCFDI": {
+      "value": "Gastos en general",
+      "type": "string"
+    },
+    "telefono": {
+      "value": "000000000",
+      "type": "string"
+    },
+    "calle": {
+      "value": "AV SANTA FE",
+      "type": "string"
+    },
+    "numeroExterior": {
+      "value": "428",
+      "type": "string"
+    },
+    "numeroInterior": {
+      "value": "TORRE 3 PISO 7",
+      "type": "string"
+    },
+    "colonia": {
+      "value": "Santa Fe Cuajimalpa",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

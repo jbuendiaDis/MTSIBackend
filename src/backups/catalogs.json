@@ -1,0 +1,2600 @@
+[
+  {
+    "_id": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Catálogo del Régimen Fiscal",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": null,
+      "type": "null"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:13:09.050Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Catálogo de Usos de CFDI",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": null,
+      "type": "null"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:13:31.367Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fb48f4f56285787e9c85",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "General de Ley Personas Morales",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "601",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:18:48.007Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fb7cf4f56285787e9c89",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Personas Morales con Fines no Lucrativos",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "603",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:19:40.725Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fb87f4f56285787e9c8c",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Sueldos y Salarios e Ingresos Asimilados a Salarios",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "605",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:19:51.050Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fb95f4f56285787e9c8f",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Arrendamiento",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "606",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:20:05.637Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fb9ef4f56285787e9c92",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Régimen de Enajenación o Adquisición de Bienes",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "607",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:20:14.836Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fba8f4f56285787e9c95",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Demás ingresos",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "608",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:20:24.698Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbb2f4f56285787e9c98",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Consolidación",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "609",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:20:34.208Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbbaf4f56285787e9c9b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Residentes en el Extranjero sin Establecimiento Permanente en México",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "610",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:20:42.624Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbc4f4f56285787e9c9e",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Ingresos por Dividendos (socios y accionistas)",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "611",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:20:52.248Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbcef4f56285787e9ca1",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Personas Físicas con Actividades Empresariales y Profesionales",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "612",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:21:02.040Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbd7f4f56285787e9ca4",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Ingresos por intereses",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "614",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:21:11.041Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbe0f4f56285787e9ca7",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Régimen de los ingresos por obtención de premios",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "615",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:21:20.837Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbeaf4f56285787e9caa",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Sin obligaciones fiscales",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "616",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:21:30.890Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbf4f4f56285787e9cad",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Sociedades Cooperativas de Producción que optan por diferir sus ingresos",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "620",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:21:40.007Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fbfef4f56285787e9cb0",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Incorporación Fiscal",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "621",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:21:50.268Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fc06f4f56285787e9cb3",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "622",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:21:58.794Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fc11f4f56285787e9cb6",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Opcional para Grupos de Sociedades",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "623",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:22:09.268Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fc1ff4f56285787e9cb9",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Coordinados",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "624",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:22:23.573Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fc27f4f56285787e9cbc",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "625",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:22:31.114Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fc32f4f56285787e9cbf",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Régimen Simplificado de Confianza",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "626",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:22:42.586Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fc3bf4f56285787e9cc2",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Hidrocarburos",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "628",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:22:51.052Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fc42f4f56285787e9cc5",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "De los Regímenes Fiscales Preferentes y de las Empresas Multinacionales",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "629",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:22:58.047Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577fc4ef4f56285787e9cc8",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Enajenación de acciones en bolsa de valores",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "630",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577f9f5a3b49e34400ca6b6",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T06:23:10.255Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578eaeed80af3d60dbb52f6",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Adquisición de mercancías.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "G01",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:21:18.508Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578eb4dd80af3d60dbb52fe",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Devoluciones, descuentos o bonificaciones.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "G02",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:22:53.652Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578eb5dd80af3d60dbb5302",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Gastos en general.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "G03",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:23:09.724Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578eb6fd80af3d60dbb5306",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Construcciones.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "I01",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:23:27.748Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578eb7cd80af3d60dbb530a",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Mobiliario y equipo de oficina por inversiones.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "I02",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:23:40.914Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578eb92d80af3d60dbb530e",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Equipo de transporte",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "I03",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:24:02.478Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578eb9dd80af3d60dbb5312",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Equipo de computo y accesorios.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "I04",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:24:13.488Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ebaad80af3d60dbb5316",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Dados, troqueles, moldes, matrices y herramental.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "I05",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:24:26.977Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ebbad80af3d60dbb531a",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Comunicaciones telefónicas.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "I06",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:24:42.594Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ebc8d80af3d60dbb531e",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Comunicaciones satelitales.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "I07",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:24:56.788Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ebd4d80af3d60dbb5322",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Otra maquinaria y equipo.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "I08",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:25:08.221Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ebe8d80af3d60dbb5326",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Honorarios médicos, dentales y gastos hospitalarios.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D01",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:25:28.217Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ebf4d80af3d60dbb532a",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Gastos médicos por incapacidad o discapacidad.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D02",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:25:40.682Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec00d80af3d60dbb532e",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Gastos funerales.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D03",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:25:52.433Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec0ed80af3d60dbb5332",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Donativos.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D04",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:26:06.442Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec1cd80af3d60dbb5336",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación).",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D05",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:26:20.002Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec2cd80af3d60dbb533a",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Aportaciones voluntarias al SAR.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D06",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:26:36.435Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec3ad80af3d60dbb533e",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Primas por seguros de gastos médicos.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D07",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:26:50.473Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec48d80af3d60dbb5342",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Gastos de transportación escolar obligatoria.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D08",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:27:04.119Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec52d80af3d60dbb5346",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D09",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:27:14.842Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec5ed80af3d60dbb534a",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Pagos por servicios educativos (colegiaturas).",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "D10",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:27:26.729Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec6bd80af3d60dbb534e",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Sin efectos fiscales.",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "S01",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:27:39.626Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec7ad80af3d60dbb5352",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Pagos",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "CP01",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:27:54.477Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6578ec86d80af3d60dbb5356",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Nómina",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "CN01",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6577fa0ba3b49e34400ca6b8",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-12T23:28:06.201Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Tipos de unidades para tarifas de casetas.",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": null,
+      "type": "null"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T01:52:30.018Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65790ffbffb8401c47d869b8",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Automoviles",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T01:59:23.436Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6579100effb8401c47d869be",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Autobuses",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T01:59:42.378Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65791012ffb8401c47d869c2",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Camiones",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T01:59:46.616Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65791017ffb8401c47d869c6",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Motocicleta",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T01:59:51.616Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6579101effb8401c47d869ca",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Camión 3 ejes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T01:59:58.959Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65791025ffb8401c47d869ce",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Camión 4 ejes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T02:00:05.200Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65791029ffb8401c47d869d2",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Camión 5 ejes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T02:00:09.184Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6579102dffb8401c47d869d6",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Camión 6 ejes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T02:00:13.119Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65791030ffb8401c47d869da",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Camión 7 ejes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T02:00:16.893Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65791039ffb8401c47d869de",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Camión 8 ejes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T02:00:25.179Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6579103dffb8401c47d869e2",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Camión 9 ejes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65790e5ed80af3d60dbb535d",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T02:00:29.462Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Lista de estados de Mexico",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": null,
+      "type": "null"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T03:12:27.387Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6579214dba59a5eee8b3456b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Aguascalientes",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "1",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-13T03:13:17.033Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "657d40dc090a350a86310db4",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Tipos de viajes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": null,
+      "type": "null"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-16T06:17:00.136Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "657d410b090a350a86310db8",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Rodando",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "657d40dc090a350a86310db4",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-16T06:17:47.064Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "657d411f090a350a86310dc0",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Sin rodar",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "657d40dc090a350a86310db4",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-16T06:18:07.546Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "657d4127090a350a86310dc4",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Local",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "657d40dc090a350a86310db4",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-16T06:18:15.482Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581101cd736b0480f0be33b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Baja California",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "2",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:38:04.762Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581102fd736b0480f0be33f",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Baja California Sur",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "3",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:38:23.041Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581103cd736b0480f0be343",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Campeche",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "4",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:38:36.641Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811044d736b0480f0be347",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Coahuila",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "5",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:38:44.403Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581104ed736b0480f0be34b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Colima",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "6",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:38:54.200Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581105ad736b0480f0be34f",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Chiapas",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "7",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:39:06.763Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811064d736b0480f0be353",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Chihuahua",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "8",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:39:16.170Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811071d736b0480f0be357",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Distrito Federal",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "9",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:39:29.283Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581107ed736b0480f0be35b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Durango",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "10",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:39:42.554Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581108fd736b0480f0be35f",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Guanajuato",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "11",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:39:59.426Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581109ad736b0480f0be363",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Guerrero",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "12",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:40:10.847Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "658110a8d736b0480f0be367",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Hidalgo",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "13",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:40:24.261Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "658110b8d736b0480f0be36b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Jalisco",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "14",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:40:40.788Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "658110c9d736b0480f0be36f",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "México",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "15",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:40:57.129Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "658110e1d736b0480f0be373",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Michoacán",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "16",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:41:21.624Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "658110ebd736b0480f0be377",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Morelos",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "17",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:41:31.058Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "658110f4d736b0480f0be37b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Nayarit",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "18",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:41:40.121Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "658110fed736b0480f0be37f",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Nuevo León",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "19",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:41:50.001Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811109d736b0480f0be383",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Oaxaca",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "20",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:42:01.903Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811113d736b0480f0be387",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Puebla",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "21",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:42:11.773Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581111dd736b0480f0be38b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Querétaro",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "22",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:42:21.460Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811127d736b0480f0be38f",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Quintana Roo",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "23",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:42:31.195Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811133d736b0480f0be393",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "San Luis Potosí",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "24",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:42:43.982Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581113ed736b0480f0be397",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Sinaloa",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "25",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:42:54.791Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581114cd736b0480f0be39b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Sonora",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "26",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:43:08.106Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811155d736b0480f0be39f",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Tabasco",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "27",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:43:17.185Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581115ed736b0480f0be3a3",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Tamaulipas",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "28",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:43:26.491Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6581116ad736b0480f0be3a7",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Tlaxcala",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "29",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:43:38.566Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811174d736b0480f0be3ab",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Veracruz",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "30",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:43:48.346Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811180d736b0480f0be3af",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Yucatán",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "31",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:44:00.826Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65811189d736b0480f0be3b3",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Zacatecas",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "32",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "6579211bba59a5eee8b34567",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-19T03:44:09.915Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65827bdb73bd91d97dbe222b",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Listado de estatus de solicitudes",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": null,
+      "type": "null"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-20T05:30:03.233Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65827bf673bd91d97dbe2468",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Pendiente",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "0",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65827bdb73bd91d97dbe222b",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-20T05:30:30.570Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65827c1073bd91d97dbe2684",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Atendida",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "1",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65827bdb73bd91d97dbe222b",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-20T05:30:56.113Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65827c1d73bd91d97dbe27a4",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Cancelada",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "2",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65827bdb73bd91d97dbe222b",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-20T05:31:09.838Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65827c2a73bd91d97dbe28b4",
+      "type": "object"
+    },
+    "descripcion": {
+      "value": "Rechazada",
+      "type": "string"
+    },
+    "codigo": {
+      "value": "3",
+      "type": "string"
+    },
+    "idPadre": {
+      "value": "65827bdb73bd91d97dbe222b",
+      "type": "object"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-20T05:31:22.660Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

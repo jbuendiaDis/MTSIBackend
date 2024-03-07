@@ -273,7 +273,7 @@ const savePointsAsCountriess = async (req, res) => {
   }
 };
 
-const savePointsAsCountries = async (req, res) => {
+const savePointsAsCountries_old= async (req, res) => {
   try {
     const createCountryInternal = async (data, tipoUnidad, newCodigo) => {
       // Ajusta los datos según el tipo de unidad especificado
@@ -447,22 +447,6 @@ const savePointsAsCountries = async (req, res) => {
 
       savedCountries.push(savedCountry12);
 
-
-      // Actualiza newCodigo para el siguiente registro
-      newCodigo++;
-
-      // Crea y guarda el país con tipoUnidad2
-      const savedCountry13 = await createCountryInternal({
-        ...punto,
-        nombre: punto.nombre,
-        fechaCreacion: new Date(),
-      }, 'Otro', newCodigo);
-
-      savedCountries.push(savedCountry13);
-
-      
-
-
     }
 
     res.formatResponse('ok', 200, 'Puntos guardados como localidades con éxito.', savedCountries);
@@ -471,6 +455,109 @@ const savePointsAsCountries = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
+ 
+
+const savePointsAsCountries_ok = async (req, res) => {
+  try {
+    const createCountryInternal = async (data, tipoUnidad, codigo) => {
+      const countryData = {
+        ...data,
+        codigo,
+        tipoUnidad,
+        fechaCreacion: new Date(),
+      };
+      const country = new Country(countryData);
+      return await country.save();
+    };
+
+    const dataFilePath = path.join(__dirname, '../functions/data.json');
+    const rawData = await fs.readFile(dataFilePath, 'utf-8');
+    const data = JSON.parse(rawData);
+
+    if (!data || !data.puntos || typeof data.puntos !== 'object') {
+      return res.formatResponse('error', 400, 'La estructura de puntos no es válida.', []);
+    }
+
+    const savedCountries = [];
+    const tiposUnidad = [
+      'Automoviles', 'Autobuses', 'Camiones', 'Motocicleta',
+      'Camión 3 ejes', 'Camión 4 ejes', 'Camión 5 ejes',
+      'Camión 6 ejes', 'Camión 7 ejes', 'Camión 8 ejes', 'Camión 9 ejes',
+    ];
+
+    for (const codigo of Object.keys(data.puntos)) {
+      const punto = data.puntos[codigo];
+      let lastCountry = await Country.findOne().sort({ codigo: -1 });
+      let newCodigo = lastCountry ? lastCountry.codigo + 1 : 1;
+
+      for (const tipoUnidad of tiposUnidad) {
+        const savedCountry = await createCountryInternal(punto, tipoUnidad, newCodigo++);
+        savedCountries.push(savedCountry);
+      }
+    }
+
+    res.formatResponse('ok', 200, 'Puntos guardados como localidades con éxito.', savedCountries);
+  } catch (error) {
+    console.error('Error al guardar puntos como países:', error);
+    await responseError(409, error, res); // Ensure responseError is a properly defined function for error handling
+  }
+};
+
+
+
+const savePointsAsCountries = async (req, res) => {
+  try {
+    const dataFilePath = path.join(__dirname, '../functions/data.json');
+    const rawData = await fs.readFile(dataFilePath, 'utf-8');
+    const data = JSON.parse(rawData);
+
+    if (!data || !data.puntos || typeof data.puntos !== 'object' || !data.estados || typeof data.estados !== 'object') {
+      return res.formatResponse('error', 400, 'La estructura de datos no es válida.', []);
+    }
+
+    const estados = data.estados; // Diccionario de estados
+    const savedCountries = [];
+    let lastCountry = await Country.findOne().sort({ codigo: -1 });
+    let newCodigo = lastCountry ? lastCountry.codigo + 1 : 1;
+
+    for (const codigo of Object.keys(data.puntos)) {
+      const punto = data.puntos[codigo];
+      const estadoId = punto.estado;
+      const estadoNombre = estados[estadoId.toString()]; // Obtiene el nombre del estado usando el ID
+
+      // Verifica si el estadoNombre existe, de lo contrario continúa con el siguiente punto
+      if (!estadoNombre) continue;
+
+      const tiposUnidad = ['Automoviles', 'Autobuses', 'Camiones', 'Motocicleta', 'Camión 3 ejes', 'Camión 4 ejes', 'Camión 5 ejes', 'Camión 6 ejes', 'Camión 7 ejes', 'Camión 8 ejes', 'Camión 9 ejes'];
+
+      tiposUnidad.forEach(async (tipoUnidad) => {
+        const newCountryData = {
+          ...punto,
+          nombre: `${punto.nombre}`, // Modifica el nombre para incluir el estado
+          estadoNombre:`${estadoNombre}`,
+          fechaCreacion: new Date(),
+          tipoUnidad: tipoUnidad,
+          codigo: newCodigo++
+        };
+
+        // Crea el nuevo país y lo guarda en la base de datos
+        const newCountry = new Country(newCountryData);
+        const savedCountry = await newCountry.save();
+        savedCountries.push(savedCountry);
+      });
+    }
+
+    res.formatResponse('ok', 200, 'Puntos guardados como localidades con éxito.', savedCountries);
+  } catch (error) {
+    console.error('Error al guardar puntos como países:', error);
+    await responseError(409, error, res);
+  }
+};
+
+
+
+
 
 const getCountryByEstadoYTipoUnidad = async (req, res) => {
   try {

@@ -1,0 +1,156 @@
+[
+  {
+    "_id": {
+      "value": "65375bfa66a04e0450d01d87",
+      "type": "object"
+    },
+    "marca": {
+      "value": "FREIGHTLINER",
+      "type": "string"
+    },
+    "modelo": {
+      "value": "BUSINES CLAS-FL-106",
+      "type": "string"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65375c1c66a04e0450d01d8a",
+      "type": "object"
+    },
+    "marca": {
+      "value": "FREIGHTLINER",
+      "type": "string"
+    },
+    "modelo": {
+      "value": "BUSINES CLAS-FL-112-6X4",
+      "type": "string"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65375c2566a04e0450d01d8c",
+      "type": "object"
+    },
+    "marca": {
+      "value": "FREIGHTLINER",
+      "type": "string"
+    },
+    "modelo": {
+      "value": "BUSINES CLAS-FL-112-29 TONS.",
+      "type": "string"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65375c3a66a04e0450d01d8e",
+      "type": "object"
+    },
+    "marca": {
+      "value": "FUSO",
+      "type": "string"
+    },
+    "modelo": {
+      "value": "360 715",
+      "type": "string"
+    },
+    "rendimiento": {
+      "value": 6,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65375c5c66a04e0450d01d90",
+      "type": "object"
+    },
+    "marca": {
+      "value": "FUSO",
+      "type": "string"
+    },
+    "modelo": {
+      "value": "360 1217",
+      "type": "string"
+    },
+    "rendimiento": {
+      "value": 5,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6dd8c66ad1b4915af7131",
+      "type": "object"
+    },
+    "marca": {
+      "value": "Sitrac",
+      "type": "string"
+    },
+    "modelo": {
+      "value": "G7",
+      "type": "string"
+    },
+    "rendimiento": {
+      "value": 2.5,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e008a025bc7265f1a33014",
+      "type": "object"
+    },
+    "marca": {
+      "value": "FREIGHTLINER",
+      "type": "string"
+    },
+    "modelo": {
+      "value": "M2 106 52K",
+      "type": "string"
+    },
+    "rendimiento": {
+      "value": 3,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

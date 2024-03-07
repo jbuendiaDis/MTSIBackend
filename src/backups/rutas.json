@@ -1,0 +1,279 @@
+[
+  {
+    "_id": {
+      "value": "65e0002525ea3739c5955029",
+      "type": "object"
+    },
+    "localidadOrigen": {
+      "value": "1349",
+      "type": "string"
+    },
+    "localidadDestino": {
+      "value": "649",
+      "type": "string"
+    },
+    "kms": {
+      "value": 1473,
+      "type": "number"
+    },
+    "tipoUnidad": {
+      "value": "Camión 3 ejes",
+      "type": "string"
+    },
+    "puntos": {
+      "value": [
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "San Cristóbal Ecatepec",
+          "costo": 500,
+          "_id": "65e000a725ea3739c59550c0"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Ezequiel Montes",
+          "costo": 300,
+          "_id": "65e000a725ea3739c59550c1"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Jalpan de Serra",
+          "costo": 300,
+          "_id": "65e000a725ea3739c59550c2"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Guadalajara",
+          "costo": 280,
+          "_id": "65e000a725ea3739c59550c3"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Campo 79",
+          "costo": 500,
+          "_id": "65e000a725ea3739c59550c4"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Camargo",
+          "costo": 620,
+          "_id": "65e000a725ea3739c59550c5"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Glorieta Vaqueritos (Coapa)",
+          "costo": 200,
+          "_id": "65e000a725ea3739c59550c6"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Cd. Acuña",
+          "costo": 499,
+          "_id": "65e000a725ea3739c59550c7"
+        }
+      ],
+      "type": "array"
+    },
+    "totalPeajes": {
+      "value": 3199,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e006db25bc7265f1a32f68",
+      "type": "object"
+    },
+    "localidadOrigen": {
+      "value": "1812",
+      "type": "string"
+    },
+    "localidadDestino": {
+      "value": "2141",
+      "type": "string"
+    },
+    "kms": {
+      "value": 760,
+      "type": "number"
+    },
+    "tipoUnidad": {
+      "value": "Camión 3 ejes",
+      "type": "string"
+    },
+    "puntos": {
+      "value": [
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Jalpan de Serra",
+          "costo": 300,
+          "_id": "65e0070b25bc7265f1a32fb5"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Ezequiel Montes",
+          "costo": 300,
+          "_id": "65e0070b25bc7265f1a32fb6"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Apodaca",
+          "costo": 307,
+          "_id": "65e0070b25bc7265f1a32fb7"
+        }
+      ],
+      "type": "array"
+    },
+    "totalPeajes": {
+      "value": 907,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e009c75eefd980ec46cf8c",
+      "type": "object"
+    },
+    "localidadOrigen": {
+      "value": "1",
+      "type": "string"
+    },
+    "localidadDestino": {
+      "value": "1",
+      "type": "string"
+    },
+    "kms": {
+      "value": 100,
+      "type": "number"
+    },
+    "tipoUnidad": {
+      "value": "Automoviles",
+      "type": "string"
+    },
+    "puntos": {
+      "value": [
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Aguascalientes",
+          "costo": 105,
+          "_id": "65e009c75eefd980ec46cf8d"
+        }
+      ],
+      "type": "array"
+    },
+    "totalPeajes": {
+      "value": 105,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e0148b25bc7265f1a331fc",
+      "type": "object"
+    },
+    "localidadOrigen": {
+      "value": "784",
+      "type": "string"
+    },
+    "localidadDestino": {
+      "value": "818",
+      "type": "string"
+    },
+    "kms": {
+      "value": 1022,
+      "type": "number"
+    },
+    "tipoUnidad": {
+      "value": "Camión 3 ejes",
+      "type": "string"
+    },
+    "puntos": {
+      "value": [
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Glorieta Vaqueritos (Coapa)",
+          "costo": 200,
+          "_id": "65e0148b25bc7265f1a331fd"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Campo 79",
+          "costo": 500,
+          "_id": "65e0148b25bc7265f1a331fe"
+        }
+      ],
+      "type": "array"
+    },
+    "totalPeajes": {
+      "value": 700,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e7beff08b6a862a784c328",
+      "type": "object"
+    },
+    "localidadOrigen": {
+      "value": "2057",
+      "type": "string"
+    },
+    "localidadDestino": {
+      "value": "2140",
+      "type": "string"
+    },
+    "kms": {
+      "value": 322,
+      "type": "number"
+    },
+    "tipoUnidad": {
+      "value": "Camión 3 ejes",
+      "type": "string"
+    },
+    "puntos": {
+      "value": [
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "San Martín Texmelucan",
+          "costo": 0,
+          "_id": "65e7beff08b6a862a784c329"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "San Martín Texmelucan",
+          "costo": 0,
+          "_id": "65e7beff08b6a862a784c32a"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Palmillas",
+          "costo": 0,
+          "_id": "65e7beff08b6a862a784c32b"
+        }
+      ],
+      "type": "array"
+    },
+    "totalPeajes": {
+      "value": 0,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

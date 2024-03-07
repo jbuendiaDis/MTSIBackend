@@ -1,0 +1,1354 @@
+[
+  {
+    "_id": {
+      "value": "65d069877b76ae1174f2d444",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "776af21f-35a6-41e4-9178-ba3bfe756d2d",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-17T08:08:39.322Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d069e8016a97bdc329e236",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "160b94ce-636c-4aba-881a-160df932c0d0",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-17T08:10:16.010Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d0b6eec8c8a855c085962b",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "97ee401f-48a0-4910-8bb0-b20f9cd5f07a",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ReferenceError: ruta is not defined",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-17T13:38:54.219Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d0b9b7843e6949981f7864",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "0af2ceec-04ce-4e71-ad41-20808520149e",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "TypeError: gastosList.map is not a function",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-17T13:50:47.252Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d0e4162405af4308733eb5",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "6b17a49a-2a05-4f41-9cf1-e6eca9b83ce2",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Registro de gastos no encontrado.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-17T16:51:34.971Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d0e4e12405af4308733f06",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "10c1366f-8de1-4550-b98e-75722902e404",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Registro de gastos no encontrado.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-17T16:54:57.796Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d0ea0f2405af4308733f2a",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "4ea400f4-1639-4156-b0c7-8b1cb26749a6",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Registro de gastos no encontrado.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-17T17:17:03.474Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d0ea282405af4308733f66",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "cd860e84-d1f6-4997-a558-13af7c68ba1c",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Registro de gastos no encontrado.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-17T17:17:28.288Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d18c356372b79b4ea87dc9",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "492b7b41-a75c-46fc-9e33-f4fc27a88c99",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: otros: Path `otros` is required., sucontrato: Path `sucontrato` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-18T04:48:53.849Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d18db7e0efc4d31b5cad2e",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "340b817c-285d-40f5-add0-d79a8b109603",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-18T04:55:19.731Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d18e6f2f4eb00d2a1a2b0a",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "32c5d6af-eb14-4e86-8332-ead5a9f0354a",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-18T04:58:23.128Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d18ea372c9d1c6a3fa520f",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "f1694b07-e00a-4dfa-8e1f-ff725d349398",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-18T04:59:15.163Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "17/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2e2229d2ed4349d804a70",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "749a9e79-88f2-468d-b671-433ab5642b3a",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerSelectionError: connect ETIMEDOUT 3.210.35.245:27017",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-19T05:07:46.082Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "18/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2e2229d2ed4349d804a72",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "4c34ae71-c475-45c6-9ddc-d2d975a0d20c",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerSelectionError: connect ETIMEDOUT 3.210.35.245:27017",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-19T05:07:46.084Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "18/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2e2229d2ed4349d804a74",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "e6c744d2-d101-450d-90dd-83571c80dcd4",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerSelectionError: connect ETIMEDOUT 3.210.35.245:27017",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-19T05:07:46.086Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "18/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2e2229d2ed4349d804a76",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "adda26d5-0929-427c-af69-59b20d7f097f",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerSelectionError: connect ETIMEDOUT 3.210.35.245:27017",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-19T05:07:46.088Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "18/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2e2229d2ed4349d804a78",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "8ba9bd75-fb8e-4821-b49f-c7bec6009a4f",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerSelectionError: connect ETIMEDOUT 3.210.35.245:27017",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-19T05:07:46.089Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "18/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2e2229d2ed4349d804a7c",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "c21762bc-4958-4933-a759-248f859b67c4",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerSelectionError: connect ETIMEDOUT 3.210.35.245:27017",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-19T05:07:46.092Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "18/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2e2269d2ed4349d804a7e",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "4ca78663-2c5e-4a1d-a4c3-2c26cd44a38b",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerSelectionError: connect ETIMEDOUT 3.210.35.245:27017",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-19T05:07:50.735Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "18/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2e2229d2ed4349d804a7a",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "8d355232-b78f-493a-b77d-50e55ab7278b",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerSelectionError: connect ETIMEDOUT 3.210.35.245:27017",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-19T05:07:46.091Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "18/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d5929a2003800ac6dba725",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "c7c6386c-4170-42c6-9e67-fa8dae56342d",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: tipoUnidad: `Camión 4 ejes` is not a valid enum value for path `tipoUnidad`.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:05:14.187Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d592aa2003800ac6dba72c",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "e7f4c037-e13f-451c-9c5d-550771aab8c6",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: tipoUnidad: `Camión 4 ejes` is not a valid enum value for path `tipoUnidad`.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:05:30.504Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d59746d14c5bdcca3c9bad",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "3cf21687-5510-4b8c-97ed-1d808d05b53f",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ReferenceError: jwt is not defined",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:25:10.583Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d597a0bdd67abf4cee7386",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "8534b712-54d3-422d-ac60-a7539f95b634",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:26:40.196Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d597f3d8cb4761bb038488",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "3cb0ea4b-d003-41ef-b8c5-13f0c9516073",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:28:03.835Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d5988277ee38e7dcc8d1d5",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "1ffde7ac-3dd9-45b7-98bd-ea60955d9515",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:30:26.317Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d598f50e23133c25321a03",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "e5860579-6193-49f3-86af-111054d556e7",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:32:21.683Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d59ac329543c70fb9a35e0",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "61b0b844-cfaa-4117-a780-bfd18c8f4cc1",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:40:03.790Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d59c42851533a74f8fa1e9",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "73e91bf7-5845-4690-8e9a-9246da6856a5",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:46:26.683Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d59cd262443d512174daac",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "83d5c516-159d-49cb-be85-a47db6f9a31f",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:48:50.520Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d59d06d45b116895f54181",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "fefc6c88-9d62-4cc4-a9b2-c97697a9d514",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:49:42.889Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d59d519a2fe0a91016a7b7",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "8a0682bc-74c8-4e11-a0cb-522853f92d74",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:50:57.203Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d59ed791bb73fe3458a38b",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "a09f0c5f-9e2d-483b-b995-dad7fe14581a",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ReferenceError: dataSolicitud is not defined",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-21T06:57:27.293Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6dabde5041af849eeb2d4",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "19e2f991-4d2b-48e8-bac9-eb671e19aa1d",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: tipoUnidad: `Camión 4 ejes` is not a valid enum value for path `tipoUnidad`.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T05:25:17.840Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6dacbe5041af849eeb2dc",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "e140166b-e083-4c29-9cca-139b3c6efad9",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: tipoUnidad: `Camión 4 ejes` is not a valid enum value for path `tipoUnidad`.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T05:25:31.874Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6db26e5041af849eeb2e6",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "5a862c59-ff2d-43f9-981d-ca8be39d201a",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: tipoUnidad: `Camión 5 ejes` is not a valid enum value for path `tipoUnidad`.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T05:27:02.876Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6db43e5041af849eeb2f0",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "5788ca5f-c575-417b-955f-a6afd51dafcd",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: tipoUnidad: `Camión 6 ejes` is not a valid enum value for path `tipoUnidad`.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T05:27:31.996Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "21/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6e34bdfe3ee731bc94dc0",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "d1c13766-cb63-47f6-8b0b-e18d0df26207",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "MongoServerError: E11000 duplicate key error collection: MTSI.banderas index: nombre_1 dup key: { nombre: \"pasajeOrigen\" }",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T06:01:47.249Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6e8dc66ad1b4915af7570",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "aca4001f-e293-407b-a6c6-0b61e1c2ca8b",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: rendimiento: Path `rendimiento` is required., otros: Path `otros` is required., sucontrato: Path `sucontrato` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T06:25:32.852Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6e8ee66ad1b4915af7574",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "0003c055-259e-4f28-ad3c-c693159ee5bc",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: rendimiento: Path `rendimiento` is required., otros: Path `otros` is required., sucontrato: Path `sucontrato` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T06:25:50.825Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6e93159b062c82f34720e",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "eab7679f-f019-4f69-8dc6-2985f50921f6",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: rendimiento: Path `rendimiento` is required., otros: Path `otros` is required., sucontrato: Path `sucontrato` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T06:26:57.831Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6e94b66ad1b4915af7578",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "d35de420-aa01-4c1f-b082-fe465664fa80",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: rendimiento: Path `rendimiento` is required., sucontrato: Path `sucontrato` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T06:27:23.176Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6e95366ad1b4915af757c",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "caff9ecd-84e0-4134-beb9-804e9522ee82",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: rendimiento: Path `rendimiento` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T06:27:31.308Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6f8eb7e1187c81f97724a",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "ae4cb3f8-ec3c-4f01-9481-960c3ff3a457",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ReferenceError: fechaCreacion is not defined",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T07:34:03.961Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6f8fc7e1187c81f97724f",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "014abf43-0f3a-4562-aa3a-67ea36337275",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ReferenceError: fechaCreacion is not defined",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T07:34:20.584Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6fa1b8dafe882985b4e03",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "b9f2f10c-5437-421f-a487-1ebc6a0591a0",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ReferenceError: fechaCreacion is not defined",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-02-22T07:39:07.116Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "22/02/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e70e0f08b6a862a784c2d9",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "05097bc6-3989-4307-9e7a-77b71c750b2e",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: signature: Path `signature` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-03-05T12:20:31.500Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "05/03/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e70e5708b6a862a784c2df",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "da326d27-ff59-487e-ba00-e0c142e0e679",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: signature: Path `signature` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-03-05T12:21:43.492Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "05/03/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e70e7908b6a862a784c2e4",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "c113b860-6aed-4c78-857f-2087854625fb",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: signature: Path `signature` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-03-05T12:22:17.055Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "05/03/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e70ec3e971e9cd30fa8134",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "1fabc098-815f-4512-82bf-0db480050195",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: signature: Path `signature` is required.",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-03-05T12:23:31.890Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "05/03/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e8005ef0f8680dc116c6ad",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "611b5ce0-aeac-4e53-830d-d991eece4199",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: tipoUnidad: El tipo de unidad no coincide con el catálogo padre con ID  65790e5ed80af3d60dbb535d",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-03-06T05:34:22.242Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "05/03/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e8008bf0f8680dc116c6d4",
+      "type": "object"
+    },
+    "uuid": {
+      "value": "65ffbf78-39c9-4f2c-a969-b8c309c83697",
+      "type": "string"
+    },
+    "errorDescription": {
+      "value": "ValidationError: tipoUnidad: El tipo de unidad no coincide con el catálogo padre con ID  65790e5ed80af3d60dbb535d",
+      "type": "string"
+    },
+    "date": {
+      "value": "2024-03-06T05:35:07.321Z",
+      "type": "object"
+    },
+    "time": {
+      "value": "05/03/24",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

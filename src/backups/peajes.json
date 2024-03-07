@@ -1,0 +1,110 @@
+[
+  {
+    "_id": {
+      "value": "65d04bcd5f3899d86cb49718",
+      "type": "object"
+    },
+    "idgasto": {
+      "value": "65d04bcd5f3899d86cb49716",
+      "type": "object"
+    },
+    "localidadOrigen": {
+      "value": "784",
+      "type": "string"
+    },
+    "localidadDestino": {
+      "value": "818",
+      "type": "string"
+    },
+    "kms": {
+      "value": 300,
+      "type": "number"
+    },
+    "tipoUnidad": {
+      "value": "Camión 3 ejes",
+      "type": "string"
+    },
+    "puntos": {
+      "value": [
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "El Vergel",
+          "costo": 200,
+          "_id": "65d04bcd5f3899d86cb49719"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Chapultepec",
+          "costo": 0,
+          "_id": "65d04bcd5f3899d86cb4971a"
+        }
+      ],
+      "type": "array"
+    },
+    "totalPeajes": {
+      "value": 200,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d067564dd24bb9ba699382",
+      "type": "object"
+    },
+    "idgasto": {
+      "value": "65d067564dd24bb9ba699380",
+      "type": "object"
+    },
+    "localidadOrigen": {
+      "value": "801",
+      "type": "string"
+    },
+    "localidadDestino": {
+      "value": "1250",
+      "type": "string"
+    },
+    "kms": {
+      "value": 410,
+      "type": "number"
+    },
+    "tipoUnidad": {
+      "value": "Camión 3 ejes",
+      "type": "string"
+    },
+    "puntos": {
+      "value": [
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "T Av. Insurgentes",
+          "costo": 165,
+          "_id": "65d0685b4dd24bb9ba69b717"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Apatzingán",
+          "costo": 350,
+          "_id": "65d0685b4dd24bb9ba69b718"
+        },
+        {
+          "casetas": "VIAPASS",
+          "nombreCaseta": "Guadalajara",
+          "costo": 280,
+          "_id": "65d0685b4dd24bb9ba69b719"
+        }
+      ],
+      "type": "array"
+    },
+    "totalPeajes": {
+      "value": 795,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

@@ -1,0 +1,318 @@
+[
+  {
+    "_id": {
+      "value": "65e000fd25ea3739c59550ed",
+      "type": "object"
+    },
+    "idCliente": {
+      "value": "6545d363003e31ceead324ca",
+      "type": "object"
+    },
+    "rutaId": {
+      "value": "65e0002525ea3739c5955029",
+      "type": "object"
+    },
+    "pasajeOrigen": {
+      "value": 0,
+      "type": "number"
+    },
+    "pasajeDestino": {
+      "value": 2757,
+      "type": "number"
+    },
+    "comidas": {
+      "value": 1080,
+      "type": "number"
+    },
+    "hoteles": {
+      "value": 1000,
+      "type": "number"
+    },
+    "vuelo": {
+      "value": 0,
+      "type": "number"
+    },
+    "taxi": {
+      "value": 0,
+      "type": "number"
+    },
+    "ferry": {
+      "value": 0,
+      "type": "number"
+    },
+    "udsUsa": {
+      "value": 0,
+      "type": "number"
+    },
+    "liberacionPuerto": {
+      "value": 0,
+      "type": "number"
+    },
+    "talachas": {
+      "value": 0,
+      "type": "number"
+    },
+    "fitosanitarias": {
+      "value": 200,
+      "type": "number"
+    },
+    "urea": {
+      "value": 0,
+      "type": "number"
+    },
+    "extra": {
+      "value": 0,
+      "type": "number"
+    },
+    "seguroTraslado": {
+      "value": 0,
+      "type": "number"
+    },
+    "pagoEstadia": {
+      "value": 0,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e007df25bc7265f1a32fe7",
+      "type": "object"
+    },
+    "idCliente": {
+      "value": "6545d363003e31ceead324ca",
+      "type": "object"
+    },
+    "rutaId": {
+      "value": "65e006db25bc7265f1a32f68",
+      "type": "object"
+    },
+    "pasajeOrigen": {
+      "value": 1542,
+      "type": "number"
+    },
+    "pasajeDestino": {
+      "value": 570,
+      "type": "number"
+    },
+    "comidas": {
+      "value": 480,
+      "type": "number"
+    },
+    "hoteles": {
+      "value": 0,
+      "type": "number"
+    },
+    "vuelo": {
+      "value": 0,
+      "type": "number"
+    },
+    "taxi": {
+      "value": 250,
+      "type": "number"
+    },
+    "ferry": {
+      "value": 0,
+      "type": "number"
+    },
+    "udsUsa": {
+      "value": 0,
+      "type": "number"
+    },
+    "liberacionPuerto": {
+      "value": 0,
+      "type": "number"
+    },
+    "talachas": {
+      "value": 0,
+      "type": "number"
+    },
+    "fitosanitarias": {
+      "value": 0,
+      "type": "number"
+    },
+    "urea": {
+      "value": 0,
+      "type": "number"
+    },
+    "extra": {
+      "value": 1000,
+      "type": "number"
+    },
+    "seguroTraslado": {
+      "value": 0,
+      "type": "number"
+    },
+    "pagoEstadia": {
+      "value": 0,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e014a825bc7265f1a33247",
+      "type": "object"
+    },
+    "idCliente": {
+      "value": "6545d363003e31ceead324ca",
+      "type": "object"
+    },
+    "rutaId": {
+      "value": "65e0148b25bc7265f1a331fc",
+      "type": "object"
+    },
+    "pasajeOrigen": {
+      "value": 588,
+      "type": "number"
+    },
+    "pasajeDestino": {
+      "value": 588,
+      "type": "number"
+    },
+    "comidas": {
+      "value": 588,
+      "type": "number"
+    },
+    "hoteles": {
+      "value": 800,
+      "type": "number"
+    },
+    "vuelo": {
+      "value": 0,
+      "type": "number"
+    },
+    "taxi": {
+      "value": 250,
+      "type": "number"
+    },
+    "ferry": {
+      "value": 0,
+      "type": "number"
+    },
+    "udsUsa": {
+      "value": 0,
+      "type": "number"
+    },
+    "liberacionPuerto": {
+      "value": 0,
+      "type": "number"
+    },
+    "talachas": {
+      "value": 0,
+      "type": "number"
+    },
+    "fitosanitarias": {
+      "value": 0,
+      "type": "number"
+    },
+    "urea": {
+      "value": 0,
+      "type": "number"
+    },
+    "extra": {
+      "value": 500,
+      "type": "number"
+    },
+    "seguroTraslado": {
+      "value": 0,
+      "type": "number"
+    },
+    "pagoEstadia": {
+      "value": 0,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e01f1f3ce306e30263531a",
+      "type": "object"
+    },
+    "idCliente": {
+      "value": "6545d363003e31ceead324ca",
+      "type": "object"
+    },
+    "rutaId": {
+      "value": "65e009c75eefd980ec46cf8c",
+      "type": "object"
+    },
+    "pasajeOrigen": {
+      "value": 0,
+      "type": "number"
+    },
+    "pasajeDestino": {
+      "value": 0,
+      "type": "number"
+    },
+    "comidas": {
+      "value": 0,
+      "type": "number"
+    },
+    "hoteles": {
+      "value": 0,
+      "type": "number"
+    },
+    "vuelo": {
+      "value": 0,
+      "type": "number"
+    },
+    "taxi": {
+      "value": 0,
+      "type": "number"
+    },
+    "ferry": {
+      "value": 0,
+      "type": "number"
+    },
+    "udsUsa": {
+      "value": 0,
+      "type": "number"
+    },
+    "liberacionPuerto": {
+      "value": 0,
+      "type": "number"
+    },
+    "talachas": {
+      "value": 0,
+      "type": "number"
+    },
+    "fitosanitarias": {
+      "value": 0,
+      "type": "number"
+    },
+    "urea": {
+      "value": 0,
+      "type": "number"
+    },
+    "extra": {
+      "value": 0,
+      "type": "number"
+    },
+    "seguroTraslado": {
+      "value": 0,
+      "type": "number"
+    },
+    "pagoEstadia": {
+      "value": 0,
+      "type": "number"
+    },
+    "diselExtra": {
+      "value": 1000,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

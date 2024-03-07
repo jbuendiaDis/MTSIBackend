@@ -1,0 +1,112 @@
+[
+  {
+    "_id": {
+      "value": "653771b1dac7a366e792164b",
+      "type": "object"
+    },
+    "tipoTraslado": {
+      "value": "TCC-TA",
+      "type": "string"
+    },
+    "concepto": {
+      "value": "Tractos y Chasis cabina a partir de 274 en adelante Kms",
+      "type": "string"
+    },
+    "sueldo": {
+      "value": 1.55,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "653771c6dac7a366e792164f",
+      "type": "object"
+    },
+    "tipoTraslado": {
+      "value": "TCC-TA",
+      "type": "string"
+    },
+    "concepto": {
+      "value": "Con carrocerías y buses apartir de 251 en adelante Kms",
+      "type": "string"
+    },
+    "sueldo": {
+      "value": 1.4,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6537721901351345ee23fe9f",
+      "type": "object"
+    },
+    "tipoTraslado": {
+      "value": "TCC-TA",
+      "type": "string"
+    },
+    "concepto": {
+      "value": "Chasis araña a partir 500kms",
+      "type": "string"
+    },
+    "sueldo": {
+      "value": 2.3,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6537739438c3c3e49c9ded1a",
+      "type": "object"
+    },
+    "tipoTraslado": {
+      "value": "TCC53",
+      "type": "string"
+    },
+    "concepto": {
+      "value": "sin rodar camion de 53\" 0 a 200kms",
+      "type": "string"
+    },
+    "sueldo": {
+      "value": 500,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6577ef693b18a28356324aa2",
+      "type": "object"
+    },
+    "tipoTraslado": {
+      "value": "TCC-TA",
+      "type": "string"
+    },
+    "concepto": {
+      "value": " rodando camion de 53\" 0 a 200kms",
+      "type": "string"
+    },
+    "sueldo": {
+      "value": 300,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

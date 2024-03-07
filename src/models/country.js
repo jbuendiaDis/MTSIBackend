@@ -19,7 +19,6 @@ const CountrySchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: async function (value) {
-        console.log("value:",value);
         try {
           // Validar que el valor de tipoUnidad coincide con el catálogo padre con ID 23
           const catalogEntry = await Catalog.findOne({ descripcion: value, idPadre: '65790e5ed80af3d60dbb535d' });

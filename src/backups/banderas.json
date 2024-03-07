@@ -1,0 +1,68 @@
+[
+  {
+    "_id": {
+      "value": "65be7bde6ec83a9987f6bfe6",
+      "type": "object"
+    },
+    "nombre": {
+      "value": "pasajeOrigen",
+      "type": "string"
+    },
+    "descripcion": {
+      "value": "costo del pasaje origen",
+      "type": "string"
+    },
+    "valor": {
+      "value": 100,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65be7cb26ec83a9987f6bfea",
+      "type": "object"
+    },
+    "nombre": {
+      "value": "pasajeDestino",
+      "type": "string"
+    },
+    "descripcion": {
+      "value": "costo del pasaje destino",
+      "type": "string"
+    },
+    "valor": {
+      "value": 100,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65c3a9e7e8e8929da711285d",
+      "type": "object"
+    },
+    "nombre": {
+      "value": "destinoTemporalParaSinrodar",
+      "type": "string"
+    },
+    "descripcion": {
+      "value": "codigo de destino para calcular cotizaciones sin rodar, miestras se define de donde salen",
+      "type": "string"
+    },
+    "valor": {
+      "value": 3,
+      "type": "number"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

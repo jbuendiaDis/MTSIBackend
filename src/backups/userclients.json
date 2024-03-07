@@ -1,0 +1,60 @@
+[
+  {
+    "_id": {
+      "value": "65794717700332260a067796",
+      "type": "object"
+    },
+    "idCliente": {
+      "value": "6537652daa824f6f174bb419",
+      "type": "object"
+    },
+    "nombreCliente": {
+      "value": "AUTOBUSES Y TRACTOCAMIONES DEL CENTRO",
+      "type": "string"
+    },
+    "nombre": {
+      "value": "Juan Carlos Buendia",
+      "type": "string"
+    },
+    "genero": {
+      "value": "Masculino",
+      "type": "string"
+    },
+    "puesto": {
+      "value": "Lic",
+      "type": "string"
+    },
+    "email": {
+      "value": "juan.carlos.buendia@outlook.com",
+      "type": "string"
+    },
+    "password": {
+      "value": "$2b$10$VYjSEm0665vsBQf7MZGB4O8FNp.hklcaTn8IAIzQHqCYq8w9lbPJy",
+      "type": "string"
+    },
+    "telOficina": {
+      "value": "2323232323",
+      "type": "string"
+    },
+    "telMovil": {
+      "value": "2323232323",
+      "type": "string"
+    },
+    "whatsapp": {
+      "value": "2323232323",
+      "type": "string"
+    },
+    "direccion": {
+      "value": "algun lugar de un gran pais",
+      "type": "string"
+    },
+    "notas": {
+      "value": "esto es una prueba",
+      "type": "string"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

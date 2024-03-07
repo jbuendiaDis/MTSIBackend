@@ -1,0 +1,1502 @@
+[
+  {
+    "_id": {
+      "value": "655eb2abb55483a3bfe6d4b1",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 3,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "20:02:05",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-23T02:02:19.642Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "655eb2fa37948e79ee1ed039",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 27.88,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 3,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "20:03:22",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-23T02:03:38.066Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    },
+    "fechaActualizacion": {
+      "value": "2023-11-23T02:07:30.199Z",
+      "type": "object"
+    }
+  },
+  {
+    "_id": {
+      "value": "65603b3f870f2450eda783fa",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 3,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "01:10:24",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-24T05:57:19.035Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65603c16870f2450eda783fe",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 3,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "01:10:24",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-24T06:00:54.073Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65603c48870f2450eda78404",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 3,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "01:10:24",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-24T06:01:44.334Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6564c912de415bb45e926671",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 1,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Inactivo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "10:47:55",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-27T16:51:30.383Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6564c924de415bb45e926676",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 2,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Inactivo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "10:47:55",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-27T16:51:48.899Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6564cc09ebc50e7ab98e47d7",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 3,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Inactivo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "11:03:41",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-27T17:04:09.751Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6564cc43ebc50e7ab98e47dd",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 4,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Inactivo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "11:03:41",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-27T17:05:07.165Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "6564cc50ebc50e7ab98e47e1",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 5,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Inactivo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "11:03:41",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-11-27T17:05:20.109Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65714b5ff64790dda19a5985",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 5,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Inactivo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "22:29:02",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-07T04:34:39.237Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65714b7df64790dda19a598b",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 555,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 5,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "22:29:02",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-07T04:35:09.006Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "658be36b569d4b107ae783e3",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 100,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 10000,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 10,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 10,
+      "type": "number"
+    },
+    "otros": {
+      "value": 5000,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 2000,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "01:07:28",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2023-12-27T08:42:19.875Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65977d62529bde75b0cfb5fb",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 1000,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 10000,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 10,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 10,
+      "type": "number"
+    },
+    "otros": {
+      "value": 1000,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 1000,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "21:38:35",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-01-05T03:54:10.061Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "659cce330d54a01ba77f21c7",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 10000,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 24,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 9,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 3,
+      "type": "number"
+    },
+    "otros": {
+      "value": 2500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 8500,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "22:12:39",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-01-09T04:40:19.698Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    },
+    "fechaActualizacion": {
+      "value": "2024-01-09T05:34:47.161Z",
+      "type": "object"
+    }
+  },
+  {
+    "_id": {
+      "value": "65ab2aad0b8545064f89f5ce",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 1000,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 25,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 8,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 8,
+      "type": "number"
+    },
+    "otros": {
+      "value": 2000,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 5000,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "20:05:03",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-01-20T02:06:37.811Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65bdc27714277a46f4ae5cba",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 1000,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 25.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 10,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 1000,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 5000,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "20:20:53",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-03T04:35:03.302Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65c12adc7795bdc89ad552b6",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 1000,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 25,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 10,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 1000,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 2500,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "12:34:47",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-05T18:37:16.961Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65c2e5b2b6f5c50e711a5de5",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 2500,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 22.4,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 10,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 15,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 1000,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "20:03:02",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-07T02:06:42.067Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65c59e1539844a86922a5440",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 1000,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 22.49,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 10,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 8,
+      "type": "number"
+    },
+    "otros": {
+      "value": 250,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 1000,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "21:30:42",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-09T03:37:57.765Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65c72fb80265ab32d5a785da",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 5.3,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 3,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 8,
+      "type": "number"
+    },
+    "otros": {
+      "value": 100,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 100,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "01:48:33",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-10T08:11:36.582Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65c9a0818377f976dcf8ab41",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 3,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 22.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 8,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 8,
+      "type": "number"
+    },
+    "otros": {
+      "value": 1500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500,
+      "type": "number"
+    },
+    "status": {
+      "value": "Inactivo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "22:29:10",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-12T04:37:21.311Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65c9a0a0eb7788bdb972a552",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 555,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 5,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500.6,
+      "type": "number"
+    },
+    "status": {
+      "value": "Inactivo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "22:30:36",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-12T04:37:52.594Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65c9a0b0eb7788bdb972a55b",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 22.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 5,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 4.5,
+      "type": "number"
+    },
+    "otros": {
+      "value": 4500,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 500,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "22:30:36",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-12T04:38:08.418Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    },
+    "fechaActualizacion": {
+      "value": "2024-02-12T08:06:25.118Z",
+      "type": "object"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d01998a3a3789096113257",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 4,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 22.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 4,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 8,
+      "type": "number"
+    },
+    "otros": {
+      "value": 0,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 0,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "20:27:05",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-17T02:27:36.918Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    },
+    "fechaActualizacion": {
+      "value": "2024-02-17T06:02:00.684Z",
+      "type": "object"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d18c909a531f44fc49ec0b",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 5,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 23.2,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 6,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 7,
+      "type": "number"
+    },
+    "otros": {
+      "value": 0,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 0,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "22:50:10",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-18T04:50:24.350Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    },
+    "fechaActualizacion": {
+      "value": "2024-02-18T04:58:51.738Z",
+      "type": "object"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d2f0c3ad4ca22d421453fa",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 5.3,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 4,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 8,
+      "type": "number"
+    },
+    "otros": {
+      "value": 0,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 0,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "23:26:27",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-19T06:10:11.311Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d5914a2003800ac6dba683",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 5.3,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 4,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 8,
+      "type": "number"
+    },
+    "otros": {
+      "value": 0,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 0,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "23:52:02",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-21T05:59:38.371Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d6e95b66ad1b4915af757f",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 0,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 27,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 3,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 3,
+      "type": "number"
+    },
+    "otros": {
+      "value": 0,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 0,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "23:29:18",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-22T06:27:39.214Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    },
+    "fechaActualizacion": {
+      "value": "2024-02-22T08:13:22.765Z",
+      "type": "object"
+    }
+  },
+  {
+    "_id": {
+      "value": "65d90c9125ea3739c59549f3",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 0,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 26.5,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 4,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 8,
+      "type": "number"
+    },
+    "otros": {
+      "value": 0,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 0,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "15:02:11",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-23T21:22:25.256Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  },
+  {
+    "_id": {
+      "value": "65dff80425ea3739c5954e44",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 5.3,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 27,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 7,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 3,
+      "type": "number"
+    },
+    "otros": {
+      "value": 0,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 0,
+      "type": "number"
+    },
+    "status": {
+      "value": "Expirado",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "15:02:11",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-02-29T03:20:36.408Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    },
+    "fechaActualizacion": {
+      "value": "2024-02-29T04:35:10.993Z",
+      "type": "object"
+    }
+  },
+  {
+    "_id": {
+      "value": "65e7fda808b6a862a784c366",
+      "type": "object"
+    },
+    "rendimiento": {
+      "value": 1000,
+      "type": "number"
+    },
+    "combustible": {
+      "value": 24.99,
+      "type": "number"
+    },
+    "inflacion": {
+      "value": 10,
+      "type": "number"
+    },
+    "financiamiento": {
+      "value": 10,
+      "type": "number"
+    },
+    "otros": {
+      "value": 1000,
+      "type": "number"
+    },
+    "sucontrato": {
+      "value": 1000,
+      "type": "number"
+    },
+    "status": {
+      "value": "Activo",
+      "type": "string"
+    },
+    "horaCreacion": {
+      "value": "24:00:15",
+      "type": "string"
+    },
+    "fechaCreacion": {
+      "value": "2024-03-06T05:22:48.814Z",
+      "type": "object"
+    },
+    "__v": {
+      "value": 0,
+      "type": "number"
+    }
+  }
+]

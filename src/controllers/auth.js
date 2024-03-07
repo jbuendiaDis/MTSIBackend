@@ -32,7 +32,7 @@ async function login(req, res, next) {
         name: user.name,
         lastname: user.lastname,
         position: user.position,
-        email: user.email,
+        email: user.email
       },
     },
     process.env.TOKEN_SECRET,
@@ -54,6 +54,7 @@ async function login(req, res, next) {
         email: user.email,
         age: user.age,
         signature: user.signature,
+        roel:user.role
       },
     },
   });
