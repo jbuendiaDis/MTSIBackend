@@ -54,7 +54,7 @@ async function login(req, res, next) {
         email: user.email,
         age: user.age,
         signature: user.signature,
-        roel:user.role
+        role:user.role
       },
     },
   });
