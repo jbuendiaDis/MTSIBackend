@@ -24,11 +24,12 @@ const transporter = nodemailer.createTransport({
 
 async function enviarCorreo(quotesData) {
   try {
-    const { cliente } = quotesData;
+    const { cliente, email } = quotesData;
+    console.log(email);
     const tablaHTML = generarCorreoHTML(quotesData);
     const correoOptions = {
       from: 'cotizaciones@mtsi.com.mx',
-      to: 'juan.carlos.buendia@outlook.com', // email,
+      to: email,
       subject: `Cotización ${cliente}`,
       html: tablaHTML,
     };
