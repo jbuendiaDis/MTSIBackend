@@ -863,6 +863,7 @@ const sendSolicitudDetails = async (req, res) => {
 
     enviarCorreo({
       cliente: dataUserClient.nombreCliente,
+      email: dataUserClient.email,
       nameClient: dataUserClient.nombre,
       message: mensaje,
       nameUser: `${data.name} ${data.lastname}`,
