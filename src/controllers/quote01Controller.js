@@ -582,7 +582,7 @@ const getSolicitudesByClienteId = async (req, res) => {
   }
 };
 
-const getSolicitudesHistorialByClienteId = async (req, res) => {
+const getSolicitudesHistorialByClienteId_ok = async (req, res) => {
   try {
     const { clientId } = req.params;
 
@@ -617,6 +617,63 @@ const getSolicitudesHistorialByClienteId = async (req, res) => {
     await responseError(409, error, res);
   }
 };
+
+
+const getSolicitudesHistorialByClienteId = async (req, res) => {
+  try {
+    const { clientId } = req.params;
+
+
+    if (clientId === '0' || clientId > 0) { // Si el clientId es 0, mostrar todas las solicitudes
+      const solicitudes = await SolicitudModel.find({})
+        .select('-_id folio estatus createdAt userId tipoViajeId')
+        .sort({ folio: -1 });
+
+      // Continúa con el procesamiento de las solicitudes
+      const response = await Promise.all(solicitudes.map(async (solicitud) => {
+        const cliente = await ClienteModel.findById(solicitud.clienteId);
+        const userName = await getUserNameById(solicitud.userId);
+
+        return {
+          ...solicitud.toObject(),
+          clientName: cliente ? cliente.razonSocial : 'Cliente no encontrado',
+          userName: userName || 'Usuario no encontrado',
+        };
+      }));
+
+      return res.formatResponse('ok', 200, 'Consulta exitosa', response);
+    }
+
+    const cliente = await ClienteModel.findById(clientId);
+    if (!cliente) {
+      return res.formatResponse('ok', 204, 'Cliente no encontrado.', []);
+    }
+
+    const solicitudes = await SolicitudModel.find({ clienteId: clientId, estatus: { $in: ["Cancelada", "Atendida"] } })
+      .select('-_id folio estatus createdAt userId tipoViajeId')
+      .sort({ folio: -1 });
+
+    if (solicitudes.length === 0) {
+      return res.formatResponse('ok', 204, 'No se encontraron solicitudes para el cliente especificado', []);
+    }
+
+    const response = await Promise.all(solicitudes.map(async (solicitud) => {
+      const userName = await getUserNameById(solicitud.userId);
+
+      return {
+        ...solicitud.toObject(),
+        clientName: cliente.razonSocial,
+        userName: userName || 'Usuario no encontrado',
+      };
+    }));
+
+    return res.formatResponse('ok', 200, 'Consulta exitosa', response);
+  } catch (error) {
+    console.error(error);
+    await responseError(409, error, res);
+  }
+};
+
 
 const getSolicitudesByUserId = async (req, res) => {
   try {
