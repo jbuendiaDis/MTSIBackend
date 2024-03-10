@@ -135,6 +135,7 @@ const createSolicitud = async (req, res) => {
 
 const getCotizacionByFolio = async (req, res) => {
   try {
+    console.log("req.params:",req.params);
     const folio = parseInt(req.params.folio, 10);
     const solicitud = await SolicitudModel.findOne({ folio });
     let solicitudDetalle = await SolicitudDetalleModel.find({ folio });
@@ -274,7 +275,14 @@ const getCotizacionByFolio = async (req, res) => {
         localidadOrigen: detalle.localidadOrigenCodigo.toString(),
         localidadDestino: detalle.localidadDestinoCodigo.toString(),
       });
-      const rendimiento = await RendimientoModel.findById(detalle.unidadId);
+
+      console.log("detalle.unidadId:",detalle.unidadId);
+
+      const rendimiento = 0;
+      if (detalle.unidadId!="other"){
+        rendimiento = await RendimientoModel.findById(detalle.unidadId);
+
+      } 
 
 
       const rutas = await Peajes.findOne({
