@@ -464,7 +464,7 @@ const getCotizacionByFolio = async (req, res) => {
       await quoteHistory.save();
 
       return {
-        // id: detalle._id,
+        id: detalle._id,
         // folio: folio,
         clienteNombre: solicitud.clienteName,
         origen: detalle.localidadOrigenName,
