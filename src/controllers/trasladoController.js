@@ -58,11 +58,7 @@ const updateTraslado = async (req, res) => {
   try {
     const { tipoTraslado, concepto, sueldo } = req.body;
 
-    const traslado = await Traslado.findByIdAndUpdate(
-      req.params.id,
-      { tipoTraslado, concepto, sueldo },
-      { new: true },
-    );
+    const traslado = await Traslado.findByIdAndUpdate(req.params.id, { tipoTraslado, concepto, sueldo }, { new: true });
 
     if (!traslado) {
       res.status(204).json({ message: 'Traslado no encontrado.' });

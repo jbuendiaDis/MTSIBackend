@@ -42,8 +42,7 @@ const obtenerRendimientoPorId = async (req, res) => {
 const actualizarRendimiento = async (req, res) => {
   const rendimientoId = req.params.id;
   try {
-    const rendimientoActualizado = await
-    Rendimientos.findByIdAndUpdate(rendimientoId, req.body, { new: true });
+    const rendimientoActualizado = await Rendimientos.findByIdAndUpdate(rendimientoId, req.body, { new: true });
     if (!rendimientoActualizado) {
       return await responseError(204, 'Rendimiento no encontrado.', res);
     }
@@ -88,10 +87,12 @@ const obtenerModelosPorMarca = async (req, res) => {
     }
 
     const nombresModelos = await Rendimientos.find({ marca }).distinct('modelo');
-    const modelosPorMarca = await Promise.all(nombresModelos.map(async (modelo) => {
-      const documento = await Rendimientos.findOne({ marca, modelo });
-      return { id: documento._id.toString(), nombre: modelo };
-    }));
+    const modelosPorMarca = await Promise.all(
+      nombresModelos.map(async (modelo) => {
+        const documento = await Rendimientos.findOne({ marca, modelo });
+        return { id: documento._id.toString(), nombre: modelo };
+      }),
+    );
 
     res.formatResponse('ok', 200, 'Modelos obtenidos por marca con éxito.', modelosPorMarca);
   } catch (error) {

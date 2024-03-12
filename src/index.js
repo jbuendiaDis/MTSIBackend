@@ -21,6 +21,7 @@ const { quote01Routes } = require('./routes/quote01Routes');
 const { countryRoutes } = require('./routes/countryRoutes');
 const { catalogRoutes } = require('./routes/catalogRoutes');
 const { banderaRoutes } = require('./routes/banderaRoutes');
+const { municipiosRoutes  } = require('./routes/municipiosRoutes');
 
 const connectToDatabase = require('./db');
 
@@ -74,6 +75,7 @@ app.use('/api', quote01Routes);
 app.use('/api', countryRoutes);
 app.use('/api', catalogRoutes);
 app.use('/api', banderaRoutes);
+app.use('/api', municipiosRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

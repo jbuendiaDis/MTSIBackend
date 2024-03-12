@@ -1,22 +1,17 @@
- 
 const responseError = require('../functions/responseError');
 
 const getDestinationName = require('../functions/getDestinationName');
 const getDestinationIdEstado = require('../functions/getDestinationIdEstado');
 const getStateName = require('../functions/getStateName');
 
- 
-
 require('dotenv').config();
 const { MongoClient, ObjectId } = require('mongodb');
 
 const path = require('path');
-const dbNameOld = "MTSI";
-const dbNameNew = "MTSI02";
+const dbNameOld = 'MTSI';
+const dbNameNew = 'MTSI02';
 const uri = process.env.MONGODB_URI;
 const fs = require('fs').promises;
-
- 
 
 const respaldarDB = async (req, res) => {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -32,13 +27,13 @@ const respaldarDB = async (req, res) => {
     for (const collection of collections) {
       const colName = collection.name;
       const documents = await db.collection(colName).find({}).toArray();
-      const typedData = documents.map(doc => addTypeInformation(doc));
+      const typedData = documents.map((doc) => addTypeInformation(doc));
       const filePath = path.join(salidaDir, `${colName}.json`);
 
       // Asegura que el directorio de respaldo existe
       await fs.mkdir(path.dirname(filePath), { recursive: true });
 
-      // Escribe los datos en el archivo  
+      // Escribe los datos en el archivo
       await fs.writeFile(filePath, JSON.stringify(typedData, null, 2));
       console.log(`Respaldo realizado para la colección ${colName}`);
     }
@@ -66,8 +61,6 @@ function getType(value) {
   if (Array.isArray(value)) return 'array';
   return typeof value;
 }
-  
-
 
 const cargarRespaldoADB = async (req, res) => {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -85,7 +78,7 @@ const cargarRespaldoADB = async (req, res) => {
       const filePath = path.join(respaldoDir, archivo);
       const contenido = await fs.readFile(filePath, 'utf8');
       const documentos = JSON.parse(contenido);
-      const datosOriginales = documentos.map(doc => convertirATipoOriginal(doc));
+      const datosOriginales = documentos.map((doc) => convertirATipoOriginal(doc));
 
       // Verifica si hay documentos a insertar antes de realizar la operación
       if (datosOriginales.length > 0) {
@@ -124,7 +117,7 @@ function convertirATipoOriginal(doc) {
     } else if (type === 'number') {
       docOriginal[key] = Number(value);
     } else if (type === 'array') {
-      docOriginal[key] = value.map(item => convertirATipoOriginal(item));
+      docOriginal[key] = value.map((item) => convertirATipoOriginal(item));
     } else {
       // Para otros tipos, asigna el valor directamente
       docOriginal[key] = value;
@@ -133,9 +126,7 @@ function convertirATipoOriginal(doc) {
   return docOriginal;
 }
 
-
 module.exports = {
- 
   respaldarDB,
-  cargarRespaldoADB
+  cargarRespaldoADB,
 };
