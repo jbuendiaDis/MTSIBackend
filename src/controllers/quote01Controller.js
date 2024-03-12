@@ -278,7 +278,7 @@ const getCotizacionByFolio = async (req, res) => {
 
       console.log("detalle.unidadId:",detalle.unidadId);
 
-      const rendimiento = 0;
+      let rendimiento = 0;
       if (detalle.unidadId!="other"){
         rendimiento = await RendimientoModel.findById(detalle.unidadId);
 
