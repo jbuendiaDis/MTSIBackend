@@ -506,6 +506,8 @@ const getCotizacionByFolio = async (req, res) => {
         dimensiones: detalle.dimensiones,
         trasladoTipo: detalle.trasladoTipo,
 
+        manual: detalle.manual,
+
       };
     }));
 
