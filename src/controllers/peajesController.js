@@ -3,8 +3,12 @@ const Peajes = require('../models/peajes');
 const Gastos = require('../models/gastos');
 const responseError = require('../functions/responseError');
 const getDestinationName = require('../functions/getDestinationName');
+const getMunicipioName = require('../functions/getMunicipioName');
+
+
 const getDestinationIdEstado = require('../functions/getDestinationIdEstado');
 const getStateName = require('../functions/getStateName');
+const MunicipiosModel = require('../models/Municipio');
 
 const createPeaje = async (req, res) => {
   try {
@@ -55,14 +59,21 @@ const getPeajes = async (req, res) => {
     // Agrega los nombres de origen y destino al resultado
     const peajesWithDestinationNames = await Promise.all(
       peajes.map(async (peaje) => {
-        const nombreOrigen = await getDestinationName(peaje.localidadOrigen);
-        const nombreDestino = await getDestinationName(peaje.localidadDestino);
+        console.log("peaje:",peaje);
+        const nombreOrigen = await getMunicipioName(peaje.localidadOrigen);
 
-        const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
-        const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
 
-        const estadoNombreOrigen = await getStateName(idEstadoOrigen);
-        const estadoNombreDestino = await getStateName(idEstadoDestino);
+        console.log("nombreOrigen:",nombreOrigen);
+        
+        const nombreDestino = await getMunicipioName(peaje.localidadDestino);
+
+        console.log("nombreDestino:",nombreDestino);
+
+        //const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
+        //const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
+
+        //const estadoNombreOrigen = await getStateName(idEstadoOrigen);
+        //const estadoNombreDestino = await getStateName(idEstadoDestino);
 
         getDestinationIdEstado
 
@@ -70,10 +81,10 @@ const getPeajes = async (req, res) => {
           ...peaje.toObject(),
           nombreOrigen,
           nombreDestino,
-          idEstadoOrigen,
-          idEstadoDestino,
-          estadoNombreOrigen,
-          estadoNombreDestino
+          //idEstadoOrigen,
+          //idEstadoDestino,
+          //estadoNombreOrigen,
+          //estadoNombreDestino
         };
       }),
     );

@@ -13,6 +13,7 @@ const CotizacionHistorialModel = require('../models/cotizacionHistorialModel');
 const SolicitudModel = require('../models/solicitud');
 const ClienteModel = require('../models/clients');
 const SolicitudDetalleModel = require('../models/solicitudDetalle');
+const MunicipiosModel = require('../models/Municipio');
 
 const responseError = require('../functions/responseError');
 const getClientNameById = require('../functions/getClientNameById');
@@ -1215,7 +1216,7 @@ const getQuotesByUserId = async (req, res) => {
 };
 
 const calculateQuoteDetails = async (quote) => {
-  const peaje = await Peajes.findOne({
+  const peaje = await MunicipiosModel.findOne({
     localidadOrigen: quote.origenId.toString(),
     localidadDestino: quote.destinoId.toString(),
   });
