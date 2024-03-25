@@ -6,7 +6,8 @@ const responseError = require('../functions/responseError');
 const getDestinationName = require('../functions/getDestinationName');
 const getDestinationIdEstado = require('../functions/getDestinationIdEstado');
 const getStateName = require('../functions/getStateName');
-
+const getMunicipioName = require('../functions/getMunicipioName');
+ 
 
 const { exec } = require('child_process');
 const path = require('path');
@@ -278,8 +279,8 @@ const getGastosConPeajes = async (req, res) => {
       const peajes = ruta ? ruta.puntos : [];
       const peajesCostos = peajes.reduce((acc, curr) => acc + curr.costo, 0);
 
-      const nombreOrigen = ruta ? await getDestinationName(ruta.localidadOrigen) : null;
-      const nombreDestino = ruta ? await getDestinationName(ruta.localidadDestino) : null;
+      const nombreOrigen = ruta ? await getMunicipioName(ruta.localidadOrigen) : null;
+      const nombreDestino = ruta ? await getMunicipioName(ruta.localidadDestino) : null;
       const kilometraje = ruta ? ruta.kms : 0; // Accede al kilometraje de la ruta
 
       return {
