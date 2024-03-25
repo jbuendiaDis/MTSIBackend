@@ -184,8 +184,8 @@ const listarRutasSinGasto = async (req, res) => {
 
     // Enriquecer cada ruta con nombreOrigen y nombreDestino
     rutasSinGasto = await Promise.all(rutasSinGasto.map(async (ruta) => {
-      const nombreOrigen = await getDestinationName(ruta.localidadOrigen);
-      const nombreDestino = await getDestinationName(ruta.localidadDestino);
+      const nombreOrigen = await getMunicipioName(ruta.localidadOrigen);
+      const nombreDestino = await getMunicipioName(ruta.localidadDestino);
       
       return {
         ...ruta.toObject(), // Asume que ruta es un documento de Mongoose y necesitas convertirlo a objeto
