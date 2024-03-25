@@ -69,8 +69,8 @@ const getPeajes = async (req, res) => {
 
         console.log("nombreDestino:",nombreDestino);
 
-        //const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
-        //const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
+        const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
+        const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
 
         //const estadoNombreOrigen = await getStateName(idEstadoOrigen);
         //const estadoNombreDestino = await getStateName(idEstadoDestino);
@@ -81,8 +81,8 @@ const getPeajes = async (req, res) => {
           ...peaje.toObject(),
           nombreOrigen,
           nombreDestino,
-          //idEstadoOrigen,
-          //idEstadoDestino,
+          idEstadoOrigen,
+          idEstadoDestino,
           //estadoNombreOrigen,
           //estadoNombreDestino
         };

@@ -1,15 +1,17 @@
 // functions/getDestinationName.js
-const Country = require('../models/country');
+const MunicipiosModel = require('../models/Municipio');
 
-const getDestinationIdEstado = async (codigo) => {
+const getDestinationIdEstado = async (id) => {
   try {
-    const catalogEntry = await Country.findOne({ codigo });
+    //const catalogEntry = await Country.findOne({ codigo });
+
+    const catalogEntry =await MunicipiosModel.findOne({ _id: id });
 
     if (!catalogEntry) {
       return null;
     }
 
-    return catalogEntry.estado;
+    return catalogEntry.estadoId;
   } catch (error) {
     console.error('Error al obtener el id del estado:', error);
     return null;
