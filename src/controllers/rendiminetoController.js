@@ -6,6 +6,23 @@ const responseError = require('../functions/responseError');
 // crear rendimiento
 const crearRendimiento = async (req, res) => {
   try {
+    // Extraer los datos del cuerpo de la solicitud
+    const { marca, modelo, condicionVeiculoId, estiloCarroceriaId } = req.body;
+
+    // Verificar si ya existe un rendimiento con la misma combinación de campos
+    const existente = await Rendimientos.findOne({
+      marca,
+      modelo,
+      condicionVeiculoId,
+      estiloCarroceriaId
+    });
+
+    // Si ya existe un registro, responder con un error
+    if (existente) {
+      return res.formatResponse('conflict', 409, 'Ya existe un rendimiento con estas características.');
+    }
+
+    // Si no existe, crear el nuevo rendimiento
     const nuevoRendimiento = new Rendimientos(req.body);
     const rendimientoGuardado = await nuevoRendimiento.save();
     res.formatResponse('ok', 200, 'Rendimiento registrado con éxito.', rendimientoGuardado);

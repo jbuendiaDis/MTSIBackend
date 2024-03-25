@@ -13,7 +13,15 @@ const rendimientoSchema = new mongoose.Schema({
   rendimiento: {
     type: Number,
     required: true,
-  }, // Suponemos que rendimiento es un número (por ejemplo, en km por litro).
+  },
+  condicionVeiculoId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  estiloCarroceriaId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
 });
 
 // Crear un modelo basado en el esquema
