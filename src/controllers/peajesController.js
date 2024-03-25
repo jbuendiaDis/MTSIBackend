@@ -72,8 +72,8 @@ const getPeajes = async (req, res) => {
         const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
         const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
 
-        //const estadoNombreOrigen = await getStateName(idEstadoOrigen);
-        //const estadoNombreDestino = await getStateName(idEstadoDestino);
+        const estadoNombreOrigen = await getStateName(idEstadoOrigen);
+        const estadoNombreDestino = await getStateName(idEstadoDestino);
 
         getDestinationIdEstado
 
