@@ -26,6 +26,8 @@ const gastosSchema = new mongoose.Schema({
   seguroTraslado: Number,
   pagoEstadia: Number,
   diselExtra: Number,
+  pasajeLocalOrigen:Number,
+  pasajeLocalDestino:Number
 });
 
 const Gastos = mongoose.model('Gastos', gastosSchema);

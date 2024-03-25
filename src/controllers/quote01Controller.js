@@ -357,7 +357,7 @@ const getCotizacionByFolio = async (req, res) => {
         console.log('nochesHotel', nochesHotel);
         console.log('costoNocheHotel', costoNocheHotel);
 
-        v_hotel = nochesHotel * v_hotel;
+        //v_hotel = nochesHotel * v_hotel;
 
         v_vuelo = gastos && gastos.vuelo ? gastos.vuelo : 0;
         v_taxi = gastos && gastos.taxi ? gastos.taxi : 0;
