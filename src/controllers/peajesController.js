@@ -83,8 +83,8 @@ const getPeajes = async (req, res) => {
           nombreDestino,
           idEstadoOrigen,
           idEstadoDestino,
-          //estadoNombreOrigen,
-          //estadoNombreDestino
+          estadoNombreOrigen,
+          estadoNombreDestino
         };
       }),
     );
