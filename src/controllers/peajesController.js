@@ -61,13 +61,7 @@ const getPeajes = async (req, res) => {
       peajes.map(async (peaje) => {
         console.log("peaje:",peaje);
         const nombreOrigen = await getMunicipioName(peaje.localidadOrigen);
-
-
-        console.log("nombreOrigen:",nombreOrigen);
-        
         const nombreDestino = await getMunicipioName(peaje.localidadDestino);
-
-        console.log("nombreDestino:",nombreDestino);
 
         const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
         const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
@@ -104,8 +98,8 @@ const getPeajeById = async (req, res) => {
       await responseError(204, 'Registro de peaje no encontrado.', res);
     }
 
-    const nombreOrigen = await getDestinationName(peaje.localidadOrigen);
-    const nombreDestino = await getDestinationName(peaje.localidadDestino);
+    const nombreOrigen = await getMunicipioName(peaje.localidadOrigen);
+    const nombreDestino = await getMunicipioName(peaje.localidadDestino);
     const idEstadoOrigen = await getDestinationIdEstado(peaje.localidadOrigen);
     const idEstadoDestino = await getDestinationIdEstado(peaje.localidadDestino);
 
