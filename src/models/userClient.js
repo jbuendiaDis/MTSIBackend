@@ -15,8 +15,7 @@ const userClientSchema = new mongoose.Schema({
     required: true,
   },
   genero: {
-    type: String,
-    required: true,
+    type: String 
   },
   puesto: {
     type: String,
@@ -31,16 +30,13 @@ const userClientSchema = new mongoose.Schema({
     require: true,
   },
   telOficina: {
-    type: String,
-    required: false,
+    type: String 
   },
   telMovil: {
-    type: String,
-    required: false,
+    type: String 
   },
   whatsapp: {
-    type: String,
-    required: false,
+    type: String 
   },
   direccion: {
     type: String,
@@ -50,6 +46,12 @@ const userClientSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  extension: {
+    type: String
+  },
+
+
+  
 });
 
 const UserClient = mongoose.model('UserClient', userClientSchema);
