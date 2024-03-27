@@ -32,11 +32,11 @@ const SolicitudDetalleSchema = new mongoose.Schema({
   },
   localidadOrigenCodigo: {
     type: String,
-    required: true
+   // required: true
   },
   localidadOrigenTipoCobro: {
     type: String,
-    required: true
+   // required: true
   },
 
  
@@ -51,11 +51,11 @@ const SolicitudDetalleSchema = new mongoose.Schema({
   },
   localidadDestinoCodigo: {
     type: String,
-    required: true
+   // required: true
   },
   localidadDestinoTipoCobro: {
     type: String,
-    required: true
+    //required: true
   },      
   unidadId: {
     type: String,
@@ -105,7 +105,25 @@ const SolicitudDetalleSchema = new mongoose.Schema({
   updatedAt: {
     type: String,
     default: getCurrentFormattedDate // Establece la fecha en el formato deseado al crear
+  },
+  calle:{
+    type: String,
+  },
+  numeroInterior:{
+    type: String,
+  },
+  numeroExterior:{
+    type: String,
+  },
+  colonia:{
+    type: String,
+  },
+  cp:{
+    type: String,
   }
+
+  
+
 });
 
 SolicitudDetalleSchema.pre('save', function(next) {

@@ -26,7 +26,7 @@ const enviarCorreo = require('../functions/sendMail');
 
 const createSolicitud = async (req, res) => {
   try {
-    const { destinos } = req.body;
+    const { tipoSeguro,compania,numeroPoliza,modelo,peso,fotoUnidad,urlMapa,   destinos } = req.body;
     if (!destinos || !Array.isArray(destinos) || destinos.length === 0) {
       return res.formatResponse('ok', 204, 'El campo "destinos" es obligatorio y debe ser un array no vacío.', []);
     }
@@ -68,9 +68,17 @@ const createSolicitud = async (req, res) => {
       clienteName: cliente.razonSocial,
       tipoViajeId: tipoViaje._id,
       tipoViajeName: tipoViaje.descripcion,
+      tipoSeguro: tipoSeguro,
+      compania: compania,
+      numeroPoliza: numeroPoliza,
+      modelo: modelo,
+      peso: peso,
+      fotoUnidad: fotoUnidad,
+      urlMapa: urlMapa,
     }).save();
 
     // Iterar sobre 'destinos' para crear detalles de la solicitud-------------------------------------------------------------------------------------------------------------
+    console.log("destino",destinos);
     const detallesPromesas = destinos.map(async (destino) => {
       // Realizar la consulta para obtener el dato catalogos basado en el tipoViaje
       let v_tipoViaje = null;
@@ -82,32 +90,34 @@ const createSolicitud = async (req, res) => {
 
       let rendimiento;
       // Realizar la consulta para obtener el dato rendimiento basado en el tipoUnidad
+      console.log("destino.tipoUnidad:",destino.tipoUnidad);
       if (destino.tipoUnidad != 'other') {
         rendimiento = await RendimientoModel.findById(destino.tipoUnidad);
+        console.log("rendimiento:",rendimiento);
       }
 
       // Buscar la localidad de origen y destino en la colección countries
-      const origenData = await CountryModel.findById(destino.localidadOrigenId);
-      // console.log("origenData:",origenData);
-      const destinoData = await CountryModel.findById(destino.localidadDestinoId);
-      // console.log("destinoData:",destinoData);
+      const origenData = await MunicipiosModel.findById(destino.localidadOrigenId);
+      console.log("origenData:",origenData);
+      const destinoData = await MunicipiosModel.findById(destino.localidadDestinoId);
+      console.log("destinoData:",destinoData);
 
-      const peaje = await Peajes.findOne({ localidadOrigen: origenData.codigo, localidadDestino: destinoData.codigo });
+      //const peaje = await Peajes.findOne({ localidadOrigen: origenData.codigo, localidadDestino: destinoData.codigo });
 
-      // console.log("peaje:",peaje);
+      // console.log("peaje:",peaje); localidadOrigenName
 
       return new SolicitudDetalleModel({
         solicitudId: nuevaSolicitud._id,
         folio: nuevaSolicitud.folio,
         localidadOrigenId: destino.localidadOrigenId,
-        localidadOrigenName: origenData.nombre,
-        localidadOrigenCodigo: origenData.codigo,
-        localidadOrigenTipoCobro: origenData.tipoUnidad,
+        localidadOrigenName: origenData.municipio,
+        //localidadOrigenCodigo: origenData.codigo,
+        //localidadOrigenTipoCobro: origenData.tipoUnidad,
 
         localidadDestinoId: destino.localidadDestinoId,
-        localidadDestinoName: destinoData.nombre,
-        localidadDestinoCodigo: destinoData.codigo,
-        localidadDestinoTipoCobro: destinoData.tipoUnidad,
+        localidadDestinoName: destinoData.municipio,
+        //localidadDestinoCodigo: destinoData.codigo,
+        //localidadDestinoTipoCobro: destinoData.tipoUnidad,
 
         unidadId: destino.tipoUnidad,
         unidadMarca: rendimiento ? rendimiento.marca : undefined,
@@ -119,8 +129,15 @@ const createSolicitud = async (req, res) => {
         tipoViajeName: v_tipoViaje,
         manual: destino.manual,
         dimensiones: destino.dimensiones,
+        calle:destino.calle,
+        numeroInterior:destino.numeroInterior,
+        numeroExterior:destino.numeroExterior,
+        colonia:destino.colonia,
+        cp:destino.cp
       }).save();
     });
+
+    console.log("detallesPromesas:",detallesPromesas);
 
     const detalles = await Promise.all(detallesPromesas);
 
@@ -136,7 +153,7 @@ const createSolicitud = async (req, res) => {
 
 const getCotizacionByFolio = async (req, res) => {
   try {
-    console.log('req.params:', req.params);
+    //console.log('req.params:', req.params);
     const folio = parseInt(req.params.folio, 10);
     const solicitud = await SolicitudModel.findOne({ folio });
     let solicitudDetalle = await SolicitudDetalleModel.find({ folio });
@@ -209,12 +226,13 @@ const getCotizacionByFolio = async (req, res) => {
     const rutasFaltantes = [];
 
     for (const detalle of solicitudDetalle) {
-      console.log('detalle.localidadOrigenCodigo.toString():', detalle.localidadOrigenCodigo.toString());
-      console.log('detalle.localidadDestinoCodigo.toString():', detalle.localidadDestinoCodigo.toString());
+      //console.log('detalle.localidadOrigenId.toString():', detalle.localidadOrigenId.toString());
+      //console.log('detalle.localidadDestinoId.toString():', detalle.localidadDestinoId.toString());
       const peaje = await Peajes.findOne({
-        localidadOrigen: detalle.localidadOrigenCodigo.toString(),
-        localidadDestino: detalle.localidadDestinoCodigo.toString(),
+        localidadOrigen: detalle.localidadOrigenId,
+        localidadDestino: detalle.localidadDestinoId,
       });
+      //console.log("peaje:",peaje);
 
       if (!peaje) {
         // Agregar al array los códigos de origen y destino que no tienen peaje
@@ -278,11 +296,11 @@ const getCotizacionByFolio = async (req, res) => {
 
         // Buscar el documento de Peajes(rutas) que coincide con origenId y destinoId
         const peaje = await Peajes.findOne({
-          localidadOrigen: detalle.localidadOrigenCodigo.toString(),
-          localidadDestino: detalle.localidadDestinoCodigo.toString(),
+          localidadOrigen: detalle.localidadOrigenId,
+          localidadDestino: detalle.localidadDestinoId,
         });
 
-        console.log('detalle.unidadIdxxxx:', detalle.unidadId);
+        //console.log('detalle.unidadIdxxxx:', detalle.unidadId);
 
         let rendimiento = 0;
         if (detalle.unidadId != 'other') {
@@ -290,8 +308,8 @@ const getCotizacionByFolio = async (req, res) => {
         }
 
         const rutas = await Peajes.findOne({
-          localidadOrigen: detalle.localidadOrigenCodigo.toString(),
-          localidadDestino: detalle.localidadDestinoCodigo.toString(),
+          localidadOrigen: detalle.localidadOrigenId,
+          localidadDestino: detalle.localidadDestinoId,
         });
 
         //console.log("rutas",rutas._id);
@@ -303,7 +321,7 @@ const getCotizacionByFolio = async (req, res) => {
         //console.log("localidadOrigenCodigo",detalle.localidadOrigenCodigo.toString());
         //console.log("localidadDestinoCodigo",detalle.localidadDestinoCodigo.toString());
 
-        console.log('gastos', gastos);
+        //console.log('gastos', gastos);
 
         const banderaPasajeOrigen = await BanderaModel.findOne({ nombre: 'pasajeOrigen' });
         const banderaPasajeDestino = await BanderaModel.findOne({ nombre: 'pasajeDestino' });
@@ -322,7 +340,9 @@ const getCotizacionByFolio = async (req, res) => {
         const porcentajeAdmon = banderaPorcentajeAdmon ? banderaPorcentajeAdmon.valor : 8; // Usar 8 como valor predeterminado si no se encuentra
 
         const porcentajeFinanciamiento = configureData ? configureData.financiamiento : 0;
-        const v_otrosGastos = configureData ? configureData.otros : 0;
+        //const v_otrosGastos = configureData ? configureData.otros : 0;
+        const v_otrosGastos = configureData && 'otros' in configureData ? configureData.otros : 0;
+
 
         v_kms = peaje ? peaje.kms : 0;
         v_rend = rendimiento ? rendimiento.rendimiento : 0;
@@ -411,6 +431,11 @@ const getCotizacionByFolio = async (req, res) => {
         console.log('v_extra', v_extra);
 
         v_admon = (v_subtotal * porcentajeAdmon) / 100;
+        console.log("-------------:",v_otrosGastos);
+        console.log("v_otrosGastos:",v_otrosGastos);
+        console.log("v_admon:",v_admon);
+        console.log("v_subtotal:",v_subtotal);
+        console.log("-------------:",v_subtotal);
         v_total = v_subtotal + v_admon + v_otrosGastos;
         v_financiamiento = (v_total * porcentajeFinanciamiento) / 100;
         porcentajeInflacion = configureData ? configureData.inflacion : 0;
@@ -424,6 +449,7 @@ const getCotizacionByFolio = async (req, res) => {
         v_ganancia = gananciaEntry ? gananciaEntry.ganancia : 0;
         v_costoTotal = v_total + v_financiamiento + v_inflacion + v_ganancia;
 
+        console.log("v_total:",v_total);
         // Aquí guardamos en quote_history
         const quoteHistory = new CotizacionHistorialModel({
           quoteId: detalle._id,
